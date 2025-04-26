@@ -44,14 +44,29 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -8, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
       whileTap={{ scale: 0.95, rotate: -5 }}
       className={clsx(
-        "cursor-pointer select-none rounded-2xl border bg-white p-4 shadow transition",
-        !bug.active && "opacity-30 line-through"
+        "relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 shadow-lg transition",
+        !bug.active && "opacity-40 grayscale"
       )}
       onClick={() => bug.active && squashBug(bug.id)}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3 }}
     >
+      {!bug.active && (
+        <motion.div 
+          className="absolute inset-0 bg-red-500/10 flex items-center justify-center z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <span className="text-2xl font-bold text-red-500 transform -rotate-12 border-4 border-red-500 px-4 py-1 rounded-lg">
+            SQUASHED
+          </span>
+        </motion.div>
+      )}
+      
       <div className="flex flex-col items-start">
         <div className="flex-1"></div>
         <img
