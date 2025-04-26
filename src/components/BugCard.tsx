@@ -47,7 +47,7 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
       whileHover={{ y: -8, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
       whileTap={{ scale: 0.95, rotate: -5 }}
       className={clsx(
-        "relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 shadow-lg transition",
+        "relative overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg transition",
         !bug.active && "opacity-40 grayscale"
       )}
       onClick={() => bug.active && squashBug(bug.id)}
