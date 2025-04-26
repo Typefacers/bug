@@ -34,7 +34,7 @@ export const BugCard: React.FC<Props> = ({ bug, preview = false }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
         >
-          <motion.span 
+          <motion.span
             className="text-4xl font-extrabold text-white px-4 py-1 tracking-wider uppercase font-serif drop-shadow-[0_0_8px_rgba(255,0,0,0.7)]"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -60,7 +60,7 @@ export const BugCard: React.FC<Props> = ({ bug, preview = false }) => {
             +{bug.bounty}
           </span>
         </div>
-        <p className="my-4 mx-2 mt-1 text-sm text-gray-600">{bug.description}</p>
+        <p className="mb-4 mx-2 text-sm text-gray-600">{bug.description}</p>
       </div>
     </motion.div>
   );
