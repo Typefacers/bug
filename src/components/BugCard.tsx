@@ -60,10 +60,16 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
           className="absolute inset-0 bg-red-500/10 flex items-center justify-center z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
         >
-          <span className="text-2xl font-bold text-red-500 transform -rotate-12 border-4 border-red-500 px-4 py-1 rounded-lg">
+          <motion.span 
+            className="text-4xl font-extrabold text-white px-4 py-1 tracking-wider uppercase font-serif drop-shadow-[0_0_8px_rgba(255,0,0,0.7)]"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, delay: 0.3, ease: "easeInOut" }}
+          >
             SQUASHED
-          </span>
+          </motion.span>
         </motion.div>
       )}
 
