@@ -105,7 +105,6 @@ const BugCrawler = (props: BugCrawlerProps) => {
             setShowPreview(true);
           }}
           onMouseLeave={() => setShowPreview(false)}
-          className="w-10 h-10"
           style={{ rotate: rotation + 180 }}
         />
 
