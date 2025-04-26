@@ -5,7 +5,7 @@ export default function Bugs() {
   const bugs = useBugStore((s) => s.bugs);
 
   return (
-    <main className="mx-auto max-w-xl p-6">
+    <main className="mx-auto max-w-lg p-6">
       <h1 className="mb-6 text-center text-3xl font-bold">Bug Bounty</h1>
       <div className="grid gap-4 sm:grid-cols-1">
         {bugs.map((bug) => (

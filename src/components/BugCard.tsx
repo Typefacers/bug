@@ -56,7 +56,7 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
       transition={{ duration: 0.3 }}
     >
       {!bug.active && (
-        <motion.div 
+        <motion.div
           className="absolute inset-0 bg-red-500/10 flex items-center justify-center z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -66,7 +66,7 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
           </span>
         </motion.div>
       )}
-      
+
       <div className="flex flex-col items-start">
         <div className="flex-1"></div>
         <img
@@ -74,7 +74,7 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
           alt="Bug"
           className="h-full w-full object-cover aspect-square mb-2"
         />
-        <div className="flex items-center">
+        <div className="flex items-center  m-2">
           <h3 className="flex items-center text-xl font-semibold">
             {bug.title}
           </h3>
@@ -82,7 +82,7 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
             +{bug.bounty}
           </span>
         </div>
-        <p className="mt-1 text-sm text-gray-600">{bug.description}</p>
+        <p className="my-4 mx-2 mt-1 text-sm text-gray-600">{bug.description}</p>
       </div>
     </motion.div>
   );
