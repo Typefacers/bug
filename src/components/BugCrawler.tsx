@@ -4,6 +4,7 @@ import { Bug } from "../types/bug";
 import { getBugImage } from "../utils/utils";
 import { BugCard } from "./BugCard";
 import ReactDOM from "react-dom";
+import clsx from "clsx";
 
 interface BugCrawlerProps {
   x: number;
@@ -16,6 +17,7 @@ const BugCrawler = (props: BugCrawlerProps) => {
   const [showModal, setShowModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
+  const isAlive = bug.active;
 
   const [position, setPosition] = useState({ x, y });
   const positionRef = useRef({ x, y });
@@ -32,6 +34,8 @@ const BugCrawler = (props: BugCrawlerProps) => {
 
   useEffect(() => {
     const moveBug = () => {
+      if (!isAlive) return;
+      
       const now = Date.now();
       const timeSinceLastTurn = now - lastTurnTime.current;
 
@@ -94,17 +98,17 @@ const BugCrawler = (props: BugCrawlerProps) => {
         <motion.img
           src={bugImage}
           alt={bug.title}
+          className={clsx("w-10 h-10", !bug.active && "grayscale opacity-50")}
           onMouseEnter={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
             setHoverPosition({ x: rect.left, y: rect.top });
             setShowPreview(true);
           }}
           onMouseLeave={() => setShowPreview(false)}
-          className="w-10 h-10"
           style={{ rotate: rotation }}
         />
 
-        {showPreview &&
+        {showPreview && isAlive &&
           ReactDOM.createPortal(
             <div
               className="fixed z-50 pointer-events-none"
@@ -119,7 +123,7 @@ const BugCrawler = (props: BugCrawlerProps) => {
           )}
       </motion.div>
 
-      {showModal && (
+      {showModal && isAlive && (
         <div className="fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50">
           <div className="relative">
             <button
