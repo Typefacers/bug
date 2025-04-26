@@ -36,7 +36,7 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
 			className={clsx("cursor-pointer select-none rounded-2xl border bg-white p-4 shadow transition", !bug.active && "opacity-30 line-through")}
 			onClick={() => bug.active && squashBug(bug.id)}
 		>
-			<div className="flex items-start">
+			<div className="flex flex-col items-start">
 				<div className="flex-1">
 					<h3 className="flex items-center text-lg font-semibold">
 						<span role="img" aria-label={bug.active ? "bug" : "squashed"} className="mr-1">
@@ -47,7 +47,7 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
 					<p className="mt-1 text-sm text-gray-600">{bug.description}</p>
 					<span className="mt-3 inline-block rounded-full bg-emerald-600 px-2 py-1 text-xs font-mono text-white">+{bug.bounty}</span>
 				</div>
-				<img src={bugImage} alt="Bug" className="ml-2 h-16 w-16 object-contain" />
+				<img src={bugImage} alt="Bug" className="ml-2 h-full w-full object-contain" />
 			</div>
 		</motion.div>
 	);
