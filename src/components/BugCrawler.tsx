@@ -35,7 +35,7 @@ const BugCrawler = (props: BugCrawlerProps) => {
   useEffect(() => {
     const moveBug = () => {
       if (!isAlive) return;
-      
+
       const now = Date.now();
       const timeSinceLastTurn = now - lastTurnTime.current;
 
@@ -105,7 +105,8 @@ const BugCrawler = (props: BugCrawlerProps) => {
             setShowPreview(true);
           }}
           onMouseLeave={() => setShowPreview(false)}
-          style={{ rotate: rotation }}
+          className="w-10 h-10"
+          style={{ rotate: rotation + 180 }}
         />
 
         {showPreview && isAlive &&
