@@ -2,43 +2,14 @@ import { motion } from "framer-motion";
 import { Bug } from "../types/bug";
 import { useBugStore } from "../store";
 import clsx from "clsx";
-import cockroachImg from "../assets/cockroach-min.png";
-import flyImg from "../assets/fly-min.png";
-import ladybugImg from "../assets/ladybug-min.png";
-import spiderImg from "../assets/spider-min.png";
-import antImg from "../assets/ant-min.png";
-import beetleImg from "../assets/beetle-min.png";
-import caterpillarImg from "../assets/caterpillar-min.png";
-import mothImg from "../assets/moth-min.png";
-import beeImg from "../assets/profile-bee.png";
-import ladybugImg2 from "../assets/profile-ladybug.png";
+import { getBugImage } from "../utils/utils";
 
 interface Props {
   bug: Bug;
+  preview?: boolean;
 }
 
-// Array of all bug images
-const bugImages = [
-  ladybugImg2,
-  mothImg,
-  cockroachImg,
-  flyImg,
-  ladybugImg,
-  spiderImg,
-  antImg,
-  beetleImg,
-  caterpillarImg,
-  beeImg,
-];
-
-// Get a random bug image based on bug id
-const getBugImage = (id: string) => {
-  // Use the bug ID to consistently get the same image for the same bug
-  const index = id.charCodeAt(id.length - 1) % bugImages.length;
-  return bugImages[index];
-};
-
-export const BugCard: React.FC<Props> = ({ bug }) => {
+export const BugCard: React.FC<Props> = ({ bug, preview = false }) => {
   const squashBug = useBugStore((s) => s.squashBug);
   const bugImage = getBugImage(bug.id);
 
@@ -48,7 +19,8 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
       whileTap={{ scale: 0.95, rotate: -5 }}
       className={clsx(
         "relative overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg transition",
-        !bug.active && "opacity-40 grayscale"
+        !bug.active && "opacity-40 grayscale",
+		preview && "w-[200px]"
       )}
       onClick={() => bug.active && squashBug(bug.id)}
       initial={{ opacity: 0, scale: 0.9 }}
@@ -75,11 +47,11 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
 
       <div className="flex flex-col items-start">
         <div className="flex-1"></div>
-        <img
+        {!preview && <img
           src={bugImage}
           alt="Bug"
           className="h-full w-full object-cover aspect-square mb-2"
-        />
+        />}
         <div className="flex items-center  m-2">
           <h3 className="flex items-center text-xl font-semibold">
             {bug.title}
