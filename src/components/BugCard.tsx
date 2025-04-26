@@ -47,7 +47,7 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
       whileHover={{ y: -8, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
       whileTap={{ scale: 0.95, rotate: -5 }}
       className={clsx(
-        "relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 shadow-lg transition",
+        "relative overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg transition",
         !bug.active && "opacity-40 grayscale"
       )}
       onClick={() => bug.active && squashBug(bug.id)}
@@ -56,17 +56,23 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
       transition={{ duration: 0.3 }}
     >
       {!bug.active && (
-        <motion.div 
+        <motion.div
           className="absolute inset-0 bg-red-500/10 flex items-center justify-center z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
         >
-          <span className="text-2xl font-bold text-red-500 transform -rotate-12 border-4 border-red-500 px-4 py-1 rounded-lg">
+          <motion.span 
+            className="text-4xl font-extrabold text-white px-4 py-1 tracking-wider uppercase font-serif drop-shadow-[0_0_8px_rgba(255,0,0,0.7)]"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, delay: 0.3, ease: "easeInOut" }}
+          >
             SQUASHED
-          </span>
+          </motion.span>
         </motion.div>
       )}
-      
+
       <div className="flex flex-col items-start">
         <div className="flex-1"></div>
         <img
@@ -74,7 +80,7 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
           alt="Bug"
           className="h-full w-full object-cover aspect-square mb-2"
         />
-        <div className="flex items-center">
+        <div className="flex items-center  m-2">
           <h3 className="flex items-center text-xl font-semibold">
             {bug.title}
           </h3>
@@ -82,7 +88,7 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
             +{bug.bounty}
           </span>
         </div>
-        <p className="mt-1 text-sm text-gray-600">{bug.description}</p>
+        <p className="my-4 mx-2 mt-1 text-sm text-gray-600">{bug.description}</p>
       </div>
     </motion.div>
   );
