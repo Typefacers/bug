@@ -16,7 +16,6 @@ import {
   CheckCircleIcon,
   AlertTriangleIcon,
 } from "lucide-react";
-import Win95Window from "../components/Win95Window";
 
 // Helper function to calculate total bounty
 const calculateTotalBounty = (bugs: Bug[]): number =>
@@ -57,7 +56,7 @@ export default function Dashboard() {
     "border-2 border-t-gray-500 border-l-gray-500 border-b-white border-r-white";
 
   return (
-    <Win95Window title="Bug Dashboard">
+    <>
       {/* Top stats */}
       <div className="grid gap-6 md:grid-cols-3 mb-6">
         <Card className={`bg-[#E0E0E0] ${raised} hover:${sunken} transition-all`}>
@@ -257,6 +256,6 @@ export default function Dashboard() {
           </div>
         </TabsContent>
       </Tabs>
-    </Win95Window>
+    </>
   );
 }

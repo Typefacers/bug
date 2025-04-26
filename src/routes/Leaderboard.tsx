@@ -1,4 +1,3 @@
-import Win95Window from "../components/Win95Window";
 import { useBugStore } from "../store";
 import { UserRow } from "../components/UserRow";
 
@@ -10,18 +9,14 @@ export default function Leaderboard() {
   const users = useBugStore((s) => s.users);
 
   return (
-    <Win95Window title="Bug Leaderboard">
-      <div className="mx-auto max-w-md space-y-6">
-        <h1 className="text-center text-3xl font-bold">Leaderboard</h1>
-
-        <div className={`bg-[#E0E0E0] ${raised}`}>
-          <div className="p-4 space-y-2">
-            {users.map((u, i) => (
-              <UserRow key={u.id} user={u} index={i} />
-            ))}
-          </div>
+    <div className="mx-auto max-w-md">
+      <div className={`bg-[#E0E0E0] ${raised}`}>
+        <div className="p-4 space-y-2">
+          {users.map((u, i) => (
+            <UserRow key={u.id} user={u} index={i} />
+          ))}
         </div>
       </div>
-    </Win95Window>
+    </div>
   );
 } 

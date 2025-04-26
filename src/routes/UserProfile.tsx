@@ -1,5 +1,4 @@
 import { useParams, Link } from "react-router-dom";
-import Win95Window from "../components/Win95Window";
 import { useBugStore } from "../store";
 
 /* 3-D border helper */
@@ -14,14 +13,11 @@ export default function UserProfile() {
 
   if (!user) {
     return (
-      <Win95Window title="User Not Found">
-        <div className="text-center space-y-4">
-          <h1 className="text-3xl font-bold">User Not Found</h1>
-          <Link to="/bounty-leaderboard" className="text-indigo-600 hover:underline">
-            Back to Leaderboard
-          </Link>
-        </div>
-      </Win95Window>
+      <div className="text-center space-y-4">
+        <Link to="/bounty-leaderboard" className="text-indigo-600 hover:underline">
+          Back to Leaderboard
+        </Link>
+      </div>
     );
   }
 
@@ -30,63 +26,59 @@ export default function UserProfile() {
   const totalBounty = squashedBugs.reduce((sum, bug) => sum + bug.bounty, 0);
 
   return (
-    <Win95Window title="User Profile">
-      <div className="mx-auto max-w-md space-y-6">
-        <h1 className="text-center text-3xl font-bold">User Profile</h1>
+    <div className="mx-auto max-w-md space-y-6">
+      <div className={`bg-[#E0E0E0] ${raised}`}>
+        <div className="p-6 space-y-6">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold">{user.name}</h2>
+            <p className="mt-1 text-lg font-mono text-emerald-700">
+              {user.score.toLocaleString()} points
+            </p>
+          </div>
 
-        <div className={`bg-[#E0E0E0] ${raised}`}>
-          <div className="p-6 space-y-6">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold">{user.name}</h2>
-              <p className="mt-1 text-lg font-mono text-emerald-700">
-                {user.score.toLocaleString()} points
-              </p>
+          <div className="space-y-2">
+            <div className="flex justify-between border-b pb-2">
+              <span>Total Bugs Squashed:</span>
+              <span className="font-medium">{user.bugsSquashed.length}</span>
             </div>
 
-            <div className="space-y-2">
-              <div className="flex justify-between border-b pb-2">
-                <span>Total Bugs Squashed:</span>
-                <span className="font-medium">{user.bugsSquashed.length}</span>
-              </div>
+            <div className="flex justify-between border-b pb-2">
+              <span>Total Bounty Collected:</span>
+              <span className="font-medium">{totalBounty.toLocaleString()}</span>
+            </div>
 
-              <div className="flex justify-between border-b pb-2">
-                <span>Total Bounty Collected:</span>
-                <span className="font-medium">{totalBounty.toLocaleString()}</span>
-              </div>
-
-              <div className="flex justify-between border-b pb-2">
-                <span>Rank:</span>
-                <span className="font-medium">
-                  #{users.findIndex((u) => u.id === userId) + 1}
-                </span>
-              </div>
+            <div className="flex justify-between border-b pb-2">
+              <span>Rank:</span>
+              <span className="font-medium">
+                #{users.findIndex((u) => u.id === userId) + 1}
+              </span>
             </div>
           </div>
-        </div>
-
-        {squashedBugs.length > 0 && (
-          <div className={`bg-[#E0E0E0] ${raised}`}>
-            <div className="p-6 space-y-2">
-              <h3 className="mb-3 text-xl font-semibold">Bugs Squashed</h3>
-              {squashedBugs.map((bug) => (
-                <div key={bug.id} className="rounded-lg border bg-white p-3 shadow-sm">
-                  <div className="font-medium">{bug.title}</div>
-                  <div className="mt-1 text-sm text-gray-600">{bug.description}</div>
-                  <div className="mt-2 text-right font-mono text-emerald-700">
-                    +{bug.bounty.toLocaleString()}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="text-center">
-          <Link to="/bounty-leaderboard" className="text-indigo-600 hover:underline">
-            Back to Leaderboard
-          </Link>
         </div>
       </div>
-    </Win95Window>
+
+      {squashedBugs.length > 0 && (
+        <div className={`bg-[#E0E0E0] ${raised}`}>
+          <div className="p-6 space-y-2">
+            <h3 className="mb-3 text-xl font-semibold">Bugs Squashed</h3>
+            {squashedBugs.map((bug) => (
+              <div key={bug.id} className="rounded-lg border bg-white p-3 shadow-sm">
+                <div className="font-medium">{bug.title}</div>
+                <div className="mt-1 text-sm text-gray-600">{bug.description}</div>
+                <div className="mt-2 text-right font-mono text-emerald-700">
+                  +{bug.bounty.toLocaleString()}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="text-center">
+        <Link to="/bounty-leaderboard" className="text-indigo-600 hover:underline">
+          Back to Leaderboard
+        </Link>
+      </div>
+    </div>
   );
 }

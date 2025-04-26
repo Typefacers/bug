@@ -10,10 +10,12 @@ interface BugCrawlerProps {
   x: number;
   y: number;
   bug: Bug;
+  containerWidth: number;
+  containerHeight: number;
 }
 
 const BugCrawler = (props: BugCrawlerProps) => {
-  const { x, y, bug } = props;
+  const { x, y, bug, containerWidth, containerHeight } = props;
   const [showModal, setShowModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
@@ -56,25 +58,27 @@ const BugCrawler = (props: BugCrawlerProps) => {
 
       // Bounce off edges
       let newDirection = { ...direction };
-      if (newX <= 0 || newX >= window.innerWidth - 40) {
+      const bugSize = 40; // Approximate size of bug image
+      
+      if (newX <= 0 || newX >= (containerWidth || window.innerWidth) - bugSize) {
         newDirection.x *= -1;
       }
-      if (newY <= 0 || newY >= window.innerHeight - 40) {
+      if (newY <= 0 || newY >= (containerHeight || window.innerHeight) - bugSize) {
         newDirection.y *= -1;
       }
 
       // Keep the bug within the viewport
-      const boundedX = Math.max(0, Math.min(window.innerWidth - 40, newX));
-      const boundedY = Math.max(0, Math.min(window.innerHeight - 40, newY));
+      const boundedX = Math.max(0, Math.min((containerWidth || window.innerWidth) - bugSize, newX));
+      const boundedY = Math.max(0, Math.min((containerHeight || window.innerHeight) - bugSize, newY));
 
       positionRef.current = { x: boundedX, y: boundedY };
       setPosition({ x: boundedX, y: boundedY });
       setDirection(newDirection);
     };
 
-    const interval = setInterval(moveBug, 16); // ~60fps
+    const interval = setInterval(moveBug, 16);
     return () => clearInterval(interval);
-  }, [direction]);
+  }, [direction, containerWidth, containerHeight, isAlive]);
 
   // Calculate rotation angle in degrees, adjusting for initial image orientation
   const rotation = Math.atan2(direction.y, direction.x) * (180 / Math.PI) - 90;
@@ -93,18 +97,19 @@ const BugCrawler = (props: BugCrawlerProps) => {
           },
         }}
         onClick={() => setShowModal(true)}
-        className="cursor-pointer"
+        className="cursor-pointer absolute"
+        style={{ zIndex: 5 }}
       >
         <motion.img
           src={bugImage}
           alt={bug.title}
-          className={clsx("w-10 h-10", !bug.active && "grayscale opacity-50")}
           onMouseEnter={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
             setHoverPosition({ x: rect.left, y: rect.top });
             setShowPreview(true);
           }}
           onMouseLeave={() => setShowPreview(false)}
+          className={clsx("w-10 h-10", !bug.active && "grayscale opacity-50")}
           style={{ rotate: rotation + 180 }}
         />
 
