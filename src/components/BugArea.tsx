@@ -15,7 +15,7 @@ const BugArea = (props: BugAreaProps) => {
 	}));
 
 	return (
-		<div className="absolute inset-0 border border-red-500 overflow-hidden">
+		<div className="absolute inset-0 overflow-hidden">
 			{bugs.map((bug, index) => (
 				<BugCrawler
 					key={bug.id}
