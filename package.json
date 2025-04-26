@@ -10,13 +10,21 @@
     "lint": "eslint src --ext ts,tsx"
   },
   "dependencies": {
+    "@radix-ui/react-navigation-menu": "^1.2.10",
+    "@radix-ui/react-slot": "^1.2.0",
+    "@radix-ui/react-switch": "^1.2.2",
     "@tailwindcss/vite": "^4.1.4",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^1.2.1",
     "framer-motion": "^10.16.4",
+    "lucide-react": "^0.503.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
+    "shadcn-ui": "^0.9.5",
+    "tailwind-merge": "^3.2.0",
     "tailwindcss": "^4.1.4",
+    "tailwindcss-animate": "^1.0.7",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
