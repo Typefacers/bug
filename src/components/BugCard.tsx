@@ -20,7 +20,12 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
       )}
       onClick={() => bug.active && squashBug(bug.id)}
     >
-      <h3 className="text-lg font-semibold">{bug.title}</h3>
+      <h3 className="flex items-center text-lg font-semibold">
+        <span role="img" aria-label={bug.active ? 'bug' : 'squashed'} className="mr-1">
+          {bug.active ? '🐞' : '✅'}
+        </span>
+        {bug.title}
+      </h3>
       <p className="mt-1 text-sm text-gray-600">{bug.description}</p>
       <span className="mt-3 inline-block rounded-full bg-emerald-600 px-2 py-1 text-xs font-mono text-white">
         +{bug.bounty}
