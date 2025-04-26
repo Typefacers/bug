@@ -7,7 +7,7 @@ export default function Bugs() {
   return (
     <main className="mx-auto max-w-xl p-6">
       <h1 className="mb-6 text-center text-3xl font-bold">Bug Bounty</h1>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-1">
         {bugs.map((bug) => (
           <BugCard key={bug.id} bug={bug} />
         ))}
@@ -17,4 +17,4 @@ export default function Bugs() {
       </p>
     </main>
   );
-} 
+}
