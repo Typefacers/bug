@@ -1,13 +1,13 @@
-import cockroachImg from "../assets/cockroach-min.png";
-import flyImg from "../assets/fly-min.png";
-import ladybugImg from "../assets/ladybug-min.png";
-import spiderImg from "../assets/spider-min.png";
-import antImg from "../assets/ant-min.png";
-import beetleImg from "../assets/beetle-min.png";
-import caterpillarImg from "../assets/caterpillar-min.png";
-import mothImg from "../assets/moth-min.png";
-import mosquitoImg from "../assets/mosquito-min.png";
-import brownBeetleImg from "../assets/brown-beetle-min.png";
+import cockroachImg from "../assets/cockroach.png";
+import flyImg from "../assets/fly.png";
+import ladybugImg from "../assets/ladybug.png";
+import spiderImg from "../assets/spider.png";
+import antImg from "../assets/ant.png";
+import beetleImg from "../assets/beetle.png";
+import caterpillarImg from "../assets/caterpillar.png";
+import mothImg from "../assets/moth.png";
+import mosquitoImg from "../assets/mosquito.png";
+import brownBeetleImg from "../assets/brown-beetle.png";
 
 // Array of all bug images
 const bugImages = [cockroachImg, flyImg, ladybugImg, spiderImg, antImg, beetleImg, caterpillarImg, mothImg, mosquitoImg, brownBeetleImg];
