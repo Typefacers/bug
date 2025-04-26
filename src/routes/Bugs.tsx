@@ -1,3 +1,4 @@
+import BugArea from '../components/BugArea';
 import { BugCard } from '../components/BugCard';
 import { useBugStore } from '../store';
 
@@ -8,9 +9,10 @@ export default function Bugs() {
     <main className="mx-auto max-w-lg p-6">
       <h1 className="mb-6 text-center text-3xl font-bold">Bug Bounty</h1>
       <div className="grid gap-4 sm:grid-cols-1">
-        {bugs.map((bug) => (
+        {/* {bugs.map((bug) => (
           <BugCard key={bug.id} bug={bug} />
-        ))}
+        ))} */}
+        <BugArea bugs={bugs} />
       </div>
       <p className="mt-6 text-center text-sm text-gray-500">
         Tap a card to squash the bug &amp; earn its bounty 👆
