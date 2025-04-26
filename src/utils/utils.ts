@@ -6,9 +6,11 @@ import antImg from "../assets/ant-min.png";
 import beetleImg from "../assets/beetle-min.png";
 import caterpillarImg from "../assets/caterpillar-min.png";
 import mothImg from "../assets/moth-min.png";
+import mosquitoImg from "../assets/mosquito-min.png";
+import brownBeetleImg from "../assets/brown-beetle-min.png";
 
 // Array of all bug images
-const bugImages = [cockroachImg, flyImg, ladybugImg, spiderImg, antImg, beetleImg, caterpillarImg, mothImg];
+const bugImages = [cockroachImg, flyImg, ladybugImg, spiderImg, antImg, beetleImg, caterpillarImg, mothImg, mosquitoImg, brownBeetleImg];
 
 // Get a random bug image based on bug id
 export const getBugImage = (id: string) => {
