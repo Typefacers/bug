@@ -54,17 +54,6 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
     >
       <div className="flex flex-col items-start">
         <div className="flex-1">
-          <h3 className="flex items-center text-lg font-semibold">
-            <span
-              role="img"
-              aria-label={bug.active ? "bug" : "squashed"}
-              className="mr-1"
-            >
-              {bug.active ? "🐞" : "✅"}
-            </span>
-            {bug.title}
-          </h3>
-          <p className="mt-1 text-sm text-gray-600">{bug.description}</p>
           <span className="mt-3 inline-block rounded-full bg-emerald-600 px-2 py-1 text-xs font-mono text-white">
             +{bug.bounty}
           </span>
@@ -72,8 +61,10 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
         <img
           src={bugImage}
           alt="Bug"
-          className="h-full w-full object-contain"
+          className="h-full w-full object-cover aspect-square mb-2"
         />
+        <h3 className="flex items-center text-lg font-semibold">{bug.title}</h3>
+        <p className="mt-1 text-sm text-gray-600">{bug.description}</p>
       </div>
     </motion.div>
   );
