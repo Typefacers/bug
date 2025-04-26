@@ -20,6 +20,13 @@ export function MainNav() {
 						</Link>
 					</NavigationMenuItem>
 					<NavigationMenuItem>
+						<Link to="/dashboard">
+							<Button variant={location.pathname === "/dashboard" ? "secondary" : "gray"} className="w-32">
+								📊 Dashboard
+							</Button>
+						</Link>
+					</NavigationMenuItem>
+					<NavigationMenuItem>
 						<Link to="/bounty-leaderboard">
 							<Button variant={location.pathname === "/bounty-leaderboard" ? "indigo" : "gray"} className="w-32">
 								🏆 Leaderboard
