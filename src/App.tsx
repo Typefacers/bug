@@ -23,7 +23,7 @@ function AppContent() {
 	const windowShadow = "shadow-[inset_-2px_-2px_0_0_rgba(0,0,0,0.55),inset_2px_2px_0_0_rgba(255,255,255,0.8)]";
 
 	return (
-		<div className="min-h-screen h-screen bg-[#008080] p-4 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
+		<div className="min-h-screen bg-[#008080] p-4 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
 			<div className="mx-auto max-w-7xl w-full flex-grow flex">
 				{/* Single Win95 Window */}
 				<div className={`w-full bg-[#C0C0C0] ${raised} ${windowShadow} flex flex-col`}>
