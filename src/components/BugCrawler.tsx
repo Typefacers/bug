@@ -124,7 +124,7 @@ const BugCrawler = (props: BugCrawlerProps) => {
           <div className="relative">
             <button
               onClick={() => setShowModal(false)}
-              className="absolute -top-2 -right-2 bg-white rounded-full p-1"
+              className="absolute -top-8 -right-8 bg-white rounded-full p-1 size-8"
             >
               ✕
             </button>
