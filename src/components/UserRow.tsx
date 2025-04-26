@@ -18,14 +18,14 @@ export const UserRow: React.FC<Props> = ({ user, index }) => {
 		<div
 			onClick={handleClick}
 			className={clsx(
-				"flex items-center justify-between rounded-lg border bg-white px-4 py-2 shadow-sm",
+				"flex items-center justify-between rounded-lg border bg-white px-4 py-3 shadow-sm",
 				index === 0 && "ring-2 ring-emerald-500",
 				"cursor-pointer hover:bg-gray-50 transition-colors"
 			)}
 		>
 			<span className="w-6 text-center font-mono text-sm">{index + 1}</span>
-			<span className="flex-1 truncate text-sm font-medium">{user.name}</span>
-			<span className="font-mono text-emerald-700">{user.score.toLocaleString()}</span>
+			<span className="flex-1 truncate text-sm font-medium mx-3 min-w-[180px]">{user.name}</span>
+			<span className="font-mono text-emerald-700 text-right min-w-[80px]">{user.score.toLocaleString()}</span>
 		</div>
 	);
 };
