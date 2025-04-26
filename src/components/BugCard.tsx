@@ -47,7 +47,7 @@ export const BugCard: React.FC<Props> = ({ bug }) => {
 					<p className="mt-1 text-sm text-gray-600">{bug.description}</p>
 					<span className="mt-3 inline-block rounded-full bg-emerald-600 px-2 py-1 text-xs font-mono text-white">+{bug.bounty}</span>
 				</div>
-				<img src={bugImage} alt="Bug" className="ml-2 h-full w-full object-contain" />
+				<img src={bugImage} alt="Bug" className="h-full w-full object-contain" />
 			</div>
 		</motion.div>
 	);
