@@ -8,13 +8,16 @@ import { Minus, Square, X as CloseIcon } from "lucide-react";
 function AppContent() {
 	const location = useLocation();
 	const getWindowTitle = () => {
-		switch(location.pathname) {
-			case '/': return 'Bug Bounty';
-			case '/dashboard': return 'Bug Dashboard';
-			case '/bounty-leaderboard': return 'Bug Bounty Leaderboard';
-			default: 
-				if (location.pathname.startsWith('/user/')) return 'User Profile';
-				return 'Bug Bounty';
+		switch (location.pathname) {
+			case "/":
+				return "Bug Basher";
+			case "/dashboard":
+				return "Bug Dashboard";
+			case "/bounty-leaderboard":
+				return "Bug Bounty Leaderboard";
+			default:
+				if (location.pathname.startsWith("/user/")) return "User Profile";
+				return "Bug Bounty";
 		}
 	};
 
@@ -53,22 +56,13 @@ function AppContent() {
 					<div className="bg-[#E0E0E0] p-3 flex flex-col flex-grow">
 						{/* Navigation Tabs */}
 						<div className="mb-4 bg-[#C0C0C0] flex gap-1 p-1 sticky top-0 z-10">
-							<Link 
-								to="/" 
-								className={`px-4 py-1 ${location.pathname === '/' ? 'bg-[#E0E0E0] font-semibold' : 'hover:bg-[#D0D0D0]'}`}
-							>
+							<Link to="/" className={`px-4 py-1 ${location.pathname === "/" ? "bg-[#E0E0E0] font-semibold" : "hover:bg-[#D0D0D0]"}`}>
 								🐛 Bugs
 							</Link>
-							<Link 
-								to="/dashboard" 
-								className={`px-4 py-1 ${location.pathname === '/dashboard' ? 'bg-[#E0E0E0] font-semibold' : 'hover:bg-[#D0D0D0]'}`}
-							>
+							<Link to="/dashboard" className={`px-4 py-1 ${location.pathname === "/dashboard" ? "bg-[#E0E0E0] font-semibold" : "hover:bg-[#D0D0D0]"}`}>
 								📊 Dashboard
 							</Link>
-							<Link 
-								to="/bounty-leaderboard" 
-								className={`px-4 py-1 ${location.pathname === '/bounty-leaderboard' ? 'bg-[#E0E0E0] font-semibold' : 'hover:bg-[#D0D0D0]'}`}
-							>
+							<Link to="/bounty-leaderboard" className={`px-4 py-1 ${location.pathname === "/bounty-leaderboard" ? "bg-[#E0E0E0] font-semibold" : "hover:bg-[#D0D0D0]"}`}>
 								🏆 Leaderboard
 							</Link>
 						</div>
