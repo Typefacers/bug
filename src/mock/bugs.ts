@@ -1,5 +1,12 @@
 import { Bug } from "../types/bug";
 
+// Helper to create dates in the past (days ago)
+const daysAgo = (days: number): string => {
+	const date = new Date();
+	date.setDate(date.getDate() - days);
+	return date.toISOString();
+};
+
 export const bugs: Bug[] = [
 	{
 		id: "b1",
@@ -7,6 +14,8 @@ export const bugs: Bug[] = [
 		description: 'Safari rage-quits the instant you press "Log In."  It just nopes out.',
 		bounty: 200,
 		active: true,
+		createdAt: daysAgo(6),
+		priority: "high",
 	},
 	{
 		id: "b2",
@@ -14,6 +23,8 @@ export const bugs: Bug[] = [
 		description: "Loader spins so long we suspect it entered a parallel universe.",
 		bounty: 80,
 		active: true,
+		createdAt: daysAgo(6),
+		priority: "medium",
 	},
 	{
 		id: "b3",
@@ -21,6 +32,8 @@ export const bugs: Bug[] = [
 		description: "Blasts a full-screen white flash before night-theme.  Vampires displeased.",
 		bounty: 50,
 		active: true,
+		createdAt: daysAgo(5),
+		priority: "low",
 	},
 	{
 		id: "b4",
@@ -28,6 +41,8 @@ export const bugs: Bug[] = [
 		description: "Sending a single 🐙 turns the whole chat thread into hieroglyphics.",
 		bounty: 120,
 		active: true,
+		createdAt: daysAgo(5),
+		priority: "medium",
 	},
 	{
 		id: "b5",
@@ -35,6 +50,8 @@ export const bugs: Bug[] = [
 		description: "Page politely scrolls to the top every 42 seconds (Douglas Adams approves).",
 		bounty: 70,
 		active: true,
+		createdAt: daysAgo(4),
+		priority: "low",
 	},
 	{
 		id: "b6",
@@ -42,6 +59,8 @@ export const bugs: Bug[] = [
 		description: "Disappears the moment DevTools is open, reappears when you glance away.",
 		bounty: 150,
 		active: true,
+		createdAt: daysAgo(3),
+		priority: "high",
 	},
 	{
 		id: "b7",
@@ -49,6 +68,8 @@ export const bugs: Bug[] = [
 		description: "Old avatar refuses to leave—cache is just vibing.",
 		bounty: 60,
 		active: true,
+		createdAt: daysAgo(2),
+		priority: "low",
 	},
 	{
 		id: "b8",
@@ -56,6 +77,8 @@ export const bugs: Bug[] = [
 		description: "Button makes a great escape by floating off-screen on hover.",
 		bounty: 90,
 		active: true,
+		createdAt: daysAgo(1),
+		priority: "medium",
 	},
 	{
 		id: "b9",
@@ -63,6 +86,8 @@ export const bugs: Bug[] = [
 		description: "Modal opens, close button missing… gamers call it a soft-lock.",
 		bounty: 110,
 		active: true,
+		createdAt: daysAgo(1),
+		priority: "medium",
 	},
 	{
 		id: "b10",
@@ -70,6 +95,8 @@ export const bugs: Bug[] = [
 		description: 'Users receive a push saying "…" at 3 AM.  Spooky season, every season.',
 		bounty: 130,
 		active: true,
+		createdAt: daysAgo(0),
+		priority: "high",
 	},
 	// Squashed bugs
 	{
@@ -78,6 +105,9 @@ export const bugs: Bug[] = [
 		description: "Input field exists but is completely transparent. Typing into the void.",
 		bounty: 45000,
 		active: false,
+		createdAt: daysAgo(10),
+		resolvedAt: daysAgo(8),
+		priority: "high",
 	},
 	{
 		id: "b12",
@@ -85,6 +115,9 @@ export const bugs: Bug[] = [
 		description: 'Form keeps changing "email" to "sacrifice" before submission.',
 		bounty: 28000,
 		active: false,
+		createdAt: daysAgo(9),
+		resolvedAt: daysAgo(7),
+		priority: "medium",
 	},
 	{
 		id: "b13",
@@ -92,6 +125,9 @@ export const bugs: Bug[] = [
 		description: "Navbar floats up and out of the viewport when hovered.",
 		bounty: 15000,
 		active: false,
+		createdAt: daysAgo(8),
+		resolvedAt: daysAgo(6),
+		priority: "low",
 	},
 	{
 		id: "b14",
@@ -99,6 +135,9 @@ export const bugs: Bug[] = [
 		description: "App deletes all browser cookies, including those from other sites.",
 		bounty: 8000,
 		active: false,
+		createdAt: daysAgo(7),
+		resolvedAt: daysAgo(5),
+		priority: "high",
 	},
 	{
 		id: "b15",
@@ -106,6 +145,9 @@ export const bugs: Bug[] = [
 		description: 'CPU usage spikes to 100% when user clicks "Save" button.',
 		bounty: 6580,
 		active: false,
+		createdAt: daysAgo(6),
+		resolvedAt: daysAgo(4),
+		priority: "medium",
 	},
 	{
 		id: "b16",
@@ -113,6 +155,9 @@ export const bugs: Bug[] = [
 		description: "Site autoplays heavy metal music at 3x volume, cannot be muted.",
 		bounty: 1800,
 		active: false,
+		createdAt: daysAgo(5),
+		resolvedAt: daysAgo(3),
+		priority: "high",
 	},
 	{
 		id: "b17",
@@ -120,6 +165,9 @@ export const bugs: Bug[] = [
 		description: "Password field reveals password in giant font across entire screen.",
 		bounty: 500,
 		active: false,
+		createdAt: daysAgo(4),
+		resolvedAt: daysAgo(2),
+		priority: "medium",
 	},
 	{
 		id: "b18",
@@ -127,5 +175,8 @@ export const bugs: Bug[] = [
 		description: "Scrolling down makes the page go up, and vice versa.",
 		bounty: 230,
 		active: false,
+		createdAt: daysAgo(3),
+		resolvedAt: daysAgo(1),
+		priority: "low",
 	},
 ];

@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import BugTrendsChart from "../components/BugTrendsChart";
 
 // Helper function to calculate total bounty
 const calculateTotalBounty = (bugs: Bug[]): number =>
@@ -319,6 +320,8 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       </div>
+
+      <BugTrendsChart bugs={bugs} />
 
       {/* Top row stats */}
       <div className="grid gap-6 md:grid-cols-2 mb-6">
