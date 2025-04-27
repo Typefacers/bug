@@ -9,7 +9,7 @@ interface BugAreaProps {
   bugs: Bug[];
 }
 
-const SPEED = 320; // px per second the aim moves when an input is held/tilted
+const SPEED = 320;      // px per second the aim moves when an input is held/tilted
 const DEAD_ZONE = 0.15; // ignore tiny stick deflections
 
 const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
@@ -54,11 +54,22 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
     aimRef.current = aim;
   }, [aim]);
 
-  const squashBug = useBugStore((s) => s.squashBug);
+  /* ---------- modal helpers ---------- */
   const inspectBug = useBugStore((s) => s.inspectBug);
+  const inspectedId = useBugStore((s) => s.inspectedId);
+  const inspectedIdRef = useRef(inspectedId);
+  useEffect(() => {
+    inspectedIdRef.current = inspectedId;
+  }, [inspectedId]);
 
   /* ---------- shooting helper ---------- */
   const shoot = () => {
+    // If a modal is open, close it first.
+    if (inspectedIdRef.current) {
+      inspectBug("");
+      return;
+    }
+
     const container = containerRef.current;
     if (!container) return;
 
