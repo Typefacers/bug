@@ -16,73 +16,88 @@ interface BugCrawlerProps {
 
 const BugCrawler = (props: BugCrawlerProps) => {
   const { x, y, bug, containerWidth, containerHeight } = props;
+
+  /* ---------- UI state ---------- */
   const [showModal, setShowModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
   const isAlive = bug.active;
 
+  /* ---------- position & direction ---------- */
   const [position, setPosition] = useState({ x, y });
   const positionRef = useRef({ x, y });
-  const [direction, setDirection] = useState(() => {
-    const angle = Math.random() * Math.PI * 2;
-    return {
-      x: Math.cos(angle),
-      y: Math.sin(angle),
-    };
+
+  const initialAngle = Math.random() * Math.PI * 2;
+  const [direction, setDirection] = useState({
+    x: Math.cos(initialAngle),
+    y: Math.sin(initialAngle),
   });
-  const lastTurnTime = useRef(Date.now());
+  const directionRef = useRef(direction);
 
-  const bugImage = getBugImage(bug.id);
+  /* ---------- timing & rAF refs ---------- */
+  const lastTurnTime = useRef<number>(Date.now());
+  const animationFrameRef = useRef<number>();
 
+  /* Keep directionRef in sync with state */
   useEffect(() => {
-    const moveBug = () => {
-      if (!isAlive) return;
+    directionRef.current = direction;
+  }, [direction]);
+
+  /* ---------- requestAnimationFrame loop ---------- */
+  useEffect(() => {
+    const step = () => {
+      if (!isAlive) return; // paused if bug is squashed
 
       const now = Date.now();
-      const timeSinceLastTurn = now - lastTurnTime.current;
+      const millisSinceTurn = now - lastTurnTime.current;
 
-      // Randomly change direction every 2-4 seconds
-      if (timeSinceLastTurn > 2000 + Math.random() * 2000) {
+      /* Randomly change direction every 2-4 s */
+      if (millisSinceTurn > 2000 + Math.random() * 2000) {
         const angle = Math.random() * Math.PI * 2;
-        setDirection({
-          x: Math.cos(angle),
-          y: Math.sin(angle),
-        });
+        const newDir = { x: Math.cos(angle), y: Math.sin(angle) };
+        directionRef.current = newDir;
+        setDirection(newDir);
         lastTurnTime.current = now;
       }
 
-      // Move in current direction
-      const speed = 0.5; // Slower speed
-      const newX = positionRef.current.x + direction.x * speed;
-      const newY = positionRef.current.y + direction.y * speed;
+      const speed = 0.6; // pixels per frame
+      const bugSize = 40;
 
-      // Bounce off edges
-      let newDirection = { ...direction };
-      const bugSize = 40; // Approximate size of bug image
-      
+      let newX = positionRef.current.x + directionRef.current.x * speed;
+      let newY = positionRef.current.y + directionRef.current.y * speed;
+
+      /* Bounce off walls */
       if (newX <= 0 || newX >= (containerWidth || window.innerWidth) - bugSize) {
-        newDirection.x *= -1;
+        directionRef.current = { ...directionRef.current, x: -directionRef.current.x };
+        newX = Math.max(0, Math.min((containerWidth || window.innerWidth) - bugSize, newX));
       }
       if (newY <= 0 || newY >= (containerHeight || window.innerHeight) - bugSize) {
-        newDirection.y *= -1;
+        directionRef.current = { ...directionRef.current, y: -directionRef.current.y };
+        newY = Math.max(0, Math.min((containerHeight || window.innerHeight) - bugSize, newY));
       }
 
-      // Keep the bug within the viewport
-      const boundedX = Math.max(0, Math.min((containerWidth || window.innerWidth) - bugSize, newX));
-      const boundedY = Math.max(0, Math.min((containerHeight || window.innerHeight) - bugSize, newY));
+      /* Commit new position */
+      positionRef.current = { x: newX, y: newY };
+      setPosition(positionRef.current);
 
-      positionRef.current = { x: boundedX, y: boundedY };
-      setPosition({ x: boundedX, y: boundedY });
-      setDirection(newDirection);
+      /* Queue next frame */
+      animationFrameRef.current = requestAnimationFrame(step);
     };
 
-    const interval = setInterval(moveBug, 16);
-    return () => clearInterval(interval);
-  }, [direction, containerWidth, containerHeight, isAlive]);
+    /* Kick off animation */
+    animationFrameRef.current = requestAnimationFrame(step);
 
-  // Calculate rotation angle in degrees, adjusting for initial image orientation
+    /* Cleanup */
+    return () => {
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+    };
+  }, [isAlive, containerWidth, containerHeight]);
+
+  /* ---------- derived rotation ---------- */
   const rotation = Math.atan2(direction.y, direction.x) * (180 / Math.PI) - 90;
+  const bugImage = getBugImage(bug.id);
 
+  /* ---------- render ---------- */
   return (
     <>
       <motion.div
@@ -90,11 +105,7 @@ const BugCrawler = (props: BugCrawlerProps) => {
         animate={{
           x: position.x,
           y: position.y,
-          transition: {
-            duration: 0.016,
-            ease: "linear",
-            type: "tween",
-          },
+          transition: { duration: 0.016, ease: "linear", type: "tween" },
         }}
         onClick={() => setShowModal(true)}
         className="cursor-pointer absolute"
@@ -117,10 +128,7 @@ const BugCrawler = (props: BugCrawlerProps) => {
           ReactDOM.createPortal(
             <div
               className="fixed z-50 pointer-events-none"
-              style={{
-                left: hoverPosition.x + 50,
-                top: hoverPosition.y,
-              }}
+              style={{ left: hoverPosition.x + 50, top: hoverPosition.y }}
             >
               <BugCard bug={bug} preview />
             </div>,
