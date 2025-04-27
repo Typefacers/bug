@@ -9,7 +9,8 @@ interface BugAreaProps {
   bugs: Bug[];
 }
 
-const SPEED = 320; // px per second the aim moves when a key is held
+const SPEED = 320; // px per second the aim moves when an input is held/tilted
+const DEAD_ZONE = 0.15; // ignore tiny stick deflections
 
 const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
   /* ---------- container size tracking ---------- */
@@ -53,33 +54,10 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
     aimRef.current = aim;
   }, [aim]);
 
-  /* ---------- mouse movement tracking ---------- */
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      // Clamp coordinates to container bounds
-      const clampedX = Math.max(0, Math.min(size.width, x));
-      const clampedY = Math.max(0, Math.min(size.height, y));
-      
-      setAim({ x: clampedX, y: clampedY });
-    };
-
-    container.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      container.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, [size.width, size.height]);
-
   const squashBug = useBugStore((s) => s.squashBug);
   const inspectBug = useBugStore((s) => s.inspectBug);
 
-  /* ---------- shoot logic ---------- */
+  /* ---------- shooting helper ---------- */
   const shoot = () => {
     const container = containerRef.current;
     if (!container) return;
@@ -94,8 +72,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
       while (node && node !== container) {
         const idAttr = node.getAttribute?.("data-bug-id");
         if (idAttr) {
-          // Simulate a click on the element to trigger the onClick handler
-          node.click();
+          node.click(); // triggers onClick in BugCrawler (opens modal or squashes)
           return;
         }
         node = node.parentElement;
@@ -103,7 +80,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
     }
   };
 
-  /* ---------- key press state ---------- */
+  /* ---------- keyboard press state ---------- */
   const pressedRef = useRef({
     up: false,
     down: false,
@@ -171,48 +148,126 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
     };
   }, []);
 
-  /* ---------- mouse click for shooting ---------- */
+  /* ---------- mouse movement & click ---------- */
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    const handleMouseClick = () => {
-      shoot();
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Clamp coordinates to container bounds
+      const clampedX = Math.max(0, Math.min(size.width, x));
+      const clampedY = Math.max(0, Math.min(size.height, y));
+
+      setAim({ x: clampedX, y: clampedY });
     };
 
-    container.addEventListener('click', handleMouseClick);
+    const handleMouseClick = () => shoot();
+
+    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("click", handleMouseClick);
     return () => {
-      container.removeEventListener('click', handleMouseClick);
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("click", handleMouseClick);
+    };
+  }, [size.width, size.height]);
+
+  /* ---------- gamepad handling ---------- */
+  const gamepadIndexRef = useRef<number | null>(null);
+  const prevFireRef = useRef(false);
+
+  // Attach listeners to detect connect/disconnect
+  useEffect(() => {
+    // If a gamepad is already connected before page load, store it
+    const scanExisting = () => {
+      const pads = navigator.getGamepads?.() ?? [];
+      for (const gp of pads) {
+        if (gp && gp.mapping === "standard") {
+          gamepadIndexRef.current = gp.index;
+          break;
+        }
+      }
+    };
+    scanExisting();
+
+    const connectHandler = (e: GamepadEvent) => {
+      if (e.gamepad.mapping === "standard" && gamepadIndexRef.current === null) {
+        gamepadIndexRef.current = e.gamepad.index;
+        // eslint-disable-next-line no-console
+        console.log("Gamepad connected:", e.gamepad.id);
+      }
+    };
+
+    const disconnectHandler = (e: GamepadEvent) => {
+      if (gamepadIndexRef.current === e.gamepad.index) {
+        gamepadIndexRef.current = null;
+        // eslint-disable-next-line no-console
+        console.log("Gamepad disconnected");
+      }
+    };
+
+    window.addEventListener("gamepadconnected", connectHandler);
+    window.addEventListener("gamepaddisconnected", disconnectHandler);
+    return () => {
+      window.removeEventListener("gamepadconnected", connectHandler);
+      window.removeEventListener("gamepaddisconnected", disconnectHandler);
     };
   }, []);
 
-  /* ---------- rAF loop for smooth movement ---------- */
+  /* ---------- rAF loop for smooth movement & gamepad polling ---------- */
   useEffect(() => {
     let last = performance.now();
     let rafId: number;
 
     const step = (now: number) => {
-      const dt = (now - last) / 1000; // seconds
+      const dt = (now - last) / 1000; // seconds since last frame
       last = now;
 
+      /* ----- accumulate direction from keyboard ----- */
+      let dx = 0;
+      let dy = 0;
       const { up, down, left, right } = pressedRef.current;
-      if (up || down || left || right) {
-        setAim((prev) => {
-          let { x, y } = prev;
-          const dx =
-            (right ? 1 : 0) - (left ? 1 : 0); // +1 right, -1 left, 0 none
-          const dy =
-            (down ? 1 : 0) - (up ? 1 : 0); // +1 down, -1 up, 0 none
+      dx += (right ? 1 : 0) - (left ? 1 : 0); // +1 right, -1 left
+      dy += (down ? 1 : 0) - (up ? 1 : 0);   // +1 down,  -1 up
 
-          if (dx || dy) {
-            const mag = Math.hypot(dx, dy) || 1;
-            x += (dx / mag) * SPEED * dt;
-            y += (dy / mag) * SPEED * dt;
-            // clamp
-            x = Math.max(0, Math.min(size.width, x));
-            y = Math.max(0, Math.min(size.height, y));
+      /* ----- incorporate gamepad axes ----- */
+      const gpIndex = gamepadIndexRef.current;
+      if (gpIndex !== null && navigator.getGamepads) {
+        const gp = navigator.getGamepads()[gpIndex];
+        if (gp && gp.connected) {
+          const rawX = gp.axes[0] ?? 0; // left stick X
+          const rawY = gp.axes[1] ?? 0; // left stick Y
+
+          // Dead-zone filtering
+          const padX = Math.abs(rawX) < DEAD_ZONE ? 0 : rawX;
+          const padY = Math.abs(rawY) < DEAD_ZONE ? 0 : rawY;
+
+          dx += padX;
+          dy += padY;
+
+          /* ----- handle fire buttons (✕ / R2) ----- */
+          const fire =
+            (gp.buttons[0]?.pressed ?? false) || (gp.buttons[7]?.pressed ?? false);
+
+          if (fire && !prevFireRef.current) {
+            shoot();
           }
+          prevFireRef.current = fire;
+        }
+      }
 
+      /* ----- move aim with combined inputs ----- */
+      if (dx || dy) {
+        const mag = Math.hypot(dx, dy) || 1; // normalise
+        setAim((prev) => {
+          let x = prev.x + (dx / mag) * SPEED * dt;
+          let y = prev.y + (dy / mag) * SPEED * dt;
+          // clamp
+          x = Math.max(0, Math.min(size.width, x));
+          y = Math.max(0, Math.min(size.height, y));
           aimRef.current = { x, y };
           return aimRef.current;
         });
