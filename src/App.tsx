@@ -3,6 +3,7 @@ import Bugs from "./routes/Bugs";
 import Leaderboard from "./routes/Leaderboard";
 import UserProfile from "./routes/UserProfile";
 import Dashboard from "./routes/Dashboard";
+import NewBug from "./routes/NewBug";
 import { Minus, Square, X as CloseIcon } from "lucide-react";
 
 function AppContent() {
@@ -15,6 +16,8 @@ function AppContent() {
 				return "Bug Dashboard";
 			case "/bounty-leaderboard":
 				return "Bug Bounty Leaderboard";
+			case "/bug/new":
+				return "File a Bug";
 			default:
 				if (location.pathname.startsWith("/user/")) return "User Profile";
 				return "Bug Bounty";
@@ -74,6 +77,7 @@ function AppContent() {
 								<Route path="/dashboard" element={<Dashboard />} />
 								<Route path="/bounty-leaderboard" element={<Leaderboard />} />
 								<Route path="/user/:userId" element={<UserProfile />} />
+								<Route path="/bug/new" element={<NewBug />} />
 							</Routes>
 						</div>
 					</div>
