@@ -102,7 +102,7 @@ export default function NewBug() {
 								<SelectTrigger className={`${raised} bg-[#C0C0C0]`}>
 									<SelectValue placeholder="Select priority" />
 								</SelectTrigger>
-								<SelectContent className={`${raised} bg-[#C0C0C0]`}>
+								<SelectContent className={`${raised} bg-[#C0C0C0] w-full`}>
 									<SelectItem value="high">high</SelectItem>
 									<SelectItem value="medium">medium</SelectItem>
 									<SelectItem value="low">low</SelectItem>

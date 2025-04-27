@@ -33,7 +33,7 @@ export function SelectTrigger({ className, children }: SelectTriggerProps) {
 	}
 
 	return (
-		<div className="relative">
+		<div className="relative w-full">
 			<div onClick={() => context.setOpen(!context.open)} className={`flex h-10 w-full items-center justify-between rounded-md px-3 py-2 text-sm cursor-pointer ${className}`}>
 				{children}
 			</div>
@@ -70,7 +70,11 @@ export function SelectContent({ className, children }: SelectContentProps) {
 		return null;
 	}
 
-	return <div className={`absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md py-1 ${className}`}>{children}</div>;
+	return (
+		<div className="relative">
+			<div className={`absolute z-50 mt-1 left-0 right-0 max-h-60 overflow-auto rounded-md py-1 ${className}`}>{children}</div>
+		</div>
+	);
 }
 
 export interface SelectItemProps<T extends string> {
