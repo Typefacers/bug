@@ -56,6 +56,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
 
   /* ---------- modal helpers ---------- */
   const inspectBug = useBugStore((s) => s.inspectBug);
+  const squashBug  = useBugStore((s) => s.squashBug);
   const inspectedId = useBugStore((s) => s.inspectedId);
   const inspectedIdRef = useRef(inspectedId);
   useEffect(() => {
@@ -64,8 +65,9 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
 
   /* ---------- shooting helper ---------- */
   const shoot = () => {
-    // If a modal is open, close it first.
+    // If a modal is open, squash that bug and close the modal.
     if (inspectedIdRef.current) {
+      squashBug(inspectedIdRef.current);
       inspectBug("");
       return;
     }
