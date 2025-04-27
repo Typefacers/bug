@@ -275,7 +275,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full overflow-hidden select-none cursor-none"
+      className="relative w-full h-full overflow-hidden select-none"
     >
       {/* Aim cross-hair */}
       <AimCursor x={aim.x} y={aim.y} />
