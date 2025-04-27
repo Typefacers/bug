@@ -6,6 +6,10 @@ import { BugCard } from "./BugCard";
 import ReactDOM from "react-dom";
 import clsx from "clsx";
 
+/** -----------------------------------------------------------------------
+ *  BugCrawler — makes a bug sprite wander around the screen with a
+ *  lightweight 3-D “cardboard cut-out” effect (no real 3-D models required)
+ *  ---------------------------------------------------------------------- */
 interface BugCrawlerProps {
   x: number;
   y: number;
@@ -14,19 +18,25 @@ interface BugCrawlerProps {
   containerHeight: number;
 }
 
-const BugCrawler = (props: BugCrawlerProps) => {
-  const { x, y, bug, containerWidth, containerHeight } = props;
-
+const BugCrawler: React.FC<BugCrawlerProps> = ({
+  x,
+  y,
+  bug,
+  containerWidth,
+  containerHeight,
+}) => {
   /* ---------- UI state ---------- */
   const [showModal, setShowModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
+
   const isAlive = bug.active;
 
   /* ---------- position & direction ---------- */
   const [position, setPosition] = useState({ x, y });
   const positionRef = useRef({ x, y });
 
+  // pick a random heading to start
   const initialAngle = Math.random() * Math.PI * 2;
   const [direction, setDirection] = useState({
     x: Math.cos(initialAngle),
@@ -38,21 +48,21 @@ const BugCrawler = (props: BugCrawlerProps) => {
   const lastTurnTime = useRef<number>(Date.now());
   const animationFrameRef = useRef<number>();
 
-  /* Keep directionRef in sync with state */
+  /* Keep refs in sync with state so rAF loop sees updates */
   useEffect(() => {
     directionRef.current = direction;
   }, [direction]);
 
-  /* ---------- requestAnimationFrame loop ---------- */
+  /* ---------- main rAF loop ---------- */
   useEffect(() => {
     const step = () => {
-      if (!isAlive) return; // paused if bug is squashed
+      if (!isAlive) return; // pause when bug is squashed
 
       const now = Date.now();
-      const millisSinceTurn = now - lastTurnTime.current;
+      const sinceLastTurn = now - lastTurnTime.current;
 
-      /* Randomly change direction every 2-4 s */
-      if (millisSinceTurn > 2000 + Math.random() * 2000) {
+      /* change heading every 2–4 s */
+      if (sinceLastTurn > 2000 + Math.random() * 2000) {
         const angle = Math.random() * Math.PI * 2;
         const newDir = { x: Math.cos(angle), y: Math.sin(angle) };
         directionRef.current = newDir;
@@ -60,46 +70,62 @@ const BugCrawler = (props: BugCrawlerProps) => {
         lastTurnTime.current = now;
       }
 
-      const speed = 0.6; // pixels per frame
+      const speed = 0.6; // px / frame  (~37 px/s @ 60 fps)
       const bugSize = 40;
 
       let newX = positionRef.current.x + directionRef.current.x * speed;
       let newY = positionRef.current.y + directionRef.current.y * speed;
 
-      /* Bounce off walls */
-      if (newX <= 0 || newX >= (containerWidth || window.innerWidth) - bugSize) {
-        directionRef.current = { ...directionRef.current, x: -directionRef.current.x };
-        newX = Math.max(0, Math.min((containerWidth || window.innerWidth) - bugSize, newX));
+      /* bounce off container walls */
+      const maxX = (containerWidth || window.innerWidth) - bugSize;
+      const maxY = (containerHeight || window.innerHeight) - bugSize;
+
+      if (newX <= 0 || newX >= maxX) {
+        directionRef.current = {
+          ...directionRef.current,
+          x: -directionRef.current.x,
+        };
+        newX = Math.max(0, Math.min(maxX, newX));
       }
-      if (newY <= 0 || newY >= (containerHeight || window.innerHeight) - bugSize) {
-        directionRef.current = { ...directionRef.current, y: -directionRef.current.y };
-        newY = Math.max(0, Math.min((containerHeight || window.innerHeight) - bugSize, newY));
+      if (newY <= 0 || newY >= maxY) {
+        directionRef.current = {
+          ...directionRef.current,
+          y: -directionRef.current.y,
+        };
+        newY = Math.max(0, Math.min(maxY, newY));
       }
 
-      /* Commit new position */
       positionRef.current = { x: newX, y: newY };
       setPosition(positionRef.current);
 
-      /* Queue next frame */
+      /* queue next frame */
       animationFrameRef.current = requestAnimationFrame(step);
     };
 
-    /* Kick off animation */
+    /* kick off loop */
     animationFrameRef.current = requestAnimationFrame(step);
 
-    /* Cleanup */
+    /* cleanup on unmount */
     return () => {
       if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
     };
   }, [isAlive, containerWidth, containerHeight]);
 
-  /* ---------- derived rotation ---------- */
-  const rotation = Math.atan2(direction.y, direction.x) * (180 / Math.PI) - 90;
+  /* ---------- derived transforms ---------- */
+  const heading2D = Math.atan2(direction.y, direction.x) * (180 / Math.PI) - 90;
+
+  // tilt the card left/right based on x-direction, max ±25°
+  const tiltY = direction.x * 25;
+
+  // constant slight pitch so bug face looks up from the “floor”
+  const tiltX = 18;
+
   const bugImage = getBugImage(bug.id);
 
   /* ---------- render ---------- */
   return (
     <>
+      {/* perspective wrapper gives our sprite depth 👇 */}
       <motion.div
         initial={{ x, y }}
         animate={{
@@ -108,8 +134,13 @@ const BugCrawler = (props: BugCrawlerProps) => {
           transition: { duration: 0.016, ease: "linear", type: "tween" },
         }}
         onClick={() => setShowModal(true)}
-        className="cursor-pointer absolute"
-        style={{ zIndex: 5 }}
+        className="absolute cursor-pointer"
+        style={{
+          perspective: 600, // sets vanishing-point distance
+          width: "40px",
+          height: "40px",
+          zIndex: 5,
+        }}
       >
         <motion.img
           src={bugImage}
@@ -120,11 +151,26 @@ const BugCrawler = (props: BugCrawlerProps) => {
             setShowPreview(true);
           }}
           onMouseLeave={() => setShowPreview(false)}
-          className={clsx("w-10 h-10", !bug.active && "grayscale opacity-50")}
-          style={{ rotate: rotation + 180 }}
+          className={clsx(
+            "w-full h-full will-change-transform",
+            !bug.active && "grayscale opacity-50"
+          )}
+          /* 3-D transform magic happens here */
+          animate={{
+            rotate: heading2D + 180, // keep previous rotation logic
+            rotateY: tiltY,
+            rotateX: tiltX,
+            transition: { duration: 0.016, ease: "linear" },
+          }}
+          style={{
+            transformStyle: "preserve-3d",
+            filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.35))",
+          }}
         />
 
-        {showPreview && isAlive &&
+        {/* hover “card” preview ------------------------------------------------ */}
+        {showPreview &&
+          isAlive &&
           ReactDOM.createPortal(
             <div
               className="fixed z-50 pointer-events-none"
@@ -136,12 +182,13 @@ const BugCrawler = (props: BugCrawlerProps) => {
           )}
       </motion.div>
 
+      {/* click-through modal --------------------------------------------------- */}
       {showModal && isAlive && (
-        <div className="fixed inset-0 bg-black bg-opacity-20 flex items-center justify-center z-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
           <div className="relative">
             <button
               onClick={() => setShowModal(false)}
-              className="absolute -top-8 -right-8 bg-white rounded-full p-1 size-8"
+              className="absolute -top-8 -right-8 size-8 rounded-full bg-white p-1"
             >
               ✕
             </button>
