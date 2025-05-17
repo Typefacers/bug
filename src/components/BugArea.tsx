@@ -178,13 +178,9 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
       setAim({ x: clampedX, y: clampedY });
     };
 
-    const handleMouseClick = () => shoot();
-
     container.addEventListener("mousemove", handleMouseMove);
-    container.addEventListener("click", handleMouseClick);
     return () => {
       container.removeEventListener("mousemove", handleMouseMove);
-      container.removeEventListener("click", handleMouseClick);
     };
   }, [size.width, size.height]);
 
@@ -343,6 +339,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
   return (
     <div
       ref={containerRef}
+      onClick={shoot}
       className="relative w-full h-full overflow-hidden select-none cursor-none"
     >
       {/* Aim cross-hair */}
