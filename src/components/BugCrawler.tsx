@@ -72,7 +72,7 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
         lastTurn.current     = now;
       }
 
-      const speed    = 0.6; // px / frame  ≈37 px/s @60fps
+      const speed    = 0.6; // px / frame ≈36 px/s @60fps (not 37)
       const bugSize  = 40;
       let newX       = positionRef.current.x + directionRef.current.x * speed;
       let newY       = positionRef.current.y + directionRef.current.y * speed;
