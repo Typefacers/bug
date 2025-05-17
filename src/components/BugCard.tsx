@@ -27,7 +27,10 @@ export const BugCard: React.FC<Props> = ({ bug, preview = false }) => {
         !bug.active && "opacity-40 grayscale",
         preview ? "w-[200px]" : "w-80"
       )}
-      onClick={() => bug.active && squashBug(bug.id)}
+      onClick={(e) => {
+        e.stopPropagation();
+        if (bug.active) squashBug(bug.id);
+      }}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}

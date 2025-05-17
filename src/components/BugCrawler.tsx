@@ -163,10 +163,24 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
 
       {/* modal on click */}
       {showModal && isAlive && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
-          <div className="relative">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/20"
+          onClick={(e) => {
+            e.stopPropagation();
+            inspectBug("");
+          }}
+        >
+          <div
+            className="relative"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <button
-              onClick={() => inspectBug("")}
+              onClick={(e) => {
+                e.stopPropagation();
+                inspectBug("");
+              }}
               className="absolute -top-8 -right-8 size-8 rounded-full bg-white p-1"
             >
               ✕
