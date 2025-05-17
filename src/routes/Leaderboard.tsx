@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useBugStore } from "../store";
 
 /** Map bounty → tier name */
@@ -163,7 +164,12 @@ export default function Leaderboard() {
                       className="w-6 h-6 border border-gray-700"
                     />
                   )}
-                  <span>{u.name}</span>
+                  <Link
+                    to={`/user/${u.id}`}
+                    className="text-indigo-600 hover:underline"
+                  >
+                    {u.name}
+                  </Link>
                 </td>
                 <td className="py-1 px-3 text-right tabular-nums">
                   {bugCount}
