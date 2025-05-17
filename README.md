@@ -43,7 +43,7 @@ npm test          # run unit tests
 src/
   assets/        static images for bugs and avatars
   components/    reusable UI and game components
-  context/       React contexts such as ThemeProvider
+  context/       React contexts
   mock/          sample bug and user data
   routes/        route components (Bugs, Dashboard, Leaderboard, ...)
   store.ts       zustand store for global state
