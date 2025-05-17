@@ -4,19 +4,19 @@ import { users as mockUsers } from "./mock/users";
 import { Bug } from "./types/bug";
 
 interface State {
-	bugs: Bug[];
-	users: any[]; // Using any for now since we don't have the exact User type
-	activeUserId: string;
-	inspectedId: string | null;
-	inspectBug: (id: string) => void;
-	squashBug: (id: string) => void;
+        bugs: Bug[];
+        users: any[]; // Using any for now since we don't have the exact User type
+        activeUserId: number;
+        inspectedId: string | null;
+        inspectBug: (id: string) => void;
+        squashBug: (id: string) => void;
 }
 
 export const useBugStore = create<State>((set) => ({
 	bugs: mockBugs,
-	users: mockUsers.sort((a, b) => b.bounty - a.bounty),
-	activeUserId: "u1", // assume first user is the current hacker
-	inspectedId: null,
+        users: mockUsers.sort((a, b) => b.bounty - a.bounty),
+        activeUserId: 1, // assume first user is the current hacker
+        inspectedId: null,
 	inspectBug: (id) => set({ inspectedId: id }),
 	squashBug: (id) =>
 		set((state) => {
