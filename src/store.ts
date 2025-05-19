@@ -10,6 +10,7 @@ interface State {
         inspectedId: string | null;
         inspectBug: (id: string) => void;
         squashBug: (id: string) => void;
+        addBug: (bug: Bug) => void;
 }
 
 export const useBugStore = create<State>((set) => ({
@@ -17,10 +18,10 @@ export const useBugStore = create<State>((set) => ({
         users: mockUsers.sort((a, b) => b.bounty - a.bounty),
         activeUserId: 1, // assume first user is the current hacker
         inspectedId: null,
-	inspectBug: (id) => set({ inspectedId: id }),
-	squashBug: (id) =>
-		set((state) => {
-			// mark bug inactive + award bounty
+        inspectBug: (id) => set({ inspectedId: id }),
+        squashBug: (id) =>
+                set((state) => {
+                        // mark bug inactive + award bounty
 			let updatedBug: Bug | undefined;
 			const bugs = state.bugs.map((b) => {
 				if (b.id === id && b.active) {
@@ -44,6 +45,10 @@ export const useBugStore = create<State>((set) => ({
 						.sort((a, b) => (b.score || b.bounty) - (a.score || a.bounty))
 				: state.users;
 
-			return { bugs, users, inspectedId: null };
-		}),
+                        return { bugs, users, inspectedId: null };
+                }),
+        addBug: (bug) =>
+                set((state) => ({
+                        bugs: [...state.bugs, bug],
+                })),
 }));
