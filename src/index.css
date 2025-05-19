@@ -1,7 +1,2 @@
 @import "tailwindcss";
 
-@layer base {
-	.d {
-		border: 1px dashed red;
-	}
-}
