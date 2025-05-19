@@ -188,4 +188,4 @@ export default function Leaderboard() {
       </table>
     </div>
   );
-} 
+}
