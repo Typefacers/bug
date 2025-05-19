@@ -175,9 +175,9 @@ export default function Dashboard() {
 							<CardDescription>Available + paid bounties</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300 }} className="text-3xl font-bold">
-								${stats.totalBounty}
-							</motion.div>
+                                                        <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300 }} className="text-3xl font-bold">
+                                                                {stats.totalBounty}
+                                                        </motion.div>
 						</CardContent>
 					</Card>
 				</motion.div>
