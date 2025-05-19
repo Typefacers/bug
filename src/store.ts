@@ -2,14 +2,15 @@ import { create } from "zustand";
 import { bugs as mockBugs } from "./mock/bugs";
 import { users as mockUsers } from "./mock/users";
 import { Bug } from "./types/bug";
+import { User } from "./types/user";
 
 interface State {
-        bugs: Bug[];
-        users: any[]; // Using any for now since we don't have the exact User type
-        activeUserId: number;
-        inspectedId: string | null;
-        inspectBug: (id: string) => void;
-        squashBug: (id: string) => void;
+	bugs: Bug[];
+	users: User[];
+	activeUserId: number;
+	inspectedId: string | null;
+	inspectBug: (id: string) => void;
+	squashBug: (id: string) => void;
 }
 
 export const useBugStore = create<State>((set) => ({
