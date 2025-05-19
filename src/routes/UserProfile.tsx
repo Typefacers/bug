@@ -9,7 +9,8 @@ export default function UserProfile() {
   const { userId } = useParams<{ userId: string }>();
   const { users, bugs } = useBugStore();
 
-  const user = users.find((u) => u.id === userId);
+  const id = Number(userId);
+  const user = users.find((u) => u.id === id);
 
   if (!user) {
     return (
@@ -50,7 +51,7 @@ export default function UserProfile() {
             <div className="flex justify-between border-b pb-2">
               <span>Rank:</span>
               <span className="font-medium">
-                #{users.findIndex((u) => u.id === userId) + 1}
+                #{users.findIndex((u) => u.id === id) + 1}
               </span>
             </div>
           </div>
