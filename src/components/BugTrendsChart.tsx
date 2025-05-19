@@ -95,15 +95,15 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
       .range([innerHeight, 0]);
 
     // ----- Axes -----------------------------------------------------------
-    g.append("g")
-      .attr("transform", `translate(0,${innerHeight})`)
-      .call(
-        d3
-          .axisBottom(x)
-          .ticks(6)
-          .tickSizeOuter(0)
-          .tickFormat(d3.timeFormat("%b %d") as any),
-      );
+      g.append("g")
+        .attr("transform", `translate(0,${innerHeight})`)
+        .call(
+          d3
+            .axisBottom(x)
+            .ticks(6)
+            .tickSizeOuter(0)
+            .tickFormat(d3.timeFormat("%b %d") as (d: Date) => string),
+        );
 
     g.append("g")
       .call(d3.axisLeft(y).ticks(5).tickSizeOuter(0))
