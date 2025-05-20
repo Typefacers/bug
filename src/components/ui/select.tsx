@@ -7,7 +7,9 @@ interface SelectContextType<T extends string> {
 	setOpen: (open: boolean) => void;
 }
 
-const SelectContext = React.createContext<SelectContextType<any> | undefined>(undefined);
+const SelectContext = React.createContext<SelectContextType<string> | undefined>(
+  undefined,
+);
 
 export interface SelectProps<T extends string> {
 	value: T;
@@ -16,9 +18,20 @@ export interface SelectProps<T extends string> {
 }
 
 export function Select<T extends string>({ children, value, onValueChange }: SelectProps<T>) {
-	const [open, setOpen] = React.useState(false);
+        const [open, setOpen] = React.useState(false);
 
-	return <SelectContext.Provider value={{ value, onValueChange, open, setOpen }}>{children}</SelectContext.Provider>;
+        return (
+                <SelectContext.Provider
+                        value={{
+                                value,
+                                onValueChange: onValueChange as unknown as (value: string) => void,
+                                open,
+                                setOpen,
+                        }}
+                >
+                        {children}
+                </SelectContext.Provider>
+        );
 }
 
 export interface SelectTriggerProps {

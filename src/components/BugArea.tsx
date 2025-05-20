@@ -205,16 +205,12 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
     const connectHandler = (e: GamepadEvent) => {
       if (e.gamepad.mapping === "standard" && gamepadIndexRef.current === null) {
         gamepadIndexRef.current = e.gamepad.index;
-        // eslint-disable-next-line no-console
-        console.log("Gamepad connected:", e.gamepad.id);
       }
     };
 
     const disconnectHandler = (e: GamepadEvent) => {
       if (gamepadIndexRef.current === e.gamepad.index) {
         gamepadIndexRef.current = null;
-        // eslint-disable-next-line no-console
-        console.log("Gamepad disconnected");
       }
     };
 

@@ -160,7 +160,7 @@ export default function Leaderboard() {
                   {u.avatar && (
                     <img
                       src={u.avatar}
-                      alt=""
+                      alt={`${u.name} avatar`}
                       className="w-6 h-6 border border-gray-700"
                     />
                   )}
@@ -188,4 +188,4 @@ export default function Leaderboard() {
       </table>
     </div>
   );
-} 
+}

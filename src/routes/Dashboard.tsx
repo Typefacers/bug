@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import BugTrendsChart from "../components/BugTrendsChart";
 import { useNavigate } from "react-router-dom";
+import { raised as raisedBase, sunken as sunkenBase } from "../utils/win95";
 
 // Helper function to calculate total bounty
 const calculateTotalBounty = (bugs: Bug[]): number => bugs.reduce((total, bug) => total + bug.bounty, 0);
@@ -98,9 +99,9 @@ export default function Dashboard() {
 		return () => clearTimeout(timer);
 	}, [bugs, activeBugs, squashedBugs, activeBountyTotal, squashedBountyTotal]);
 
-	/* 3-D border helpers with enhanced styles */
-	const raised = "border-2 border-t-white border-l-white border-b-gray-500 border-r-gray-500 shadow-sm";
-	const sunken = "border-2 border-t-gray-500 border-l-gray-500 border-b-white border-r-white shadow-inner";
+        /* 3-D border helpers with enhanced styles */
+        const raised = `${raisedBase} shadow-sm`;
+        const sunken = `${sunkenBase} shadow-inner`;
 
 	return (
 		<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
@@ -175,9 +176,9 @@ export default function Dashboard() {
 							<CardDescription>Available + paid bounties</CardDescription>
 						</CardHeader>
 						<CardContent>
-							<motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300 }} className="text-3xl font-bold">
-								${stats.totalBounty}
-							</motion.div>
+                                                        <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300 }} className="text-3xl font-bold">
+                                                                {stats.totalBounty}
+                                                        </motion.div>
 						</CardContent>
 					</Card>
 				</motion.div>

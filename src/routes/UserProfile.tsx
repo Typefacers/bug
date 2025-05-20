@@ -1,15 +1,13 @@
 import { useParams, Link } from "react-router-dom";
 import { useBugStore } from "../store";
-
-/* 3-D border helper */
-const raised =
-  "border-2 border-t-white border-l-white border-b-gray-500 border-r-gray-500";
+import { raised } from "../utils/win95";
 
 export default function UserProfile() {
   const { userId } = useParams<{ userId: string }>();
   const { users, bugs } = useBugStore();
 
-  const user = users.find((u) => u.id === userId);
+  const id = Number(userId);
+  const user = users.find((u) => u.id === id);
 
   if (!user) {
     return (
@@ -22,7 +20,9 @@ export default function UserProfile() {
   }
 
   /* Derived data */
-  const squashedBugs = bugs.filter((bug) => user.bugsSquashed.includes(bug.id));
+  const squashedBugs = user.bugsSquashed
+    ? bugs.filter((bug) => user.bugsSquashed!.includes(bug.id))
+    : [];
   const totalBounty = squashedBugs.reduce((sum, bug) => sum + bug.bounty, 0);
 
   return (
@@ -32,14 +32,14 @@ export default function UserProfile() {
           <div className="text-center">
             <h2 className="text-2xl font-bold">{user.name}</h2>
             <p className="mt-1 text-lg font-mono text-emerald-700">
-              {user.score.toLocaleString()} points
+              {(user.score ?? 0).toLocaleString()} points
             </p>
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between border-b pb-2">
               <span>Total Bugs Squashed:</span>
-              <span className="font-medium">{user.bugsSquashed.length}</span>
+              <span className="font-medium">{user.bugsSquashed?.length ?? 0}</span>
             </div>
 
             <div className="flex justify-between border-b pb-2">
@@ -50,7 +50,7 @@ export default function UserProfile() {
             <div className="flex justify-between border-b pb-2">
               <span>Rank:</span>
               <span className="font-medium">
-                #{users.findIndex((u) => u.id === userId) + 1}
+                #{users.findIndex((u) => u.id === id) + 1}
               </span>
             </div>
           </div>

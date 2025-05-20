@@ -2,49 +2,52 @@ import { create } from "zustand";
 import { bugs as mockBugs } from "./mock/bugs";
 import { users as mockUsers } from "./mock/users";
 import { Bug } from "./types/bug";
-import { User } from "./types/user";
+import type { User } from "./types/user";
 
 interface State {
-	bugs: Bug[];
-	users: User[];
-	activeUserId: number;
-	inspectedId: string | null;
-	inspectBug: (id: string) => void;
-	squashBug: (id: string) => void;
+        bugs: Bug[];
+        users: User[];
+        activeUserId: number;
+        inspectedId: string | null;
+        inspectBug: (id: string) => void;
+        squashBug: (id: string) => void;
+        addBug: (bug: Bug) => void;
 }
 
 export const useBugStore = create<State>((set) => ({
-	bugs: mockBugs,
+        bugs: mockBugs,
         users: mockUsers.sort((a, b) => b.bounty - a.bounty),
         activeUserId: 1, // assume first user is the current hacker
         inspectedId: null,
-	inspectBug: (id) => set({ inspectedId: id }),
-	squashBug: (id) =>
-		set((state) => {
-			// mark bug inactive + award bounty
-			let updatedBug: Bug | undefined;
-			const bugs = state.bugs.map((b) => {
-				if (b.id === id && b.active) {
-					updatedBug = { ...b, active: false };
-					return updatedBug;
-				}
-				return b;
-			});
+        addBug: (bug) =>
+                set((state) => ({ bugs: [...state.bugs, bug] })),
+        inspectBug: (id) => set({ inspectedId: id }),
+        squashBug: (id) =>
+                set((state) => {
+				// mark bug inactive + award bounty
+				let updatedBug: Bug | undefined;
+				const bugs = state.bugs.map((b) => {
+					if (b.id === id && b.active) {
+						updatedBug = { ...b, active: false };
+						return updatedBug;
+					}
+					return b;
+				});
 
-			const users = updatedBug
-				? state.users
-						.map((u) =>
-							u.id === state.activeUserId
-								? {
-										...u,
-										score: (u.score || 0) + (updatedBug!.bounty || 0),
-										bugsSquashed: [...(u.bugsSquashed || []), updatedBug!.id],
-								  }
-								: u
-						)
-						.sort((a, b) => (b.score || b.bounty) - (a.score || a.bounty))
-				: state.users;
+				const users = updatedBug
+					? state.users
+							.map((u) =>
+								u.id === state.activeUserId
+									? {
+											...u,
+											score: (u.score || 0) + (updatedBug!.bounty || 0),
+											bugsSquashed: [...(u.bugsSquashed || []), updatedBug!.id],
+									  }
+									: u
+							)
+							.sort((a, b) => (b.score || b.bounty) - (a.score || a.bounty))
+					: state.users;
 
-			return { bugs, users, inspectedId: null };
-		}),
+				return { bugs, users, inspectedId: null };
+			}),
 }));

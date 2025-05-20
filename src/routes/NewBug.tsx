@@ -10,6 +10,7 @@ import { useBugStore } from "../store";
 import { v4 as uuidv4 } from "uuid";
 import { motion } from "framer-motion";
 import { Bug } from "../types/bug";
+import { raised as raisedBase, sunken as sunkenBase } from "../utils/win95";
 
 export default function NewBug() {
 	const navigate = useNavigate();
@@ -19,16 +20,7 @@ export default function NewBug() {
 	const [priority, setPriority] = useState<"high" | "medium" | "low">("medium");
 	const [error, setError] = useState("");
 
-	// Get bugs from store
-	const bugs = useBugStore((s) => s.bugs);
-	const setBugs = useBugStore((s) => {
-		// Return a function that updates the bugs array
-		return (newBug: Bug) => {
-			// Since we don't have an explicit addBug method in the store,
-			// we can use this approach to update the bugs array directly
-			useBugStore.setState({ bugs: [...bugs, newBug] });
-		};
-	});
+        const addBug = useBugStore((s) => s.addBug);
 
 	const createBug = () => {
 		if (!title) {
@@ -51,13 +43,13 @@ export default function NewBug() {
 			createdAt: new Date().toISOString(),
 		};
 
-		setBugs(newBug);
-		navigate("/dashboard");
-	};
+                addBug(newBug);
+                navigate("/dashboard");
+        };
 
-	/* 3-D border helpers with enhanced styles */
-	const raised = "border-2 border-t-white border-l-white border-b-gray-500 border-r-gray-500 shadow-sm";
-	const sunken = "border-2 border-t-gray-500 border-l-gray-500 border-b-white border-r-white shadow-inner";
+        /* 3-D border helpers with enhanced styles */
+        const raised = `${raisedBase} shadow-sm`;
+        const sunken = `${sunkenBase} shadow-inner`;
 
 	return (
 		<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="max-w-2xl mx-auto">
