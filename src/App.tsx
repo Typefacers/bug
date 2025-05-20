@@ -5,6 +5,7 @@ import UserProfile from "./routes/UserProfile";
 import Dashboard from "./routes/Dashboard";
 import NewBug from "./routes/NewBug";
 import { Minus, Square, X as CloseIcon } from "lucide-react";
+import { raised, windowShadow } from "./utils/win95";
 
 function AppContent() {
 	const location = useLocation();
@@ -22,13 +23,9 @@ function AppContent() {
 				if (location.pathname.startsWith("/user/")) return "User Profile";
 				return "Bug Bounty";
 		}
-	};
+        };
 
-	/* 3-D border helpers */
-	const raised = "border-2 border-t-white border-l-white border-b-gray-500 border-r-gray-500";
-	const windowShadow = "shadow-[inset_-2px_-2px_0_0_rgba(0,0,0,0.55),inset_2px_2px_0_0_rgba(255,255,255,0.8)]";
-
-	return (
+       return (
 		<div className="min-h-screen bg-[#008080] p-4 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
 			<div className="mx-auto max-w-7xl w-full flex-grow flex">
 				{/* Single Win95 Window */}

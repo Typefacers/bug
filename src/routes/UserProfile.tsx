@@ -1,9 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useBugStore } from "../store";
-
-/* 3-D border helper */
-const raised =
-  "border-2 border-t-white border-l-white border-b-gray-500 border-r-gray-500";
+import { raised } from "../utils/win95";
 
 export default function UserProfile() {
   const { userId } = useParams<{ userId: string }>();
