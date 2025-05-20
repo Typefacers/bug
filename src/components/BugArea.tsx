@@ -64,7 +64,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
   }, [inspectedId]);
 
   /* ---------- shooting helper ---------- */
-  const shoot = () => {
+  const shoot = useCallback(() => {
     // If a modal is open, squash that bug and close the modal.
     if (inspectedIdRef.current) {
       squashBug(inspectedIdRef.current);
@@ -91,7 +91,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
         node = node.parentElement;
       }
     }
-  };
+  }, [squashBug, inspectBug]);
 
   /* ---------- keyboard press state ---------- */
   const pressedRef = useRef({
@@ -159,7 +159,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
     };
-  }, []);
+  }, [shoot]);
 
   /* ---------- mouse movement & click ---------- */
   useEffect(() => {
@@ -283,7 +283,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
 
     rafId = requestAnimationFrame(step);
     return () => cancelAnimationFrame(rafId);
-  }, [size.width, size.height]);
+  }, [size.width, size.height, shoot]);
 
   /* ---------- one-time shuffle of bug order ---------- */
   const [order, setOrder] = useState<number[]>([]);
@@ -294,7 +294,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
       [indices[i], indices[j]] = [indices[j], indices[i]];
     }
     setOrder(indices);
-  }, [bugs.length]);
+  }, [bugs]);
 
   /* ---------- deterministic jitter helpers ---------- */
   const rand = (seed: number) => {
