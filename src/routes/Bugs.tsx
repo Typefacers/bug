@@ -1,8 +1,6 @@
 import BugArea from "../components/BugArea";
 import { useBugStore } from "../store";
-
-/* 3-D border helper (for the bug card area) */
-const raised = "border-2 border-t-white border-l-white border-b-gray-500 border-r-gray-500";
+import { raised } from "../utils/win95";
 
 export default function Bugs() {
 	const bugs = useBugStore((s) => s.bugs);
