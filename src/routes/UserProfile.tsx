@@ -23,7 +23,9 @@ export default function UserProfile() {
   }
 
   /* Derived data */
-  const squashedBugs = bugs.filter((bug) => user.bugsSquashed.includes(bug.id));
+  const squashedBugs = user.bugsSquashed
+    ? bugs.filter((bug) => user.bugsSquashed!.includes(bug.id))
+    : [];
   const totalBounty = squashedBugs.reduce((sum, bug) => sum + bug.bounty, 0);
 
   return (
@@ -33,14 +35,14 @@ export default function UserProfile() {
           <div className="text-center">
             <h2 className="text-2xl font-bold">{user.name}</h2>
             <p className="mt-1 text-lg font-mono text-emerald-700">
-              {user.score.toLocaleString()} points
+              {(user.score ?? 0).toLocaleString()} points
             </p>
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between border-b pb-2">
               <span>Total Bugs Squashed:</span>
-              <span className="font-medium">{user.bugsSquashed.length}</span>
+              <span className="font-medium">{user.bugsSquashed?.length ?? 0}</span>
             </div>
 
             <div className="flex justify-between border-b pb-2">
