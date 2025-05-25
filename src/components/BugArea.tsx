@@ -90,7 +90,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
         node = node.parentElement;
       }
     }
-  }, [squashBug, inspectBug]);
+  }, [squashBug]);
 
   /* ---------- keyboard press state ---------- */
   const pressedRef = useRef({
