@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { Bug } from "../types/bug";
 import BugCrawler from "./BugCrawler";
 import AimCursor from "./AimCursor";
