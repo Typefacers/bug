@@ -9,7 +9,7 @@ interface BugAreaProps {
   bugs: Bug[];
 }
 
-const SPEED = 320;      // px per second the aim moves when an input is held/tilted
+const SPEED = 320; // px per second the aim moves when an input is held/tilted
 const DEAD_ZONE = 0.15; // ignore tiny stick deflections
 
 const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
@@ -56,7 +56,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
 
   /* ---------- modal helpers ---------- */
   const inspectBug = useBugStore((s) => s.inspectBug);
-  const squashBug  = useBugStore((s) => s.squashBug);
+  const squashBug = useBugStore((s) => s.squashBug);
   const inspectedId = useBugStore((s) => s.inspectedId);
   const inspectedIdRef = useRef(inspectedId);
   useEffect(() => {
@@ -68,7 +68,6 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
     // If a modal is open, squash that bug and close the modal.
     if (inspectedIdRef.current) {
       squashBug(inspectedIdRef.current);
-      inspectBug(null);
       return;
     }
 
@@ -203,7 +202,10 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
     scanExisting();
 
     const connectHandler = (e: GamepadEvent) => {
-      if (e.gamepad.mapping === "standard" && gamepadIndexRef.current === null) {
+      if (
+        e.gamepad.mapping === "standard" &&
+        gamepadIndexRef.current === null
+      ) {
         gamepadIndexRef.current = e.gamepad.index;
       }
     };
@@ -236,7 +238,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
       let dy = 0;
       const { up, down, left, right } = pressedRef.current;
       dx += (right ? 1 : 0) - (left ? 1 : 0); // +1 right, -1 left
-      dy += (down ? 1 : 0) - (up ? 1 : 0);   // +1 down,  -1 up
+      dy += (down ? 1 : 0) - (up ? 1 : 0); // +1 down,  -1 up
 
       /* ----- incorporate gamepad axes ----- */
       const gpIndex = gamepadIndexRef.current;
@@ -255,7 +257,8 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
 
           /* ----- handle fire buttons (✕ / R2) ----- */
           const fire =
-            (gp.buttons[0]?.pressed ?? false) || (gp.buttons[7]?.pressed ?? false);
+            (gp.buttons[0]?.pressed ?? false) ||
+            (gp.buttons[7]?.pressed ?? false);
 
           if (fire && !prevFireRef.current) {
             shoot();
