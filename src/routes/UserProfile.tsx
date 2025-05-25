@@ -1,29 +1,32 @@
-import { useParams, Link } from "react-router-dom";
-import { useBugStore } from "../store";
-import { raised } from "../utils/win95";
+import { useParams, Link } from 'react-router-dom'
+import { useBugStore } from '../store'
+import { raised } from '../utils/win95'
 
 export default function UserProfile() {
-  const { userId } = useParams<{ userId: string }>();
-  const { users, bugs } = useBugStore();
+  const { userId } = useParams<{ userId: string }>()
+  const { users, bugs } = useBugStore()
 
-  const id = Number(userId);
-  const user = users.find((u) => u.id === id);
+  const id = Number(userId)
+  const user = users.find(u => u.id === id)
 
   if (!user) {
     return (
       <div className="text-center space-y-4">
-        <Link to="/bounty-leaderboard" className="text-indigo-600 hover:underline">
+        <Link
+          to="/bounty-leaderboard"
+          className="text-indigo-600 hover:underline"
+        >
           Back to Leaderboard
         </Link>
       </div>
-    );
+    )
   }
 
   /* Derived data */
   const squashedBugs = user.bugsSquashed
-    ? bugs.filter((bug) => user.bugsSquashed!.includes(bug.id))
-    : [];
-  const totalBounty = squashedBugs.reduce((sum, bug) => sum + bug.bounty, 0);
+    ? bugs.filter(bug => user.bugsSquashed!.includes(bug.id))
+    : []
+  const totalBounty = squashedBugs.reduce((sum, bug) => sum + bug.bounty, 0)
 
   return (
     <div className="mx-auto max-w-md space-y-6">
@@ -39,18 +42,22 @@ export default function UserProfile() {
           <div className="space-y-2">
             <div className="flex justify-between border-b pb-2">
               <span>Total Bugs Squashed:</span>
-              <span className="font-medium">{user.bugsSquashed?.length ?? 0}</span>
+              <span className="font-medium">
+                {user.bugsSquashed?.length ?? 0}
+              </span>
             </div>
 
             <div className="flex justify-between border-b pb-2">
               <span>Total Bounty Collected:</span>
-              <span className="font-medium">{totalBounty.toLocaleString()}</span>
+              <span className="font-medium">
+                {totalBounty.toLocaleString()}
+              </span>
             </div>
 
             <div className="flex justify-between border-b pb-2">
               <span>Rank:</span>
               <span className="font-medium">
-                #{users.findIndex((u) => u.id === id) + 1}
+                #{users.findIndex(u => u.id === id) + 1}
               </span>
             </div>
           </div>
@@ -61,10 +68,15 @@ export default function UserProfile() {
         <div className={`bg-[#E0E0E0] ${raised}`}>
           <div className="p-6 space-y-2">
             <h3 className="mb-3 text-xl font-semibold">Bugs Squashed</h3>
-            {squashedBugs.map((bug) => (
-              <div key={bug.id} className="rounded-lg border bg-white p-3 shadow-sm">
+            {squashedBugs.map(bug => (
+              <div
+                key={bug.id}
+                className="rounded-lg border bg-white p-3 shadow-sm"
+              >
                 <div className="font-medium">{bug.title}</div>
-                <div className="mt-1 text-sm text-gray-600">{bug.description}</div>
+                <div className="mt-1 text-sm text-gray-600">
+                  {bug.description}
+                </div>
                 <div className="mt-2 text-right font-mono text-emerald-700">
                   +{bug.bounty.toLocaleString()}
                 </div>
@@ -75,10 +87,13 @@ export default function UserProfile() {
       )}
 
       <div className="text-center">
-        <Link to="/bounty-leaderboard" className="text-indigo-600 hover:underline">
+        <Link
+          to="/bounty-leaderboard"
+          className="text-indigo-600 hover:underline"
+        >
           Back to Leaderboard
         </Link>
       </div>
     </div>
-  );
+  )
 }

@@ -1,35 +1,35 @@
-import { motion } from "framer-motion";
-import { Bug } from "../types/bug";
-import { useBugStore } from "../store";
-import clsx from "clsx";
-import { getBugImage } from "../utils/utils";
+import { motion } from 'framer-motion'
+import { Bug } from '../types/bug'
+import { useBugStore } from '../store'
+import clsx from 'clsx'
+import { getBugImage } from '../utils/utils'
 
 interface Props {
-  bug: Bug;
+  bug: Bug
   /** Compact hover preview when true */
-  preview?: boolean;
+  preview?: boolean
 }
 
 export const BugCard: React.FC<Props> = ({ bug, preview = false }) => {
-  const squashBug = useBugStore((s) => s.squashBug);
-  const bugImage = getBugImage(bug.id);
+  const squashBug = useBugStore(s => s.squashBug)
+  const bugImage = getBugImage(bug.id)
 
   return (
     <motion.div
       whileHover={{
         y: -8,
         boxShadow:
-          "0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.05)",
+          '0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.05)',
       }}
       whileTap={{ scale: 0.95, rotate: -3 }}
       className={clsx(
-        "relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition",
-        !bug.active && "opacity-40 grayscale",
-        preview ? "w-[200px]" : "w-80"
+        'relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition',
+        !bug.active && 'opacity-40 grayscale',
+        preview ? 'w-[200px]' : 'w-80'
       )}
-      onClick={(e) => {
-        e.stopPropagation();
-        if (bug.active) squashBug(bug.id);
+      onClick={e => {
+        e.stopPropagation()
+        if (bug.active) squashBug(bug.id)
       }}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -41,13 +41,13 @@ export const BugCard: React.FC<Props> = ({ bug, preview = false }) => {
           className="absolute inset-0 bg-red-500/20 flex items-center justify-center z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
+          transition={{ duration: 1.2, ease: 'easeInOut' }}
         >
           <motion.span
             className="text-4xl font-extrabold text-white px-4 py-1 tracking-wider uppercase font-serif drop-shadow-[0_0_8px_rgba(255,0,0,0.7)]"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, delay: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 1.5, delay: 0.3, ease: 'easeInOut' }}
           >
             SQUASHED
           </motion.span>
@@ -75,5 +75,5 @@ export const BugCard: React.FC<Props> = ({ bug, preview = false }) => {
         <p className="mb-4 mx-4 text-sm text-gray-600">{bug.description}</p>
       </div>
     </motion.div>
-  );
-};
+  )
+}
