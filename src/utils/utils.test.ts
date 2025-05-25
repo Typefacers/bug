@@ -8,3 +8,12 @@ test('getBugImage returns consistent image for identical bug IDs', () => {
   const second = getBugImage(id);
   assert.strictEqual(second, first);
 });
+
+
+test('getBugImage returns different images for distinct bug IDs', () => {
+  const id1 = 'bug-id-1';
+  const id2 = 'bug-id-2';
+  const img1 = getBugImage(id1);
+  const img2 = getBugImage(id2);
+  assert.notStrictEqual(img1, img2);
+});
