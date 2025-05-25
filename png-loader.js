@@ -1,8 +1,11 @@
 export async function resolve(specifier, context, defaultResolve) {
   if (specifier.endsWith('.png')) {
-    return { url: new URL(specifier, context.parentURL).href, shortCircuit: true };
+    return {
+      url: new URL(specifier, context.parentURL).href,
+      shortCircuit: true,
+    }
   }
-  return defaultResolve(specifier, context, defaultResolve);
+  return defaultResolve(specifier, context, defaultResolve)
 }
 
 export async function load(url, context, defaultLoad) {
@@ -11,7 +14,7 @@ export async function load(url, context, defaultLoad) {
       format: 'module',
       source: `export default ${JSON.stringify(url)};`,
       shortCircuit: true,
-    };
+    }
   }
-  return defaultLoad(url, context, defaultLoad);
+  return defaultLoad(url, context, defaultLoad)
 }

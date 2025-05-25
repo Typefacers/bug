@@ -9,6 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint --cache .",
     "lint:ci": "eslint . --max-warnings=0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "node --experimental-transform-types --loader ./png-loader.js --test"
   },
   "dependencies": {
@@ -44,6 +46,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "globals": "^13.24.0",
+    "prettier": "^3.5.3",
     "typescript": "^5.4.3",
     "typescript-eslint": "^7.0.0",
     "vite": "^6.3.5"
