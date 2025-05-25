@@ -55,7 +55,6 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
   }, [aim]);
 
   /* ---------- modal helpers ---------- */
-  const inspectBug = useBugStore((s) => s.inspectBug);
   const squashBug = useBugStore((s) => s.squashBug);
   const inspectedId = useBugStore((s) => s.inspectedId);
   const inspectedIdRef = useRef(inspectedId);

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation, Link } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
+import { useBugStore } from "./store";
 
 const Bugs = lazy(() => import("./routes/Bugs"));
 const Leaderboard = lazy(() => import("./routes/Leaderboard"));
@@ -11,6 +12,12 @@ import { raised, windowShadow } from "./utils/win95";
 
 function AppContent() {
 	const location = useLocation();
+	const { startAutomaticSystems, stopAutomaticSystems } = useBugStore();
+
+	useEffect(() => {
+		startAutomaticSystems();
+		return () => stopAutomaticSystems();
+	}, [startAutomaticSystems, stopAutomaticSystems]);
 	const getWindowTitle = () => {
 		switch (location.pathname) {
 			case "/":
