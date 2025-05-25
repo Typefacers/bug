@@ -68,7 +68,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
     // If a modal is open, squash that bug and close the modal.
     if (inspectedIdRef.current) {
       squashBug(inspectedIdRef.current);
-      inspectBug("");
+      inspectBug(null);
       return;
     }
 

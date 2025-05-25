@@ -167,7 +167,7 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/20"
           onClick={(e) => {
             e.stopPropagation();
-            inspectBug("");
+            inspectBug(null);
           }}
         >
           <div
@@ -179,7 +179,7 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                inspectBug("");
+                inspectBug(null);
               }}
               className="absolute -top-8 -right-8 size-8 rounded-full bg-white p-1"
             >
