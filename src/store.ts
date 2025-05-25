@@ -20,9 +20,9 @@ interface State {
 // Configuration for automatic systems
 const CONFIG = {
   CLEANUP_DELAY: 10000, // Remove squashed bugs after 10 seconds
-  RESPAWN_INTERVAL: 15000, // Spawn new bug every 15 seconds
-  MAX_ACTIVE_BUGS: 12, // Maximum number of active bugs
-  MIN_ACTIVE_BUGS: 5, // Minimum number of active bugs to maintain
+  RESPAWN_INTERVAL: 3000, // Spawn new bug every 3 seconds
+  MAX_ACTIVE_BUGS: 15, // Maximum number of active bugs
+  MIN_ACTIVE_BUGS: 8, // Minimum number of active bugs to maintain
 }
 
 // Bug titles and descriptions for random generation
@@ -142,7 +142,18 @@ export const useBugStore = create<State>((set, get) => ({
         const state = get()
         const activeBugs = state.bugs.filter(b => b.active)
 
-        if (activeBugs.length < CONFIG.MAX_ACTIVE_BUGS) {
+        // Determine how many bugs to spawn
+        let bugsToSpawn = 0
+        if (activeBugs.length < CONFIG.MIN_ACTIVE_BUGS) {
+          // Spawn multiple bugs to reach minimum quickly
+          bugsToSpawn = CONFIG.MIN_ACTIVE_BUGS - activeBugs.length
+        } else if (activeBugs.length < CONFIG.MAX_ACTIVE_BUGS) {
+          // Spawn one bug if below max
+          bugsToSpawn = 1
+        }
+
+        // Create the bugs
+        for (let i = 0; i < bugsToSpawn; i++) {
           const template =
             BUG_TEMPLATES[Math.floor(Math.random() * BUG_TEMPLATES.length)]
           const priorities: ('high' | 'medium' | 'low')[] = [
