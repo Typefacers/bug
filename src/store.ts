@@ -3,6 +3,7 @@ import { bugs as mockBugs } from "./mock/bugs";
 import { users as mockUsers } from "./mock/users";
 import { Bug } from "./types/bug";
 import type { User } from "./types/user";
+import { v4 as uuidv4 } from "uuid";
 
 interface State {
         bugs: Bug[];
@@ -12,6 +13,8 @@ interface State {
         inspectBug: (id: string | null) => void;
         squashBug: (id: string) => void;
         addBug: (bug: Bug) => void;
+        respawnBug: () => void;
+        cleanDeadBugs: () => void;
 }
 
 export const useBugStore = create<State>((set) => ({
@@ -50,4 +53,21 @@ export const useBugStore = create<State>((set) => ({
 
                     return { bugs, users, inspectedId: null };
                 }),
+        respawnBug: () =>
+                set((state) => {
+                        const id = uuidv4().substring(0, 8);
+                        const priorities = ["high", "medium", "low"] as const;
+                        const bug: Bug = {
+                                id,
+                                title: `Respawned Bug ${id}`,
+                                description: "A newly respawned bug.",
+                                bounty: 50 + Math.floor(Math.random() * 100),
+                                active: true,
+                                priority: priorities[Math.floor(Math.random() * priorities.length)],
+                                createdAt: new Date().toISOString(),
+                        };
+                        return { bugs: [...state.bugs, bug] };
+                }),
+        cleanDeadBugs: () =>
+                set((state) => ({ bugs: state.bugs.filter((b) => b.active) })),
 }));

@@ -65,7 +65,9 @@ const ActivityTimeline = ({ bugs }: { bugs: Bug[] }) => {
 };
 
 export default function Dashboard() {
-	const bugs = useBugStore((s) => s.bugs);
+        const bugs = useBugStore((s) => s.bugs);
+        const respawnBug = useBugStore((s) => s.respawnBug);
+        const cleanDeadBugs = useBugStore((s) => s.cleanDeadBugs);
 	const activeBugs = bugs.filter((bug) => bug.active);
 	const squashedBugs = bugs.filter((bug) => !bug.active);
 	const [stats, setStats] = useState({
@@ -82,9 +84,9 @@ export default function Dashboard() {
 	// Find highest bounty bug
 	const highestBountyBug = bugs.length > 0 ? bugs.reduce((prev, current) => (prev.bounty > current.bounty ? prev : current)) : null;
 
-	// Animated counter effect
-	useEffect(() => {
-		const resolutionRate = bugs.length > 0 ? (squashedBugs.length / bugs.length) * 100 : 0;
+        // Animated counter effect
+        useEffect(() => {
+                const resolutionRate = bugs.length > 0 ? (squashedBugs.length / bugs.length) * 100 : 0;
 
 		// Animate the counters from 0 to their actual values
 		const timer = setTimeout(() => {
@@ -96,8 +98,18 @@ export default function Dashboard() {
 			});
 		}, 300);
 
-		return () => clearTimeout(timer);
-	}, [bugs, activeBugs, squashedBugs, activeBountyTotal, squashedBountyTotal]);
+                return () => clearTimeout(timer);
+        }, [bugs, activeBugs, squashedBugs, activeBountyTotal, squashedBountyTotal]);
+
+        // automatically respawn and clean bugs
+        useEffect(() => {
+                const spawnId = setInterval(respawnBug, 15000);
+                const cleanId = setInterval(cleanDeadBugs, 15000);
+                return () => {
+                        clearInterval(spawnId);
+                        clearInterval(cleanId);
+                };
+        }, [respawnBug, cleanDeadBugs]);
 
         /* 3-D border helpers with enhanced styles */
         const raised = `${raisedBase} shadow-sm`;
@@ -119,13 +131,13 @@ export default function Dashboard() {
 					</p>
 				</motion.div>
 
-				<motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
-					<Button className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black flex items-center gap-2`} onClick={() => navigate("/bug/new")}>
-						<BugIcon className="h-4 w-4" />
-						File a Bug
-					</Button>
-				</motion.div>
-			</div>
+                                <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
+                                        <Button className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black flex items-center gap-2`} onClick={() => navigate("/bug/new")}>
+                                                <BugIcon className="h-4 w-4" />
+                                                File a Bug
+                                        </Button>
+                                </motion.div>
+                        </div>
 
 			{/* Top stats */}
 			<div className="grid gap-6 md:grid-cols-3 mb-6">
