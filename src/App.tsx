@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route, useLocation, Link } from "react-router-dom";
-import Bugs from "./routes/Bugs";
-import Leaderboard from "./routes/Leaderboard";
-import UserProfile from "./routes/UserProfile";
-import Dashboard from "./routes/Dashboard";
-import NewBug from "./routes/NewBug";
+import { Suspense, lazy } from "react";
+
+const Bugs = lazy(() => import("./routes/Bugs"));
+const Leaderboard = lazy(() => import("./routes/Leaderboard"));
+const UserProfile = lazy(() => import("./routes/UserProfile"));
+const Dashboard = lazy(() => import("./routes/Dashboard"));
+const NewBug = lazy(() => import("./routes/NewBug"));
 import { Minus, Square, X as CloseIcon } from "lucide-react";
 import { raised, windowShadow } from "./utils/win95";
 
@@ -67,16 +69,18 @@ function AppContent() {
 							</Link>
 						</div>
 
-						{/* Route Content */}
-						<div className="p-2 overflow-auto relative z-0 flex-grow flex flex-col">
-							<Routes>
-								<Route path="/" element={<Bugs />} />
-								<Route path="/dashboard" element={<Dashboard />} />
-								<Route path="/bounty-leaderboard" element={<Leaderboard />} />
-								<Route path="/user/:userId" element={<UserProfile />} />
-								<Route path="/bug/new" element={<NewBug />} />
-							</Routes>
-						</div>
+                                                {/* Route Content */}
+                                                <div className="p-2 overflow-auto relative z-0 flex-grow flex flex-col">
+                                                        <Suspense fallback={<div className="p-4">Loading...</div>}>
+                                                                <Routes>
+                                                                        <Route path="/" element={<Bugs />} />
+                                                                        <Route path="/dashboard" element={<Dashboard />} />
+                                                                        <Route path="/bounty-leaderboard" element={<Leaderboard />} />
+                                                                        <Route path="/user/:userId" element={<UserProfile />} />
+                                                                        <Route path="/bug/new" element={<NewBug />} />
+                                                                </Routes>
+                                                        </Suspense>
+                                                </div>
 					</div>
 				</div>
 			</div>
