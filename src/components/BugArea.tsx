@@ -335,7 +335,11 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
   return (
     <div
       ref={containerRef}
-      onClick={shoot}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          shoot();
+        }
+      }}
       className="relative w-full h-full overflow-hidden select-none cursor-none"
     >
       {/* Aim cross-hair */}

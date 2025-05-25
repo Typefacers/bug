@@ -118,7 +118,9 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
           y: position.y,
           transition: { duration: 0.016, ease: "linear", type: "tween" },
         }}
-        onClick={() => inspectBug(bug.id)}
+        onClick={() => {
+          inspectBug(bug.id);
+        }}
         className="absolute cursor-pointer"
         style={{ perspective: 600, width: 40, height: 40, zIndex: 5 }}
       >
