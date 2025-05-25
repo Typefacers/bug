@@ -9,7 +9,7 @@ interface State {
         users: User[];
         activeUserId: number;
         inspectedId: string | null;
-        inspectBug: (id: string) => void;
+        inspectBug: (id: string | null) => void;
         squashBug: (id: string) => void;
         addBug: (bug: Bug) => void;
 }
