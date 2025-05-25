@@ -25,7 +25,7 @@
 [![Bundle Size](https://img.shields.io/badge/Bundle%20Size-Astronomical-purple?style=flat-square&logo=webpack)](vite.config.ts)
 [![Dependencies](https://img.shields.io/badge/Dependencies-18%20Too%20Many-orange?style=flat-square&logo=npm)](package.json)
 [![Technical Debt](https://img.shields.io/badge/Technical%20Debt-Overwhelming-crimson?style=flat-square&logo=debt)](src/)
-[![Bugs Fixed](https://img.shields.io/badge/Bugs%20Fixed-0%20(Ironically)-darkred?style=flat-square&logo=bug)](src/)
+[![Bugs Fixed](<https://img.shields.io/badge/Bugs%20Fixed-0%20(Ironically)-darkred?style=flat-square&logo=bug>)](src/)
 [![Dev Dependencies](https://img.shields.io/badge/Dev%20Dependencies-12%20Overkill-red?style=flat-square&logo=npm)](package.json)
 [![Coffee Required](https://img.shields.io/badge/Coffee-IV%20Drip%20Recommended-8B4513?style=flat-square&logo=coffee)](https://en.wikipedia.org/wiki/Caffeine_dependence)
 
@@ -39,7 +39,7 @@
 
 ## 🎭 Welcome to the Greatest Comedy in Software Development
 
-*Ladies and gentlemen, feast your eyes on the most over-engineered bug-squashing simulator ever created by human hands. This project has more dependencies than a soap opera storyline and enough complexity to make a NASA engineer weep.*
+_Ladies and gentlemen, feast your eyes on the most over-engineered bug-squashing simulator ever created by human hands. This project has more dependencies than a soap opera storyline and enough complexity to make a NASA engineer weep._
 
 ### 🤡 What Is This Magnificent Disaster?
 
@@ -74,12 +74,14 @@ This project showcases the fine art of using 30 dependencies to accomplish what 
 ### 🎭 Getting Started (Abandon Hope, All Ye Who Enter Here)
 
 **Prerequisites:**
+
 - Node.js 18+ (because we're cutting edge like that)
 - 16GB of RAM (for the node_modules folder)
 - A therapist on speed dial
 - Low expectations
 
 **Installation Ritual:**
+
 ```bash
 # Clone this monument to over-engineering
 git clone <this-repo>
@@ -95,6 +97,7 @@ npm run dev
 ```
 
 **Available Incantations:**
+
 ```bash
 npm run dev      # Start development (prepare for frustration)
 npm run build    # Create production build (good luck)
@@ -123,17 +126,20 @@ src/
 ### 🎪 The Comedy Special Features
 
 **🐛 Bug Component Showcase:**
+
 - `BugArea.tsx`: Where bugs live rent-free
 - `BugCard.tsx`: Instagram for insects
 - `BugCrawler.tsx`: AI pathfinding for 2D sprites
 - `AimCursor.tsx`: Mouse cursor replacement nobody asked for
 
 **📊 Dashboard Extravaganza:**
+
 - Real-time metrics for imaginary users
 - Charts that update faster than your actual productivity
 - Progress bars that go backwards
 
 **🏆 Leaderboard Excellence:**
+
 - Ranks users who don't exist
 - Stores scores in localStorage (enterprise-grade persistence)
 - Displays achievements for playing alone
@@ -158,6 +164,7 @@ This project is perfect as-is. Adding more code would be like putting a hat on a
 ### 🎪 License (Buyer Beware)
 
 This project is licensed under the "Use At Your Own Risk" license. Side effects may include:
+
 - Spontaneous questioning of life choices
 - Sudden urge to learn backend development
 - Chronic dependency addiction
@@ -165,10 +172,10 @@ This project is licensed under the "Use At Your Own Risk" license. Side effects 
 
 ### 🎭 Final Words
 
-*This project proves that with enough determination, caffeine, and a complete disregard for best practices, you can turn a simple idea into a beautiful, complex nightmare. It's not the hero we needed, but it's the hero we deserved.*
+_This project proves that with enough determination, caffeine, and a complete disregard for best practices, you can turn a simple idea into a beautiful, complex nightmare. It's not the hero we needed, but it's the hero we deserved._
 
 **Built with ❤️, poor decisions, and way too much free time.**
 
 ---
 
-*"Why use one tool when you can use twenty?" - The Dev Team, probably*
+_"Why use one tool when you can use twenty?" - The Dev Team, probably_
