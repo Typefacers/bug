@@ -118,7 +118,10 @@ const ActivityTimeline = ({ bugs }: { bugs: Bug[] }) => {
 
 export default function Dashboard() {
   const bugs = useBugStore(s => s.bugs)
-  const activeBugs = bugs.filter(bug => bug.active)
+  // Sort active bugs by bounty in descending order for display
+  const activeBugs = bugs
+    .filter(bug => bug.active)
+    .sort((a, b) => b.bounty - a.bounty)
   const squashedBugs = bugs.filter(bug => !bug.active)
   const [stats, setStats] = useState({
     active: 0,
