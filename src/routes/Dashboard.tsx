@@ -12,6 +12,7 @@ import { Bug } from '../types/bug'
 import { Badge } from '../components/ui/badge'
 import { Progress } from '../components/ui/progress'
 import { Button } from '../components/ui/button'
+import Meta from '../components/Meta'
 import {
   CalendarIcon,
   CheckCircleIcon,
@@ -166,6 +167,10 @@ export default function Dashboard() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
+      <Meta
+        title="Bug Dashboard - Stats and Progress"
+        description="Track bug statistics, bounties and progress on the Bug Basher dashboard."
+      />
       {/* Header with title and date */}
       <div className="mb-6 flex justify-between items-start">
         <motion.div
@@ -383,7 +388,7 @@ export default function Dashboard() {
                       variant="outline"
                       className="bg-green-100 font-semibold"
                     >
-                      ${highestBountyBug.bounty}
+                      {highestBountyBug.bounty}
                     </Badge>
                   </div>
                   <p className="text-sm text-muted-foreground">
@@ -493,7 +498,7 @@ export default function Dashboard() {
                           variant="outline"
                           className="ml-2 bg-green-100 font-semibold"
                         >
-                          ${bug.bounty}
+                          {bug.bounty}
                         </Badge>
                       </CardTitle>
                       {bug.priority && (
@@ -556,7 +561,7 @@ export default function Dashboard() {
                           variant="outline"
                           className="ml-2 bg-gray-100 font-semibold"
                         >
-                          ${bug.bounty}
+                          {bug.bounty}
                         </Badge>
                       </CardTitle>
                     </CardHeader>
@@ -584,6 +589,5 @@ export default function Dashboard() {
           </TabsContent>
         </Tabs>
       </motion.div>
-    </motion.div>
   )
 }
