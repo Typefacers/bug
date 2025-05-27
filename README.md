@@ -123,6 +123,19 @@ src/
 └── vite-env.d.ts    # Types for things that don't need types
 ```
 
+### Naming Conventions
+
+See [docs/NAMING_CONVENTIONS.md](docs/NAMING_CONVENTIONS.md) for the complete guide.
+
+- **Folders**: lower-case names, hyphenated when needed.
+- **Component files**: `PascalCase.tsx`.
+- **Utilities**: lower-case with optional hyphens, e.g., `utils.ts`.
+- **Test files**: same base name plus `.test.ts`.
+- **Components**: export default components with names matching their file.
+- **Variables/functions**: camelCase.
+- **Constants**: `UPPER_SNAKE_CASE`.
+- **Types/interfaces**: PascalCase.
+
 ### 🎪 The Comedy Special Features
 
 **🐛 Bug Component Showcase:**
