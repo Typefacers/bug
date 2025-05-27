@@ -11,6 +11,11 @@ export default function Bugs() {
       <Meta
         title="Bug Basher - Squash Bugs"
         description="Play Bug Basher and earn bounties by squashing pesky bugs."
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'Bug Basher',
+        }}
       />
       <div className="flex flex-col h-full">
         <div
