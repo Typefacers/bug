@@ -178,6 +178,7 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
             }}
           >
             <button
+              aria-label="Close"
               onClick={e => {
                 e.stopPropagation()
                 inspectBug(null)
