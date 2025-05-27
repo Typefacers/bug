@@ -104,44 +104,63 @@ export default function Leaderboard() {
       />
       <div className="overflow-x-auto">
         <table className="w-full text-sm select-none bg-[#E0E0E0]">
+          <caption className="sr-only">Bug bounty rankings</caption>
           <thead>
             <tr className="bg-[#000080] text-white">
-              <th
-                onClick={() => handleSort('rank')}
-                className="py-2 px-3 text-left font-semibold w-16 whitespace-nowrap cursor-pointer"
-              >
-                #<span className="ml-1">{sortArrow('rank')}</span>
+              <th className="py-2 px-3 text-left font-semibold w-16 whitespace-nowrap">
+                <button
+                  type="button"
+                  onClick={() => handleSort('rank')}
+                  className="w-full text-left"
+                >
+                  #<span className="ml-1">{sortArrow('rank')}</span>
+                </button>
               </th>
-              <th
-                onClick={() => handleSort('name')}
-                className="py-2 px-3 text-left font-semibold cursor-pointer"
-              >
-                Hunter <span className="ml-1">{sortArrow('name')}</span>
+              <th className="py-2 px-3 text-left font-semibold">
+                <button
+                  type="button"
+                  onClick={() => handleSort('name')}
+                  className="w-full text-left"
+                >
+                  Hunter <span className="ml-1">{sortArrow('name')}</span>
+                </button>
               </th>
-              <th
-                onClick={() => handleSort('bugs')}
-                className="py-2 px-3 text-right font-semibold w-24 cursor-pointer"
-              >
-                Bugs <span className="ml-1">{sortArrow('bugs')}</span>
+              <th className="py-2 px-3 text-right font-semibold w-24">
+                <button
+                  type="button"
+                  onClick={() => handleSort('bugs')}
+                  className="w-full text-right"
+                >
+                  Bugs <span className="ml-1">{sortArrow('bugs')}</span>
+                </button>
               </th>
-              <th
-                onClick={() => handleSort('bounty')}
-                className="py-2 px-3 text-right font-semibold w-28 cursor-pointer"
-              >
-                Bounty <span className="ml-1">{sortArrow('bounty')}</span>
+              <th className="py-2 px-3 text-right font-semibold w-28">
+                <button
+                  type="button"
+                  onClick={() => handleSort('bounty')}
+                  className="w-full text-right"
+                >
+                  Bounty <span className="ml-1">{sortArrow('bounty')}</span>
+                </button>
               </th>
-              <th
-                onClick={() => handleSort('efficiency')}
-                className="py-2 px-3 text-right font-semibold w-32 cursor-pointer"
-              >
-                Efficiency{' '}
-                <span className="ml-1">{sortArrow('efficiency')}</span>
+              <th className="py-2 px-3 text-right font-semibold w-32">
+                <button
+                  type="button"
+                  onClick={() => handleSort('efficiency')}
+                  className="w-full text-right"
+                >
+                  Efficiency{' '}
+                  <span className="ml-1">{sortArrow('efficiency')}</span>
+                </button>
               </th>
-              <th
-                onClick={() => handleSort('level')}
-                className="py-2 px-3 text-center font-semibold w-28 cursor-pointer"
-              >
-                Level <span className="ml-1">{sortArrow('level')}</span>
+              <th className="py-2 px-3 text-center font-semibold w-28">
+                <button
+                  type="button"
+                  onClick={() => handleSort('level')}
+                  className="w-full text-center"
+                >
+                  Level <span className="ml-1">{sortArrow('level')}</span>
+                </button>
               </th>
             </tr>
           </thead>
