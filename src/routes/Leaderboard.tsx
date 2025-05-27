@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useBugStore } from '../store'
+import Meta from '../components/Meta'
 
 /** Map bounty → tier name */
 const levelFromBounty = (bounty: number): string => {
@@ -96,95 +97,102 @@ export default function Leaderboard() {
     sortKey === key ? (ascending ? '▲' : '▼') : ''
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm select-none bg-[#E0E0E0]">
-        <thead>
-          <tr className="bg-[#000080] text-white">
-            <th
-              onClick={() => handleSort('rank')}
-              className="py-2 px-3 text-left font-semibold w-16 whitespace-nowrap cursor-pointer"
-            >
-              #<span className="ml-1">{sortArrow('rank')}</span>
-            </th>
-            <th
-              onClick={() => handleSort('name')}
-              className="py-2 px-3 text-left font-semibold cursor-pointer"
-            >
-              Hunter <span className="ml-1">{sortArrow('name')}</span>
-            </th>
-            <th
-              onClick={() => handleSort('bugs')}
-              className="py-2 px-3 text-right font-semibold w-24 cursor-pointer"
-            >
-              Bugs <span className="ml-1">{sortArrow('bugs')}</span>
-            </th>
-            <th
-              onClick={() => handleSort('bounty')}
-              className="py-2 px-3 text-right font-semibold w-28 cursor-pointer"
-            >
-              Bounty <span className="ml-1">{sortArrow('bounty')}</span>
-            </th>
-            <th
-              onClick={() => handleSort('efficiency')}
-              className="py-2 px-3 text-right font-semibold w-32 cursor-pointer"
-            >
-              Efficiency <span className="ml-1">{sortArrow('efficiency')}</span>
-            </th>
-            <th
-              onClick={() => handleSort('level')}
-              className="py-2 px-3 text-center font-semibold w-28 cursor-pointer"
-            >
-              Level <span className="ml-1">{sortArrow('level')}</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedUsers.map((u, i) => {
-            const bugCount =
-              (Array.isArray(u.bugs) ? u.bugs.length : u.bugs) ?? 0
-            const bounty = u.bounty ?? 0
-            const efficiency =
-              bugCount > 0 ? (bounty / bugCount).toFixed(1) : '—'
-            const level = levelFromBounty(bounty)
-
-            return (
-              <tr
-                key={u.id}
-                className={`${
-                  i % 2 ? 'bg-[#D4D0C8]' : 'bg-[#E0E0E0]'
-                } hover:bg-[#C0C0C0]`}
+    <>
+      <Meta
+        title="Bug Bounty Leaderboard"
+        description="Check the rankings of top bug squashers and their bounties."
+      />
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm select-none bg-[#E0E0E0]">
+          <thead>
+            <tr className="bg-[#000080] text-white">
+              <th
+                onClick={() => handleSort('rank')}
+                className="py-2 px-3 text-left font-semibold w-16 whitespace-nowrap cursor-pointer"
               >
-                <td className="py-1 px-3 font-bold">{i + 1}</td>
-                <td className="py-1 px-3 flex items-center gap-2">
-                  {u.avatar && (
-                    <img
-                      src={u.avatar}
-                      alt={`${u.name} avatar`}
-                      className="w-6 h-6 border border-gray-700"
-                    />
-                  )}
-                  <Link
-                    to={`/user/${u.id}`}
-                    className="text-indigo-600 hover:underline"
-                  >
-                    {u.name}
-                  </Link>
-                </td>
-                <td className="py-1 px-3 text-right tabular-nums">
-                  {bugCount}
-                </td>
-                <td className="py-1 px-3 text-right tabular-nums">
-                  {bounty.toLocaleString()}
-                </td>
-                <td className="py-1 px-3 text-right tabular-nums">
-                  {efficiency}
-                </td>
-                <td className="py-1 px-3 text-center">{level}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    </div>
+                #<span className="ml-1">{sortArrow('rank')}</span>
+              </th>
+              <th
+                onClick={() => handleSort('name')}
+                className="py-2 px-3 text-left font-semibold cursor-pointer"
+              >
+                Hunter <span className="ml-1">{sortArrow('name')}</span>
+              </th>
+              <th
+                onClick={() => handleSort('bugs')}
+                className="py-2 px-3 text-right font-semibold w-24 cursor-pointer"
+              >
+                Bugs <span className="ml-1">{sortArrow('bugs')}</span>
+              </th>
+              <th
+                onClick={() => handleSort('bounty')}
+                className="py-2 px-3 text-right font-semibold w-28 cursor-pointer"
+              >
+                Bounty <span className="ml-1">{sortArrow('bounty')}</span>
+              </th>
+              <th
+                onClick={() => handleSort('efficiency')}
+                className="py-2 px-3 text-right font-semibold w-32 cursor-pointer"
+              >
+                Efficiency{' '}
+                <span className="ml-1">{sortArrow('efficiency')}</span>
+              </th>
+              <th
+                onClick={() => handleSort('level')}
+                className="py-2 px-3 text-center font-semibold w-28 cursor-pointer"
+              >
+                Level <span className="ml-1">{sortArrow('level')}</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedUsers.map((u, i) => {
+              const bugCount =
+                (Array.isArray(u.bugs) ? u.bugs.length : u.bugs) ?? 0
+              const bounty = u.bounty ?? 0
+              const efficiency =
+                bugCount > 0 ? (bounty / bugCount).toFixed(1) : '—'
+              const level = levelFromBounty(bounty)
+
+              return (
+                <tr
+                  key={u.id}
+                  className={`${
+                    i % 2 ? 'bg-[#D4D0C8]' : 'bg-[#E0E0E0]'
+                  } hover:bg-[#C0C0C0]`}
+                >
+                  <td className="py-1 px-3 font-bold">{i + 1}</td>
+                  <td className="py-1 px-3 flex items-center gap-2">
+                    {u.avatar && (
+                      <img
+                        src={u.avatar}
+                        alt={`${u.name} avatar`}
+                        className="w-6 h-6 border border-gray-700"
+                      />
+                    )}
+                    <Link
+                      to={`/user/${u.id}`}
+                      className="text-indigo-600 hover:underline"
+                    >
+                      {u.name}
+                    </Link>
+                  </td>
+                  <td className="py-1 px-3 text-right tabular-nums">
+                    {bugCount}
+                  </td>
+                  <td className="py-1 px-3 text-right tabular-nums">
+                    {bounty.toLocaleString()}
+                  </td>
+                  <td className="py-1 px-3 text-right tabular-nums">
+                    {efficiency}
+                  </td>
+                  <td className="py-1 px-3 text-center">{level}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
   )
 }

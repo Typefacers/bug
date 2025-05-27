@@ -23,6 +23,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { motion } from 'framer-motion'
 import { Bug } from '../types/bug'
 import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
+import Meta from '../components/Meta'
 
 export default function NewBug() {
   const navigate = useNavigate()
@@ -64,97 +65,103 @@ export default function NewBug() {
   const sunken = `${sunkenBase} shadow-inner`
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-2xl mx-auto"
-    >
-      <Card className={`bg-[#E0E0E0] ${raised}`}>
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">File a New Bug</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {error && (
-            <div className={`${sunken} bg-red-100 text-red-800 p-2 text-sm`}>
-              {error}
-            </div>
-          )}
+    <>
+      <Meta
+        title="File a New Bug"
+        description="Report a new bug and earn bounties in Bug Basher."
+      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-2xl mx-auto"
+      >
+        <Card className={`bg-[#E0E0E0] ${raised}`}>
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold">File a New Bug</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {error && (
+              <div className={`${sunken} bg-red-100 text-red-800 p-2 text-sm`}>
+                {error}
+              </div>
+            )}
 
-          <div className="space-y-1">
-            <Label htmlFor="title">Bug Title</Label>
-            <Input
-              id="title"
-              value={title}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setTitle(e.target.value)
-              }
-              className={`bg-white ${sunken}`}
-            />
-          </div>
-
-          <div className="space-y-1">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              value={description}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                setDescription(e.target.value)
-              }
-              className={`bg-white ${sunken} min-h-[100px]`}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
-              <Label htmlFor="bounty">Bounty Amount ($)</Label>
+              <Label htmlFor="title">Bug Title</Label>
               <Input
-                id="bounty"
-                type="number"
-                min={10}
-                value={bounty}
+                id="title"
+                value={title}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setBounty(Number(e.target.value))
+                  setTitle(e.target.value)
                 }
                 className={`bg-white ${sunken}`}
               />
             </div>
 
             <div className="space-y-1">
-              <Label htmlFor="priority">Priority</Label>
-              <Select
-                value={priority}
-                onValueChange={(value: 'high' | 'medium' | 'low') =>
-                  setPriority(value)
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                value={description}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                  setDescription(e.target.value)
                 }
-              >
-                <SelectTrigger className={`${raised} bg-[#C0C0C0]`}>
-                  <SelectValue placeholder="Select priority" />
-                </SelectTrigger>
-                <SelectContent className={`${raised} bg-[#C0C0C0] w-full`}>
-                  <SelectItem value="high">high</SelectItem>
-                  <SelectItem value="medium">medium</SelectItem>
-                  <SelectItem value="low">low</SelectItem>
-                </SelectContent>
-              </Select>
+                className={`bg-white ${sunken} min-h-[100px]`}
+              />
             </div>
-          </div>
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button
-            className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black`}
-            onClick={() => navigate('/dashboard')}
-          >
-            Cancel
-          </Button>
-          <Button
-            className={`${raised} bg-[#008080] hover:bg-[#006666] text-white`}
-            onClick={createBug}
-          >
-            Submit Bug
-          </Button>
-        </CardFooter>
-      </Card>
-    </motion.div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="bounty">Bounty Amount ($)</Label>
+                <Input
+                  id="bounty"
+                  type="number"
+                  min={10}
+                  value={bounty}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setBounty(Number(e.target.value))
+                  }
+                  className={`bg-white ${sunken}`}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="priority">Priority</Label>
+                <Select
+                  value={priority}
+                  onValueChange={(value: 'high' | 'medium' | 'low') =>
+                    setPriority(value)
+                  }
+                >
+                  <SelectTrigger className={`${raised} bg-[#C0C0C0]`}>
+                    <SelectValue placeholder="Select priority" />
+                  </SelectTrigger>
+                  <SelectContent className={`${raised} bg-[#C0C0C0] w-full`}>
+                    <SelectItem value="high">high</SelectItem>
+                    <SelectItem value="medium">medium</SelectItem>
+                    <SelectItem value="low">low</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button
+              className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black`}
+              onClick={() => navigate('/dashboard')}
+            >
+              Cancel
+            </Button>
+            <Button
+              className={`${raised} bg-[#008080] hover:bg-[#006666] text-white`}
+              onClick={createBug}
+            >
+              Submit Bug
+            </Button>
+          </CardFooter>
+        </Card>
+      </motion.div>
+    </>
   )
 }
