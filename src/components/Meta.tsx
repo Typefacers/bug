@@ -4,7 +4,7 @@ interface MetaProps {
   title: string
   description: string
   image?: string
-  structuredData?: Record<string, any>
+  structuredData?: Record<string, unknown>
 }
 
 export default function Meta({
