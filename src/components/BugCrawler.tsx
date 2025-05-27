@@ -33,6 +33,11 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
   const inspectedId = useBugStore(s => s.inspectedId)
   const showModal = inspectedId === bug.id
 
+  // Refs for focus management
+  const bugRef = useRef<HTMLDivElement>(null)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const wasOpenRef = useRef(showModal)
+
   const isAlive = bug.active
 
   /* -------------- position & heading -------------- */
@@ -54,6 +59,21 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
   useEffect(() => {
     directionRef.current = direction
   }, [direction])
+
+  // Manage focus when modal opens/closes
+  useEffect(() => {
+    if (showModal && isAlive) {
+      wasOpenRef.current = true
+      requestAnimationFrame(() => {
+        modalRef.current?.focus()
+      })
+    } else {
+      if (wasOpenRef.current) {
+        bugRef.current?.focus()
+      }
+      wasOpenRef.current = false
+    }
+  }, [showModal, isAlive])
 
   /* -------------- main rAF loop -------------- */
   useEffect(() => {
@@ -112,6 +132,8 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
       {/* perspective wrapper gives our sprite depth */}
       <motion.div
         data-bug-id={bug.id}
+        ref={bugRef}
+        tabIndex={-1}
         initial={{ x, y }}
         animate={{
           x: position.x,
@@ -166,6 +188,8 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
       {showModal && isAlive && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/20"
+          ref={modalRef}
+          tabIndex={-1}
           onClick={e => {
             e.stopPropagation()
             inspectBug(null)
