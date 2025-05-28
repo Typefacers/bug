@@ -1,8 +1,8 @@
 import { create } from 'zustand'
-import { bugs as mockBugs } from './mock/bugs'
-import { users as mockUsers } from './mock/users'
-import { Bug } from './types/bug'
-import type { User } from './types/user'
+import { bugs as mockBugs } from './mock/bugs.ts'
+import { users as mockUsers } from './mock/users.ts'
+import type { Bug } from './types/bug.ts'
+import type { User } from './types/user.ts'
 
 interface State {
   bugs: Bug[]
