@@ -122,6 +122,7 @@ npm run build    # Create production build (good luck)
 npm run preview  # Preview build (spoiler: it's broken)
 npm run lint     # Find 47 linting errors you'll ignore
 npm test         # Run the single test that actually works
+npm run test:coverage # See how little of the code actually runs
 npm run format   # Rearrange deck chairs on the Titanic
 ```
 
