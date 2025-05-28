@@ -16,10 +16,12 @@ const NewBug = lazy(() => import('./routes/NewBug'))
 const NotFound = lazy(() => import('./routes/NotFound'))
 import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import { raised, windowShadow } from './utils/win95'
+import QuantumStormOverlay from './components/QuantumStormOverlay'
 
 function AppContent() {
   const location = useLocation()
   const { startAutomaticSystems, stopAutomaticSystems } = useBugStore()
+  const quantumStormActive = useBugStore(s => s.quantumStormActive)
   const [minimized, setMinimized] = useState(false)
   const [maximized, setMaximized] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -59,6 +61,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-[#008080] p-4 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
+      <QuantumStormOverlay active={quantumStormActive} />
       {minimized ? (
         <div className="mx-auto">
           <button
