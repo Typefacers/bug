@@ -16,6 +16,7 @@ const NewBug = lazy(() => import('./routes/NewBug'))
 const NotFound = lazy(() => import('./routes/NotFound'))
 import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import { raised, windowShadow } from './utils/win95'
+import QuantumOverlay from './components/QuantumOverlay'
 
 function AppContent() {
   const location = useLocation()
@@ -43,6 +44,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-[#008080] p-4 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
+      <QuantumOverlay />
       <div className="mx-auto max-w-7xl w-full flex-grow flex">
         {/* Single Win95 Window */}
         <div

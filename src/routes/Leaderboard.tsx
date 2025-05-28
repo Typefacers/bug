@@ -23,6 +23,7 @@ type SortKey = 'rank' | 'name' | 'bugs' | 'bounty' | 'efficiency' | 'level'
 
 export default function Leaderboard() {
   const users = useBugStore(s => s.users)
+  const quantumMode = useBugStore(s => s.quantumMode)
 
   /** Local sort state */
   const [sortKey, setSortKey] = React.useState<SortKey>('bounty')
@@ -42,6 +43,13 @@ export default function Leaderboard() {
   /** Users sorted according to selected column */
   const sortedUsers = React.useMemo(() => {
     const list = [...users]
+    if (quantumMode) {
+      for (let i = list.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[list[i], list[j]] = [list[j], list[i]]
+      }
+      return list
+    }
 
     list.sort((a, b) => {
       const bugCountA =
@@ -90,7 +98,7 @@ export default function Leaderboard() {
     })
 
     return list
-  }, [users, sortKey, ascending])
+  }, [users, sortKey, ascending, quantumMode])
 
   /** Helper to render sort arrows */
   const sortArrow = (key: SortKey) =>
@@ -195,6 +203,9 @@ export default function Leaderboard() {
                     >
                       {u.name}
                     </Link>
+                    {u.badges?.includes('Quantum Survivor') && (
+                      <span title="Quantum Survivor">🌀</span>
+                    )}
                   </td>
                   <td className="py-1 px-3 text-right tabular-nums">
                     {bugCount}

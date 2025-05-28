@@ -8,4 +8,5 @@ export interface User {
   bounty: number
   score?: number
   bugsSquashed?: string[]
+  badges?: string[]
 }

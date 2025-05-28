@@ -15,6 +15,8 @@ interface State {
   removeBug: (id: string) => void
   startAutomaticSystems: () => void
   stopAutomaticSystems: () => void
+  quantumMode: boolean
+  triggerQuantumApocalypse: () => void
 }
 
 // Configuration for automatic systems
@@ -71,12 +73,14 @@ const BUG_TEMPLATES = [
 
 let cleanupTimer: ReturnType<typeof setInterval> | null = null
 let respawnTimer: ReturnType<typeof setInterval> | null = null
+let apocalypseTimer: ReturnType<typeof setTimeout> | null = null
 
 export const useBugStore = create<State>((set, get) => ({
   bugs: mockBugs,
   users: mockUsers.sort((a, b) => b.bounty - a.bounty),
   activeUserId: 1, // assume first user is the current hacker
   inspectedId: null,
+  quantumMode: false,
   addBug: bug => set(state => ({ bugs: [...state.bugs, bug] })),
   inspectBug: id => set({ inspectedId: id }),
   removeBug: id =>
@@ -115,6 +119,41 @@ export const useBugStore = create<State>((set, get) => ({
 
       return { bugs, users, inspectedId: null }
     }),
+  triggerQuantumApocalypse: () => {
+    if (get().quantumMode || apocalypseTimer) return
+    set({ quantumMode: true })
+    for (let i = 0; i < 30; i++) {
+      const template =
+        BUG_TEMPLATES[Math.floor(Math.random() * BUG_TEMPLATES.length)]
+      const priorities: ('high' | 'medium' | 'low')[] = [
+        'high',
+        'medium',
+        'low',
+      ]
+      const priority = priorities[Math.floor(Math.random() * priorities.length)]
+      const newBug: Bug = {
+        id: `quantum-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        title: template.title,
+        description: template.description,
+        bounty: Math.floor(Math.random() * 100) + 50,
+        active: true,
+        priority,
+        createdAt: new Date().toISOString(),
+      }
+      get().addBug(newBug)
+    }
+    apocalypseTimer = setTimeout(() => {
+      set(state => ({
+        quantumMode: false,
+        users: state.users.map(u =>
+          u.id === state.activeUserId
+            ? { ...u, badges: [...(u.badges || []), 'Quantum Survivor'] }
+            : u
+        ),
+      }))
+      apocalypseTimer = null
+    }, 8000)
+  },
   startAutomaticSystems: () => {
     // Start cleanup timer for squashed bugs
     if (!cleanupTimer) {

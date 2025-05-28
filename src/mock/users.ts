@@ -23,6 +23,7 @@ export const users: User[] = [
     bounty: 5400,
     score: 0,
     bugsSquashed: [],
+    badges: [],
   },
   {
     id: 2,
@@ -32,6 +33,7 @@ export const users: User[] = [
     bounty: 4950,
     score: 0,
     bugsSquashed: [],
+    badges: [],
   },
   {
     id: 3,
@@ -41,6 +43,7 @@ export const users: User[] = [
     bounty: 4100,
     score: 0,
     bugsSquashed: [],
+    badges: [],
   },
   {
     id: 4,
@@ -50,6 +53,7 @@ export const users: User[] = [
     bounty: 3600,
     score: 0,
     bugsSquashed: [],
+    badges: [],
   },
   {
     id: 5,
@@ -59,6 +63,7 @@ export const users: User[] = [
     bounty: 3200,
     score: 0,
     bugsSquashed: [],
+    badges: [],
   },
   {
     id: 6,
@@ -68,6 +73,7 @@ export const users: User[] = [
     bounty: 2800,
     score: 0,
     bugsSquashed: [],
+    badges: [],
   },
   {
     id: 7,
@@ -77,6 +83,7 @@ export const users: User[] = [
     bounty: 2200,
     score: 0,
     bugsSquashed: [],
+    badges: [],
   },
   {
     id: 8,
@@ -86,6 +93,7 @@ export const users: User[] = [
     bounty: 2000,
     score: 0,
     bugsSquashed: [],
+    badges: [],
   },
   {
     id: 9,
@@ -95,6 +103,7 @@ export const users: User[] = [
     bounty: 1600,
     score: 0,
     bugsSquashed: [],
+    badges: [],
   },
   {
     id: 10,
@@ -104,5 +113,6 @@ export const users: User[] = [
     bounty: 1200,
     score: 0,
     bugsSquashed: [],
+    badges: [],
   },
 ]
