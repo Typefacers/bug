@@ -11,7 +11,8 @@
     "lint:ci": "eslint . --max-warnings=0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "node --experimental-transform-types --loader ./png-loader.js --test"
+    "test": "node --experimental-transform-types --loader ./png-loader.js --test",
+    "coverage": "node --experimental-test-coverage --experimental-transform-types --loader ./png-loader.js --test --test-reporter=spec --test-reporter=lcov --test-reporter-destination=stdout --test-reporter-destination=coverage.lcov --test-coverage-exclude=\"node_modules/**\" --test-coverage-exclude=\"**/*.png\""
   },
   "dependencies": {
     "@radix-ui/react-navigation-menu": "^1.2.10",
