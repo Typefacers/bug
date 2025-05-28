@@ -71,6 +71,24 @@ This project showcases the fine art of using 30 dependencies to accomplish what 
 - **UUID**: Industrial-strength ID generation for a client-side game
 - **Lucide Icons**: 1000+ icons imported to use exactly 7
 
+### 🚀 Quick Start
+
+```bash
+git clone <this-repo>
+cd bug-bounty-hackathon
+npm install
+npm run dev
+```
+
+Common commands:
+
+```bash
+npm run build    # Create production build
+npm test         # Run tests
+npm run lint     # Lint code
+npm run format   # Format code
+```
+
 ### 🎭 Getting Started (Abandon Hope, All Ye Who Enter Here)
 
 **Prerequisites:**
