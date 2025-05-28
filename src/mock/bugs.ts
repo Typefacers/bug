@@ -1,4 +1,4 @@
-import { Bug } from '../types/bug'
+import type { Bug } from '../types/bug.ts'
 
 // Helper to create dates in the past (days ago)
 const daysAgo = (days: number): string => {

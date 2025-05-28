@@ -8,7 +8,7 @@ import antAvatar from '../assets/ant.png'
 import mothAvatar from '../assets/moth.png'
 import cockroachAvatar from '../assets/cockroach.png'
 import caterpillarAvatar from '../assets/caterpillar.png'
-import { User } from '../types/user'
+import type { User } from '../types/user.ts'
 
 /**
  * Demo leaderboard data – feel free to tweak!
