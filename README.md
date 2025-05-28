@@ -154,7 +154,7 @@ See [docs/NAMING_CONVENTIONS.md](docs/NAMING_CONVENTIONS.md) for the complete gu
 **🏆 Leaderboard Excellence:**
 
 - Ranks users who don't exist
-- Stores scores in localStorage (enterprise-grade persistence)
+- Score persistence not yet implemented
 - Displays achievements for playing alone
 
 ### 🎭 Performance Notes
