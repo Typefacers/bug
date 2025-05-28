@@ -195,6 +195,7 @@ export default function Leaderboard() {
                     >
                       {u.name}
                     </Link>
+                    {u.survivor && <span title="Quantum Survivor">⚡</span>}
                   </td>
                   <td className="py-1 px-3 text-right tabular-nums">
                     {bugCount}
