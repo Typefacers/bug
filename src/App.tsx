@@ -13,6 +13,7 @@ const Leaderboard = lazy(() => import('./routes/Leaderboard'))
 const UserProfile = lazy(() => import('./routes/UserProfile'))
 const Dashboard = lazy(() => import('./routes/Dashboard'))
 const NewBug = lazy(() => import('./routes/NewBug'))
+const NotFound = lazy(() => import('./routes/NotFound'))
 import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import { raised, windowShadow } from './utils/win95'
 
@@ -36,7 +37,7 @@ function AppContent() {
         return 'File a Bug'
       default:
         if (location.pathname.startsWith('/user/')) return 'User Profile'
-        return 'Bug Bounty'
+        return 'Page Not Found'
     }
   }
 
@@ -104,6 +105,7 @@ function AppContent() {
                   <Route path="/bounty-leaderboard" element={<Leaderboard />} />
                   <Route path="/user/:userId" element={<UserProfile />} />
                   <Route path="/bug/new" element={<NewBug />} />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
             </div>
