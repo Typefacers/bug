@@ -169,6 +169,92 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
       .attr('alignment-baseline', 'middle')
       .attr('font-size', 12)
       .text('Resolved')
+
+    // ----- Tooltip -------------------------------------------------------
+    const bisectDate = d3.bisector<DataPoint, Date>(d => d.date).left
+
+    const tooltip = g.append('g').style('display', 'none')
+
+    tooltip
+      .append('line')
+      .attr('id', 'tooltip-line')
+      .attr('stroke', '#9ca3af')
+      .attr('y1', 0)
+      .attr('y2', innerHeight)
+
+    const tooltipBox = tooltip
+      .append('rect')
+      .attr('fill', '#ffffff')
+      .attr('stroke', '#d1d5db')
+      .attr('rx', 4)
+      .attr('width', 90)
+      .attr('height', 38)
+
+    const tooltipDate = tooltip
+      .append('text')
+      .attr('font-size', 12)
+      .attr('dy', '1.2em')
+
+    const tooltipCreated = tooltip
+      .append('text')
+      .attr('font-size', 12)
+      .attr('dy', '2.4em')
+
+    const tooltipResolved = tooltip
+      .append('text')
+      .attr('font-size', 12)
+      .attr('dy', '3.6em')
+
+    const circleCreated = tooltip
+      .append('circle')
+      .attr('r', 4)
+      .attr('fill', '#f97316')
+
+    const circleResolved = tooltip
+      .append('circle')
+      .attr('r', 4)
+      .attr('fill', '#10b981')
+
+    g.append('rect')
+      .attr('width', innerWidth)
+      .attr('height', innerHeight)
+      .attr('fill', 'none')
+      .attr('pointer-events', 'all')
+      .on('mouseenter', () => tooltip.style('display', null))
+      .on('mouseleave', () => tooltip.style('display', 'none'))
+      .on('mousemove', function (event: MouseEvent) {
+        const [mx] = d3.pointer(event)
+        const xDate = x.invert(mx)
+        const i = bisectDate(series, xDate, 1)
+        const d0 = series[i - 1]
+        const d1 = series[i]
+        const d =
+          !d1 ||
+          xDate.getTime() - d0.date.getTime() <
+            d1.date.getTime() - xDate.getTime()
+            ? d0
+            : d1
+
+        const xPos = x(d.date) as number
+        const boxOffset = xPos > innerWidth - 100 ? -98 : 8
+
+        tooltip.select('#tooltip-line').attr('x1', xPos).attr('x2', xPos)
+        circleCreated.attr('cx', xPos).attr('cy', y(d.created))
+        circleResolved.attr('cx', xPos).attr('cy', y(d.resolved))
+        tooltipBox.attr('x', xPos + boxOffset).attr('y', 4)
+        tooltipDate
+          .attr('x', xPos + boxOffset + 4)
+          .attr('y', 4)
+          .text(d3.timeFormat('%b %d')(d.date))
+        tooltipCreated
+          .attr('x', xPos + boxOffset + 4)
+          .attr('y', 4)
+          .text(`Reported: ${d.created}`)
+        tooltipResolved
+          .attr('x', xPos + boxOffset + 4)
+          .attr('y', 4)
+          .text(`Resolved: ${d.resolved}`)
+      })
   }
 
   /** Setup & teardown ----------------------------------------------------- */
