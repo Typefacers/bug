@@ -12,6 +12,7 @@
 
 1. After making changes, run `npm run format`, `npm run lint`, and `npm test`.
 2. Commit only when all checks pass.
+3. Update `README.md` to document any new features or changes.
 
 ## Commit Messages
 
