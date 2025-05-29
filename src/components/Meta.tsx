@@ -1,11 +1,5 @@
 import { useEffect } from 'react'
-
-interface MetaProps {
-  title: string
-  description: string
-  image?: string
-  structuredData?: Record<string, unknown>
-}
+import type { MetaProps } from '../types/components/Meta'
 
 export default function Meta({
   title,

@@ -1,16 +1,10 @@
 import { motion } from 'framer-motion'
-import { Bug } from '../types/bug'
 import { useBugStore } from '../store'
 import clsx from 'clsx'
 import { getBugImage } from '../utils/utils'
+import type { BugCardProps } from '../types/components/BugCard'
 
-interface Props {
-  bug: Bug
-  /** Compact hover preview when true */
-  preview?: boolean
-}
-
-export const BugCard: React.FC<Props> = ({ bug, preview = false }) => {
+export const BugCard: React.FC<BugCardProps> = ({ bug, preview = false }) => {
   const squashBug = useBugStore(s => s.squashBug)
   const bugImage = getBugImage(bug.id)
 

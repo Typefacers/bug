@@ -3,23 +3,7 @@ import { bugs as mockBugs } from './mock/bugs.ts'
 import { users as mockUsers } from './mock/users.ts'
 import { CONFIG, BUG_TEMPLATES } from './lib/store-constants.ts'
 import type { Bug } from './types/bug.ts'
-import type { User } from './types/user.ts'
-
-interface State {
-  bugs: Bug[]
-  users: User[]
-  activeUserId: number
-  inspectedId: string | null
-  quantumStormActive: boolean
-  inspectBug: (id: string | null) => void
-  squashBug: (id: string) => void
-  addBug: (bug: Bug) => void
-  removeBug: (id: string) => void
-  startQuantumStorm: () => void
-  stopQuantumStorm: () => void
-  startAutomaticSystems: () => void
-  stopAutomaticSystems: () => void
-}
+import type { State } from './types/store.ts'
 
 // Configuration and bug templates are defined in src/lib/store-constants.ts
 
