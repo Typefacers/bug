@@ -21,7 +21,7 @@ import {
 import { useBugStore } from '../store'
 import { v4 as uuidv4 } from 'uuid'
 import { motion } from 'framer-motion'
-import { Bug } from '../types/bug'
+import { Bug } from '../types'
 import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
 import Meta from '../components/Meta'
 

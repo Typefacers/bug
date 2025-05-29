@@ -1,13 +1,10 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
-import { Bug } from '../types/bug'
+import type { BugAreaProps } from '../types'
 import BugCrawler from './BugCrawler'
 import AimCursor from './AimCursor'
 import { useBugStore } from '../store'
 
 /** Evenly spreads bugs, then shuffles and jitters them for an organic layout. */
-interface BugAreaProps {
-  bugs: Bug[]
-}
 
 const SPEED = 320 // px per second the aim moves when an input is held/tilted
 const DEAD_ZONE = 0.15 // ignore tiny stick deflections

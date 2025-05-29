@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useBugStore } from '../store'
 import Meta from '../components/Meta'
+import type { SortKey } from '../types'
 
 /** Map bounty → tier name */
 const levelFromBounty = (bounty: number): string => {
@@ -18,8 +19,6 @@ const levelTier = (bounty: number): number => {
   if (bounty >= 2000) return 2
   return 1
 }
-
-type SortKey = 'rank' | 'name' | 'bugs' | 'bounty' | 'efficiency' | 'level'
 
 export default function Leaderboard() {
   const users = useBugStore(s => s.users)

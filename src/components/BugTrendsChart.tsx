@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import * as d3 from 'd3'
-import { Bug } from '../types/bug'
+import { Bug } from '../types'
+import type { BugTrendsDataPoint } from '../types'
 
 /**
  * Interactive line chart that tracks how many bugs were reported
@@ -70,13 +71,7 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
       return
     }
 
-    interface DataPoint {
-      date: Date
-      created: number
-      resolved: number
-    }
-
-    const series = allDays.map(d => ({
+    const series: BugTrendsDataPoint[] = allDays.map(d => ({
       date: d,
       created: created.get(d) ?? 0,
       resolved: resolved.get(d) ?? 0,
@@ -92,7 +87,9 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
       .scaleLinear()
       .domain([
         0,
-        d3.max(series, (d: DataPoint) => Math.max(d.created, d.resolved)) || 1,
+        d3.max(series, (d: BugTrendsDataPoint) =>
+          Math.max(d.created, d.resolved)
+        ) || 1,
       ])
       .nice()
       .range([innerHeight, 0])
@@ -116,15 +113,15 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
 
     // ----- Line generators ------------------------------------------------
     const lineCreated = d3
-      .line<DataPoint>()
-      .x((d: DataPoint) => x(d.date) as number)
-      .y((d: DataPoint) => y(d.created))
+      .line<BugTrendsDataPoint>()
+      .x((d: BugTrendsDataPoint) => x(d.date) as number)
+      .y((d: BugTrendsDataPoint) => y(d.created))
       .curve(d3.curveMonotoneX)
 
     const lineResolved = d3
-      .line<DataPoint>()
-      .x((d: DataPoint) => x(d.date) as number)
-      .y((d: DataPoint) => y(d.resolved))
+      .line<BugTrendsDataPoint>()
+      .x((d: BugTrendsDataPoint) => x(d.date) as number)
+      .y((d: BugTrendsDataPoint) => y(d.resolved))
       .curve(d3.curveMonotoneX)
 
     // ----- Draw lines -----------------------------------------------------

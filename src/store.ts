@@ -1,24 +1,7 @@
 import { create } from 'zustand'
 import { bugs as mockBugs } from './mock/bugs.ts'
 import { users as mockUsers } from './mock/users.ts'
-import type { Bug } from './types/bug.ts'
-import type { User } from './types/user.ts'
-
-interface State {
-  bugs: Bug[]
-  users: User[]
-  activeUserId: number
-  inspectedId: string | null
-  quantumStormActive: boolean
-  inspectBug: (id: string | null) => void
-  squashBug: (id: string) => void
-  addBug: (bug: Bug) => void
-  removeBug: (id: string) => void
-  startQuantumStorm: () => void
-  stopQuantumStorm: () => void
-  startAutomaticSystems: () => void
-  stopAutomaticSystems: () => void
-}
+import type { Bug, BugStoreState } from './types'
 
 // Configuration for automatic systems
 const CONFIG = {
@@ -81,7 +64,7 @@ let respawnTimer: ReturnType<typeof setInterval> | null = null
 let stormTimer: ReturnType<typeof setInterval> | null = null
 let stormBugIds: string[] = []
 
-export const useBugStore = create<State>((set, get) => ({
+export const useBugStore = create<BugStoreState>((set, get) => ({
   bugs: mockBugs,
   users: mockUsers.sort((a, b) => b.bounty - a.bounty),
   activeUserId: 1, // assume first user is the current hacker
