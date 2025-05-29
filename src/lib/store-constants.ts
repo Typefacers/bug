@@ -3,10 +3,6 @@ export const CONFIG = {
   RESPAWN_INTERVAL: 3000, // Spawn new bug every 3 seconds
   MAX_ACTIVE_BUGS: 15, // Maximum number of active bugs
   MIN_ACTIVE_BUGS: 8, // Minimum number of active bugs to maintain
-  STORM_CHECK_INTERVAL: 15000, // Check for quantum storm every 15s
-  STORM_DURATION: 10000, // Storm lasts 10s
-  STORM_BUGS: 15, // Number of extra bugs during storm
-  STORM_CHANCE: 0.25, // 25% chance each interval
 }
 
 export const BUG_TEMPLATES = [
