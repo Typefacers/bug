@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
+import { useElementSize } from '../hooks/use-element-size'
 import { Bug } from '../types/bug'
 import BugCrawler from './BugCrawler'
 import AimCursor from './AimCursor'
@@ -15,27 +16,7 @@ const DEAD_ZONE = 0.15 // ignore tiny stick deflections
 const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
   /* ---------- container size tracking ---------- */
   const containerRef = useRef<HTMLDivElement>(null)
-  const [size, setSize] = useState({ width: 0, height: 0 })
-
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-
-    const measure = () => {
-      const { width, height } = el.getBoundingClientRect()
-      setSize({ width, height })
-    }
-    measure()
-
-    const ro = new ResizeObserver(measure)
-    ro.observe(el)
-    window.addEventListener('resize', measure)
-
-    return () => {
-      ro.disconnect()
-      window.removeEventListener('resize', measure)
-    }
-  }, [])
+  const size = useElementSize(containerRef)
 
   /* ---------- aim tracking ---------- */
   const [aim, setAim] = useState({ x: 0, y: 0 })
