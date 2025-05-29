@@ -1,12 +1,8 @@
 import React from 'react'
-
-interface Props {
-  x: number
-  y: number
-}
+import type { AimCursorProps } from '../types/components/AimCursor'
 
 /** A simple red cross-hair that never intercepts pointer events. */
-const AimCursor: React.FC<Props> = ({ x, y }) => {
+const AimCursor: React.FC<AimCursorProps> = ({ x, y }) => {
   const size = 24
   const half = size / 2
 

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import * as d3 from 'd3'
+import type { DataPoint } from '../types/components/BugTrendsChart'
 import { Bug } from '../types/bug'
 
 /**
@@ -68,12 +69,6 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
         .attr('fill', '#6b7280') // gray-500
         .text('No data to display')
       return
-    }
-
-    interface DataPoint {
-      date: Date
-      created: number
-      resolved: number
     }
 
     const series = allDays.map(d => ({
