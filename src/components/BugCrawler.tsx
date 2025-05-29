@@ -180,7 +180,7 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
       {/* modal on click */}
       {showModal && isAlive && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/20"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 p-4"
           ref={modalRef}
           tabIndex={-1}
           onClick={e => {
@@ -200,11 +200,11 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
                 e.stopPropagation()
                 inspectBug(null)
               }}
-              className="absolute -top-8 -right-8 size-8 rounded-full bg-white p-1"
+              className="absolute top-2 right-2 size-8 rounded-full bg-white p-1"
             >
               ✕
             </button>
-            <BugCard bug={bug} />
+            <BugCard bug={bug} modal />
           </div>
         </div>
       )}

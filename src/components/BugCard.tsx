@@ -5,7 +5,11 @@ import clsx from 'clsx'
 import { getBugImage } from '../utils/utils'
 import { predictPriorityProbability } from '../lib/bug-priority-ml.ts'
 
-export const BugCard: React.FC<BugCardProps> = ({ bug, preview = false }) => {
+export const BugCard: React.FC<BugCardProps> = ({
+  bug,
+  preview = false,
+  modal = false,
+}) => {
   const squashBug = useBugStore(s => s.squashBug)
   const bugImage = getBugImage(bug.id)
   const highProb =
@@ -24,7 +28,7 @@ export const BugCard: React.FC<BugCardProps> = ({ bug, preview = false }) => {
       className={clsx(
         'relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition',
         !bug.active && 'opacity-40 grayscale',
-        preview ? 'w-[200px]' : 'w-80'
+        preview ? 'w-[200px]' : modal ? 'w-[90vw] max-w-sm sm:max-w-md' : 'w-80'
       )}
       onClick={e => {
         e.stopPropagation()
@@ -58,7 +62,10 @@ export const BugCard: React.FC<BugCardProps> = ({ bug, preview = false }) => {
           <img
             src={bugImage}
             alt={bug.title}
-            className="h-full w-full object-cover aspect-square mb-2"
+            className={clsx(
+              'w-full object-cover mb-2',
+              modal ? 'h-40' : 'h-full aspect-square'
+            )}
           />
         )}
 
