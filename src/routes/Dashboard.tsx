@@ -576,9 +576,6 @@ export default function Dashboard() {
                       )}
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                      <Badge variant="secondary" className="text-xs">
-                        ID: {bug.id}
-                      </Badge>
                       {bug.assignee && (
                         <Badge variant="outline" className="text-xs">
                           {bug.assignee}
@@ -627,9 +624,6 @@ export default function Dashboard() {
                     <CardFooter className="flex justify-between items-center">
                       <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
                         Squashed
-                      </Badge>
-                      <Badge variant="secondary" className="ml-2 text-xs">
-                        ID: {bug.id}
                       </Badge>
                     </CardFooter>
                   </Card>
