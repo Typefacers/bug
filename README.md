@@ -56,6 +56,10 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🎭 **TypeScript**: Added types everywhere except where they're actually needed
 - 🎨 **Tailwind CSS**: 47KB of utility classes to style 3 buttons
 - 🎬 **Framer Motion**: Animated everything because static websites are for quitters
+- 🖥️ **Windows 95 Taskbar**: Because productivity peaks with a retro clock
+- 🔍 **Search & Filter**: Hunt bugs and leaderboard entries like a pro
+- 🧹 **Automatic Cleanup**: Squashed bugs vanish on their own, only to respawn
+- 🚫 **Comical 404 Page**: Getting lost has never been so entertaining
 
 ### 🎪 The Technology Circus
 
@@ -163,18 +167,23 @@ See [docs/NAMING_CONVENTIONS.md](docs/NAMING_CONVENTIONS.md) for the complete gu
 - `BugCrawler.tsx`: AI pathfinding for 2D sprites
 - `bug-priority-ml.ts`: Logistic regression that pretends to rank urgency
 - `AimCursor.tsx`: Mouse cursor replacement nobody asked for
+- `BugTrendsChart.tsx`: Because bug graphs are apparently a thing
+- `Taskbar.tsx`: Windows 95 clock for peak nostalgia
+- `NotFound.tsx`: A 404 page with jokes for when routing fails
 
 **📊 Dashboard Extravaganza:**
 
 - Real-time metrics for imaginary users
 - Charts that update faster than your actual productivity
 - Progress bars that go backwards
+- Search field and priority filters so you can pretend to triage
 
 **🏆 Leaderboard Excellence:**
 
 - Ranks users who don't exist
 - Score persistence not yet implemented
 - Displays achievements for playing alone
+- Searchable table to find your imaginary rivals
 
 ### 🎭 Performance Notes
 
