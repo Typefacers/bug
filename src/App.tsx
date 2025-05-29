@@ -16,14 +16,11 @@ const NewBug = lazy(() => import('./routes/NewBug'))
 const NotFound = lazy(() => import('./routes/NotFound'))
 import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import { raised, windowShadow } from './utils/win95'
-import QuantumStormOverlay from './components/QuantumStormOverlay'
 import Taskbar from './components/Taskbar'
 
 function AppContent() {
   const location = useLocation()
   const { startAutomaticSystems, stopAutomaticSystems } = useBugStore()
-  const quantumStormActive = useBugStore(s => s.quantumStormActive)
-  const startQuantumStorm = useBugStore(s => s.startQuantumStorm)
   const [minimized, setMinimized] = useState(false)
   const [maximized, setMaximized] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -33,15 +30,6 @@ function AppContent() {
     return () => stopAutomaticSystems()
   }, [startAutomaticSystems, stopAutomaticSystems])
 
-  // Randomly trigger Quantum Storms
-  useEffect(() => {
-    const id = setInterval(() => {
-      if (Math.random() < 0.25) {
-        startQuantumStorm()
-      }
-    }, 15000)
-    return () => clearInterval(id)
-  }, [startQuantumStorm])
   const getWindowTitle = () => {
     switch (location.pathname) {
       case '/':
@@ -80,7 +68,6 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-[#008080] p-4 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
-      <QuantumStormOverlay active={quantumStormActive} />
       <div className="flex-grow flex">
         {!minimized && (
           <div

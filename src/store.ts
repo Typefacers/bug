@@ -12,13 +12,10 @@ interface State {
   users: User[]
   activeUserId: number
   inspectedId: string | null
-  quantumStormActive: boolean
   inspectBug: (id: string | null) => void
   squashBug: (id: string) => void
   addBug: (bug: Bug) => void
   removeBug: (id: string) => void
-  startQuantumStorm: () => void
-  stopQuantumStorm: () => void
   startAutomaticSystems: () => void
   stopAutomaticSystems: () => void
 }
@@ -27,8 +24,6 @@ interface State {
 
 let cleanupTimer: ReturnType<typeof setInterval> | null = null
 let respawnTimer: ReturnType<typeof setInterval> | null = null
-let stormTimer: ReturnType<typeof setInterval> | null = null
-let stormBugIds: string[] = []
 
 // Train a simple logistic regression model using the mock bugs
 export let priorityModel: PriorityModel | null = null
@@ -41,7 +36,6 @@ export const useBugStore = create<State>((set, get) => ({
   users: mockUsers.sort((a, b) => b.bounty - a.bounty),
   activeUserId: 1, // assume first user is the current hacker
   inspectedId: null,
-  quantumStormActive: false,
   addBug: bug => set(state => ({ bugs: [...state.bugs, bug] })),
   inspectBug: id => set({ inspectedId: id }),
   removeBug: id =>
@@ -80,47 +74,6 @@ export const useBugStore = create<State>((set, get) => ({
 
       return { bugs, users, inspectedId: null }
     }),
-  startQuantumStorm: () => {
-    if (get().quantumStormActive) return
-    stormBugIds = []
-    const extras: Bug[] = []
-    for (let i = 0; i < CONFIG.STORM_BUGS; i++) {
-      const template =
-        BUG_TEMPLATES[Math.floor(Math.random() * BUG_TEMPLATES.length)]
-      const id = `storm-${Date.now()}-${i}`
-      stormBugIds.push(id)
-
-      const bounty = Math.floor(Math.random() * 50) + 10
-      const priority = priorityModel
-        ? predictPriority({ bounty } as Bug, priorityModel)
-        : 'low'
-
-      extras.push({
-        id,
-        title: template.title,
-        description: template.description,
-        bounty,
-        active: true,
-        priority,
-        createdAt: new Date().toISOString(),
-      })
-    }
-    set(state => ({
-      bugs: [...state.bugs, ...extras],
-      quantumStormActive: true,
-    }))
-    setTimeout(() => get().stopQuantumStorm(), CONFIG.STORM_DURATION)
-  },
-  stopQuantumStorm: () => {
-    set(state => {
-      const bugs = state.bugs.filter(b => !stormBugIds.includes(b.id))
-      const users = state.users.map(u =>
-        u.id === state.activeUserId ? { ...u, survivor: true } : u
-      )
-      stormBugIds = []
-      return { bugs, users, quantumStormActive: false }
-    })
-  },
   startAutomaticSystems: () => {
     // Start cleanup timer for squashed bugs
     if (!cleanupTimer) {
@@ -190,14 +143,6 @@ export const useBugStore = create<State>((set, get) => ({
         }
       }, CONFIG.RESPAWN_INTERVAL)
     }
-
-    if (!stormTimer) {
-      stormTimer = setInterval(() => {
-        if (Math.random() < CONFIG.STORM_CHANCE) {
-          get().startQuantumStorm()
-        }
-      }, CONFIG.STORM_CHECK_INTERVAL)
-    }
   },
   stopAutomaticSystems: () => {
     if (cleanupTimer) {
@@ -207,10 +152,6 @@ export const useBugStore = create<State>((set, get) => ({
     if (respawnTimer) {
       clearInterval(respawnTimer)
       respawnTimer = null
-    }
-    if (stormTimer) {
-      clearInterval(stormTimer)
-      stormTimer = null
     }
   },
 }))
