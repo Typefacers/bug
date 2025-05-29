@@ -48,7 +48,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 ### 🎪 Features That Will Blow Your Mind (And Your Bundle Size)
 
 - 🐛 **Virtual Bug Extermination**: Because squashing real bugs requires actual skill
-- 📊 **Dashboard with Fancy Charts**: Made with D3.js because apparently Canvas was too mainstream
+- 📊 **Dashboard with Fancy Charts**: D3.js charts now sport gradients, grids, and zoom
 - 🏆 **Leaderboard System**: Compete with yourself since you're probably the only user
 - 🎨 **Windows 95 UI**: Nothing says "modern web development" like nostalgic 30-year-old design
 - 🗃️ **Zustand State Management**: Because Redux wasn't complicated enough, we needed something "simpler"
@@ -167,7 +167,7 @@ See [docs/NAMING_CONVENTIONS.md](docs/NAMING_CONVENTIONS.md) for the complete gu
 - `BugCrawler.tsx`: AI pathfinding for 2D sprites
 - `bug-priority-ml.ts`: Logistic regression that pretends to rank urgency
 - `AimCursor.tsx`: Mouse cursor replacement nobody asked for
-- `BugTrendsChart.tsx`: Because bug graphs are apparently a thing
+- `BugTrendsChart.tsx`: Gradient-filled line chart with zoomable timelines
 - `Taskbar.tsx`: Windows 95 clock for peak nostalgia
 - `NotFound.tsx`: A 404 page with jokes for when routing fails
 
