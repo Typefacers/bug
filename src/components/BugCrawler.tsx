@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Bug } from '../types/bug'
+import type { BugCrawlerProps } from '../types/bug-crawler-props'
 import { getBugImage } from '../utils/utils'
 import { BugCard } from './BugCard'
 import ReactDOM from 'react-dom'
@@ -10,13 +10,6 @@ import { useBugStore } from '../store'
 /** -----------------------------------------------------------------------
  *  BugCrawler — makes a bug sprite wander with a lightweight 3-D effect
  *  ---------------------------------------------------------------------- */
-interface BugCrawlerProps {
-  x: number
-  y: number
-  bug: Bug
-  containerWidth: number
-  containerHeight: number
-}
 
 const BugCrawler: React.FC<BugCrawlerProps> = ({
   x,

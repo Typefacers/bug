@@ -1,11 +1,6 @@
 import { useEffect, useState } from 'react'
 import { raised, sunken } from '../utils/win95'
-
-interface TaskbarProps {
-  windowTitle: string
-  minimized: boolean
-  onToggle: () => void
-}
+import type { TaskbarProps } from '../types/taskbar-props'
 
 const getTime = () =>
   new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
