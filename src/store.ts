@@ -4,6 +4,8 @@ import { users as mockUsers } from './mock/users.ts'
 import { CONFIG, BUG_TEMPLATES } from './lib/store-constants.ts'
 import type { Bug } from './types/bug.ts'
 import type { User } from './types/user.ts'
+import { trainPriorityModel, predictPriority } from './lib/bug-priority-ml.ts'
+import type { PriorityModel } from './lib/bug-priority-ml.ts'
 
 interface State {
   bugs: Bug[]
@@ -27,6 +29,12 @@ let cleanupTimer: ReturnType<typeof setInterval> | null = null
 let respawnTimer: ReturnType<typeof setInterval> | null = null
 let stormTimer: ReturnType<typeof setInterval> | null = null
 let stormBugIds: string[] = []
+
+// Train a simple logistic regression model using the mock bugs
+export let priorityModel: PriorityModel | null = null
+if (mockBugs.length) {
+  priorityModel = trainPriorityModel(mockBugs)
+}
 
 export const useBugStore = create<State>((set, get) => ({
   bugs: mockBugs,
@@ -81,12 +89,19 @@ export const useBugStore = create<State>((set, get) => ({
         BUG_TEMPLATES[Math.floor(Math.random() * BUG_TEMPLATES.length)]
       const id = `storm-${Date.now()}-${i}`
       stormBugIds.push(id)
+
+      const bounty = Math.floor(Math.random() * 50) + 10
+      const priority = priorityModel
+        ? predictPriority({ bounty } as Bug, priorityModel)
+        : 'low'
+
       extras.push({
         id,
         title: template.title,
         description: template.description,
-        bounty: Math.floor(Math.random() * 50) + 10,
+        bounty,
         active: true,
+        priority,
         createdAt: new Date().toISOString(),
       })
     }
@@ -147,19 +162,25 @@ export const useBugStore = create<State>((set, get) => ({
         for (let i = 0; i < bugsToSpawn; i++) {
           const template =
             BUG_TEMPLATES[Math.floor(Math.random() * BUG_TEMPLATES.length)]
-          const priorities: ('high' | 'medium' | 'low')[] = [
-            'high',
-            'medium',
-            'low',
-          ]
-          const priority =
-            priorities[Math.floor(Math.random() * priorities.length)]
+
+          const bounty = Math.floor(Math.random() * 180) + 20 // 20-200 bounty
+          let priority: 'high' | 'medium' | 'low'
+          if (priorityModel) {
+            priority = predictPriority({ bounty } as Bug, priorityModel)
+          } else {
+            const priorities: ('high' | 'medium' | 'low')[] = [
+              'high',
+              'medium',
+              'low',
+            ]
+            priority = priorities[Math.floor(Math.random() * priorities.length)]
+          }
 
           const newBug: Bug = {
             id: `auto-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
             title: template.title,
             description: template.description,
-            bounty: Math.floor(Math.random() * 180) + 20, // 20-200 bounty
+            bounty,
             active: true,
             priority,
             createdAt: new Date().toISOString(),
