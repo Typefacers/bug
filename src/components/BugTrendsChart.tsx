@@ -42,6 +42,43 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`)
 
+    const defs = svg.append('defs')
+    const gradientReported = defs
+      .append('linearGradient')
+      .attr('id', 'gradient-reported')
+      .attr('x1', '0')
+      .attr('y1', '0')
+      .attr('x2', '0')
+      .attr('y2', '1')
+    gradientReported
+      .append('stop')
+      .attr('offset', '0%')
+      .attr('stop-color', '#f97316')
+      .attr('stop-opacity', 0.4)
+    gradientReported
+      .append('stop')
+      .attr('offset', '100%')
+      .attr('stop-color', '#f97316')
+      .attr('stop-opacity', 0)
+
+    const gradientResolved = defs
+      .append('linearGradient')
+      .attr('id', 'gradient-resolved')
+      .attr('x1', '0')
+      .attr('y1', '0')
+      .attr('x2', '0')
+      .attr('y2', '1')
+    gradientResolved
+      .append('stop')
+      .attr('offset', '0%')
+      .attr('stop-color', '#10b981')
+      .attr('stop-opacity', 0.4)
+    gradientResolved
+      .append('stop')
+      .attr('offset', '100%')
+      .attr('stop-color', '#10b981')
+      .attr('stop-opacity', 0)
+
     // ----- Data wrangling -------------------------------------------------
     const floor = d3.timeDay.floor
 
@@ -93,22 +130,90 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
       .nice()
       .range([innerHeight, 0])
 
-    // ----- Axes -----------------------------------------------------------
-    g.append('g')
+    // ----- Axes & grids ---------------------------------------------------
+    const xGrid = g
+      .append('g')
+      .attr('class', 'grid')
       .attr('transform', `translate(0,${innerHeight})`)
       .call(
         d3
-          .axisBottom<Date>(x)
+          .axisBottom(x)
+          .ticks(6)
+          .tickSize(-innerHeight)
+          .tickFormat(() => '')
+      )
+    xGrid
+      .selectAll('line')
+      .attr('stroke', '#e5e7eb')
+      .attr('stroke-dasharray', '2,2')
+    xGrid.select('path').remove()
+
+    const yGrid = g
+      .append('g')
+      .attr('class', 'grid')
+      .call(
+        d3
+          .axisLeft(y)
+          .ticks(5)
+          .tickSize(-innerWidth)
+          .tickFormat(() => '')
+      )
+    yGrid
+      .selectAll('line')
+      .attr('stroke', '#e5e7eb')
+      .attr('stroke-dasharray', '2,2')
+    yGrid.select('path').remove()
+
+    const xAxis = g.append('g').attr('transform', `translate(0,${innerHeight})`)
+    const yAxis = g.append('g')
+
+    const drawAxes = (xScale: d3.ScaleTime<number, number>) => {
+      xAxis.call(
+        d3
+          .axisBottom<Date>(xScale)
           .ticks(6)
           .tickSizeOuter(0)
           .tickFormat((d: Date) => d3.timeFormat('%b %d')(d))
       )
+      yAxis
+        .call(d3.axisLeft(y).ticks(5).tickSizeOuter(0))
+        .call(sel => sel.selectAll('text').attr('dx', '-0.25em'))
+    }
 
-    g.append('g')
-      .call(d3.axisLeft(y).ticks(5).tickSizeOuter(0))
-      .call((selection: d3.Selection<SVGGElement, unknown, null, undefined>) =>
-        selection.selectAll('text').attr('dx', '-0.25em')
-      )
+    drawAxes(x)
+    let currentX = x
+
+    const zoomBehavior = d3
+      .zoom<SVGRectElement, unknown>()
+      .scaleExtent([1, 5])
+      .translateExtent([
+        [0, 0],
+        [innerWidth, innerHeight],
+      ])
+      .extent([
+        [0, 0],
+        [innerWidth, innerHeight],
+      ])
+      .on('zoom', event => {
+        currentX = event.transform.rescaleX(x)
+        createdLine.attr(
+          'd',
+          lineCreated.x(d => currentX(d.date) as number)
+        )
+        resolvedLine.attr(
+          'd',
+          lineResolved.x(d => currentX(d.date) as number)
+        )
+        content.select('.area-created').attr(
+          'd',
+          areaCreated.x(d => currentX(d.date) as number)
+        )
+        content.select('.area-resolved').attr(
+          'd',
+          areaResolved.x(d => currentX(d.date) as number)
+        )
+        drawAxes(currentX)
+      })
 
     // ----- Line generators ------------------------------------------------
     const lineCreated = d3
@@ -123,19 +228,60 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
       .y((d: DataPoint) => y(d.resolved))
       .curve(d3.curveMonotoneX)
 
-    // ----- Draw lines -----------------------------------------------------
-    g.append('path')
+    const areaCreated = d3
+      .area<DataPoint>()
+      .x((d: DataPoint) => x(d.date) as number)
+      .y0(innerHeight)
+      .y1((d: DataPoint) => y(d.created))
+      .curve(d3.curveMonotoneX)
+
+    const areaResolved = d3
+      .area<DataPoint>()
+      .x((d: DataPoint) => x(d.date) as number)
+      .y0(innerHeight)
+      .y1((d: DataPoint) => y(d.resolved))
+      .curve(d3.curveMonotoneX)
+
+    // ----- Draw areas and lines ------------------------------------------
+    const clipId = `clip-${Date.now()}`
+    g.append('clipPath')
+      .attr('id', clipId)
+      .append('rect')
+      .attr('width', innerWidth)
+      .attr('height', innerHeight)
+
+    const content = g.append('g').attr('clip-path', `url(#${clipId})`)
+
+    content
+      .append('path')
+      .datum(series)
+      .attr('fill', 'url(#gradient-reported)')
+      .attr('class', 'area-created')
+      .attr('d', areaCreated)
+
+    content
+      .append('path')
+      .datum(series)
+      .attr('fill', 'url(#gradient-resolved)')
+      .attr('class', 'area-resolved')
+      .attr('d', areaResolved)
+
+    const createdLine = content
+      .append('path')
       .datum(series)
       .attr('fill', 'none')
-      .attr('stroke', '#f97316') // orange-500
+      .attr('stroke', '#f97316')
       .attr('stroke-width', 2)
+      .attr('class', 'line-created')
       .attr('d', lineCreated)
 
-    g.append('path')
+    const resolvedLine = content
+      .append('path')
       .datum(series)
       .attr('fill', 'none')
-      .attr('stroke', '#10b981') // emerald-500
+      .attr('stroke', '#10b981')
       .attr('stroke-width', 2)
+      .attr('class', 'line-resolved')
       .attr('d', lineResolved)
 
     // ----- Legend ---------------------------------------------------------
@@ -220,11 +366,12 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
       .attr('height', innerHeight)
       .attr('fill', 'none')
       .attr('pointer-events', 'all')
+      .call(zoomBehavior)
       .on('mouseenter', () => tooltip.style('display', null))
       .on('mouseleave', () => tooltip.style('display', 'none'))
       .on('mousemove', function (event: MouseEvent) {
         const [mx] = d3.pointer(event)
-        const xDate = x.invert(mx)
+        const xDate = currentX.invert(mx)
         const i = bisectDate(series, xDate, 1)
         const d0 = series[i - 1]
         const d1 = series[i]
@@ -235,7 +382,7 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
             ? d0
             : d1
 
-        const xPos = x(d.date) as number
+        const xPos = currentX(d.date) as number
         const boxOffset = xPos > innerWidth - 100 ? -98 : 8
 
         tooltip.select('#tooltip-line').attr('x1', xPos).attr('x2', xPos)
