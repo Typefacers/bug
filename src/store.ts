@@ -3,22 +3,9 @@ import { bugs as mockBugs } from './mock/bugs.ts'
 import { users as mockUsers } from './mock/users.ts'
 import { CONFIG, BUG_TEMPLATES } from './lib/store-constants.ts'
 import type { Bug } from './types/bug.ts'
-import type { User } from './types/user.ts'
 import { trainPriorityModel, predictPriority } from './lib/bug-priority-ml.ts'
-import type { PriorityModel } from './lib/bug-priority-ml.ts'
-
-interface State {
-  bugs: Bug[]
-  users: User[]
-  activeUserId: number
-  inspectedId: string | null
-  inspectBug: (id: string | null) => void
-  squashBug: (id: string) => void
-  addBug: (bug: Bug) => void
-  removeBug: (id: string) => void
-  startAutomaticSystems: () => void
-  stopAutomaticSystems: () => void
-}
+import type { PriorityModel } from './types/priority-model'
+import type { StoreState } from './types/store-state'
 
 // Configuration and bug templates are defined in src/lib/store-constants.ts
 
@@ -31,7 +18,7 @@ if (mockBugs.length) {
   priorityModel = trainPriorityModel(mockBugs)
 }
 
-export const useBugStore = create<State>((set, get) => ({
+export const useBugStore = create<StoreState>((set, get) => ({
   bugs: mockBugs,
   users: mockUsers.sort((a, b) => b.bounty - a.bounty),
   activeUserId: 1, // assume first user is the current hacker

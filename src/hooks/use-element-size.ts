@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react'
-
-export interface ElementSize {
-  width: number
-  height: number
-}
+import type { ElementSize } from '../types/element-size'
 
 export const useElementSize = <T extends HTMLElement>(
   ref: React.RefObject<T>

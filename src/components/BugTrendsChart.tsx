@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useElementSize } from '../hooks/use-element-size'
 import * as d3 from 'd3'
 import { Bug } from '../types/bug'
+import type { DataPoint } from '../types/bug-trends-chart'
 
 /**
  * Interactive line chart that tracks how many bugs were reported
@@ -69,12 +70,6 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
         .attr('fill', '#6b7280') // gray-500
         .text('No data to display')
       return
-    }
-
-    interface DataPoint {
-      date: Date
-      created: number
-      resolved: number
     }
 
     const series = allDays.map(d => ({

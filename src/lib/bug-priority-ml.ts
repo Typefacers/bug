@@ -1,9 +1,5 @@
 import type { Bug } from '../types/bug.ts'
-
-export interface PriorityModel {
-  weight: number
-  bias: number
-}
+import type { PriorityModel } from '../types/priority-model'
 
 const sigmoid = (z: number) => 1 / (1 + Math.exp(-z))
 

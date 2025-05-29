@@ -1,21 +1,16 @@
 import * as React from 'react'
-
-interface SelectContextType<T extends string> {
-  value: T
-  onValueChange: (value: T) => void
-  open: boolean
-  setOpen: (open: boolean) => void
-}
+import type {
+  SelectContextType,
+  SelectProps,
+  SelectTriggerProps,
+  SelectValueProps,
+  SelectContentProps,
+  SelectItemProps,
+} from '../../types/select-props'
 
 const SelectContext = React.createContext<
   SelectContextType<string> | undefined
 >(undefined)
-
-export interface SelectProps<T extends string> {
-  value: T
-  onValueChange: (value: T) => void
-  children: React.ReactNode
-}
 
 export function Select<T extends string>({
   children,
@@ -36,11 +31,6 @@ export function Select<T extends string>({
       {children}
     </SelectContext.Provider>
   )
-}
-
-export interface SelectTriggerProps {
-  className?: string
-  children: React.ReactNode
 }
 
 export function SelectTrigger({ className, children }: SelectTriggerProps) {
@@ -67,10 +57,6 @@ export function SelectTrigger({ className, children }: SelectTriggerProps) {
   )
 }
 
-export interface SelectValueProps {
-  placeholder: string
-}
-
 export function SelectValue({ placeholder }: SelectValueProps) {
   const context = React.useContext(SelectContext)
   if (!context) {
@@ -78,11 +64,6 @@ export function SelectValue({ placeholder }: SelectValueProps) {
   }
 
   return <span>{context.value || placeholder}</span>
-}
-
-export interface SelectContentProps {
-  className?: string
-  children: React.ReactNode
 }
 
 export function SelectContent({ className, children }: SelectContentProps) {
@@ -104,11 +85,6 @@ export function SelectContent({ className, children }: SelectContentProps) {
       </div>
     </div>
   )
-}
-
-export interface SelectItemProps<T extends string> {
-  value: T
-  children: React.ReactNode
 }
 
 export function SelectItem<T extends string>({
