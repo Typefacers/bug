@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useElementSize } from '../hooks/use-element-size'
 import * as d3 from 'd3'
 import { Bug } from '../types/bug'
 
@@ -10,19 +11,19 @@ import { Bug } from '../types/bug'
  * • Displays a friendly "No data" placeholder if nothing to plot.
  */
 const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement | null>(null)
-  const resizeObserver = useRef<ResizeObserver | null>(null)
+  const size = useElementSize(wrapperRef)
 
   /** Main render routine -------------------------------------------------- */
   const renderChart = () => {
+    if (!svgRef.current || !size.width) return
+
     const svg = d3.select(svgRef.current)
     svg.selectAll('*').remove() // wipe previous
 
-    const parent = svgRef.current?.parentElement
-    if (!parent) return
-
     // ----- Dimensions (responsive) ---------------------------------------
-    const containerWidth = parent.clientWidth || 640
+    const containerWidth = size.width
     const margin = { top: 20, right: 20, bottom: 35, left: 48 }
     const innerWidth = containerWidth - margin.left - margin.right
     const innerHeight = 320 - margin.top - margin.bottom
@@ -177,25 +178,15 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
 
   /** Setup & teardown ----------------------------------------------------- */
   useEffect(() => {
-    // Initial render
     renderChart()
-
-    // Observe container resize
-    const parent = svgRef.current?.parentElement
-    if (parent && !resizeObserver.current) {
-      resizeObserver.current = new ResizeObserver(() => renderChart())
-      resizeObserver.current.observe(parent)
-    }
-
-    return () => {
-      if (resizeObserver.current && parent) {
-        resizeObserver.current.unobserve(parent)
-      }
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bugs]) // re-render when data changes
+  }, [bugs, size.width])
 
-  return <svg ref={svgRef} className="w-full h-80 select-none" />
+  return (
+    <div ref={wrapperRef} className="w-full">
+      <svg ref={svgRef} className="w-full h-80 select-none" />
+    </div>
+  )
 }
 
 export default BugTrendsChart
