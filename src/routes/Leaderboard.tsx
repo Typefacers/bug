@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useBugStore } from '../store'
 import Meta from '../components/Meta'
+import { Input } from '../components/ui/input'
 
 /** Map bounty → tier name */
 const levelFromBounty = (bounty: number): string => {
@@ -27,6 +28,7 @@ export default function Leaderboard() {
   /** Local sort state */
   const [sortKey, setSortKey] = React.useState<SortKey>('bounty')
   const [ascending, setAscending] = React.useState(false)
+  const [query, setQuery] = React.useState('')
 
   /** Toggle / change sort */
   const handleSort = (key: SortKey) => {
@@ -39,9 +41,16 @@ export default function Leaderboard() {
     }
   }
 
+  /** Users filtered by search query */
+  const filteredUsers = React.useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return users
+    return users.filter(u => u.name.toLowerCase().includes(q))
+  }, [users, query])
+
   /** Users sorted according to selected column */
   const sortedUsers = React.useMemo(() => {
-    const list = [...users]
+    const list = [...filteredUsers]
 
     list.sort((a, b) => {
       const bugCountA =
@@ -90,7 +99,7 @@ export default function Leaderboard() {
     })
 
     return list
-  }, [users, sortKey, ascending])
+  }, [filteredUsers, sortKey, ascending])
 
   /** Helper to render sort arrows */
   const sortArrow = (key: SortKey) =>
@@ -103,6 +112,20 @@ export default function Leaderboard() {
         description="Check the rankings of top bug squashers and their bounties."
       />
       <div className="overflow-x-auto">
+        <div className="mb-2 max-w-xs">
+          <label htmlFor="search" className="sr-only">
+            Search
+          </label>
+          <Input
+            id="search"
+            value={query}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setQuery(e.target.value)
+            }
+            placeholder="Search hunters"
+            className="bg-white border px-2 py-1 text-sm"
+          />
+        </div>
         <table className="w-full text-sm select-none bg-[#E0E0E0]">
           <caption className="sr-only">Bug bounty rankings</caption>
           <thead>
