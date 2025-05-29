@@ -7,13 +7,7 @@ import {
   CardTitle,
 } from '../components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../components/ui/select'
+
 import { Input } from '../components/ui/input'
 import { useBugStore } from '../store'
 import { Bug } from '../types/bug'
@@ -128,9 +122,6 @@ export default function Dashboard() {
   const bugs = useBugStore(s => s.bugs)
   // Sort active bugs by bounty in descending order for display
   const [searchTerm, setSearchTerm] = useState('')
-  const [priorityFilter, setPriorityFilter] = useState<
-    'all' | 'high' | 'medium' | 'low'
-  >('all')
   const activeBugs = bugs
     .filter(bug => bug.active)
     .sort((a, b) => b.bounty - a.bounty)
@@ -138,14 +129,8 @@ export default function Dashboard() {
   const matchesSearch = (bug: Bug) =>
     bug.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     bug.description.toLowerCase().includes(searchTerm.toLowerCase())
-  const matchesPriority = (bug: Bug) =>
-    priorityFilter === 'all' || bug.priority === priorityFilter
-  const filteredActiveBugs = activeBugs.filter(
-    b => matchesSearch(b) && matchesPriority(b)
-  )
-  const filteredSquashedBugs = squashedBugs.filter(
-    b => matchesSearch(b) && matchesPriority(b)
-  )
+  const filteredActiveBugs = activeBugs.filter(b => matchesSearch(b))
+  const filteredSquashedBugs = squashedBugs.filter(b => matchesSearch(b))
   const [stats, setStats] = useState({
     active: 0,
     squashed: 0,
@@ -493,22 +478,6 @@ export default function Dashboard() {
             onChange={e => setSearchTerm(e.target.value)}
             className="md:w-1/2"
           />
-          <Select
-            value={priorityFilter}
-            onValueChange={v =>
-              setPriorityFilter(v as 'all' | 'high' | 'medium' | 'low')
-            }
-          >
-            <SelectTrigger className="bg-white md:w-40">
-              <SelectValue placeholder="Priority" />
-            </SelectTrigger>
-            <SelectContent className="bg-white">
-              <SelectItem value="all">All</SelectItem>
-              <SelectItem value="high">High</SelectItem>
-              <SelectItem value="medium">Medium</SelectItem>
-              <SelectItem value="low">Low</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
         <Tabs defaultValue="active" className="mb-6">
           <TabsList
