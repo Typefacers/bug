@@ -23,6 +23,7 @@ function AppContent() {
   const location = useLocation()
   const { startAutomaticSystems, stopAutomaticSystems } = useBugStore()
   const quantumStormActive = useBugStore(s => s.quantumStormActive)
+  const startQuantumStorm = useBugStore(s => s.startQuantumStorm)
   const [minimized, setMinimized] = useState(false)
   const [maximized, setMaximized] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -31,6 +32,16 @@ function AppContent() {
     startAutomaticSystems()
     return () => stopAutomaticSystems()
   }, [startAutomaticSystems, stopAutomaticSystems])
+
+  // Randomly trigger Quantum Storms
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (Math.random() < 0.25) {
+        startQuantumStorm()
+      }
+    }, 15000)
+    return () => clearInterval(id)
+  }, [startQuantumStorm])
   const getWindowTitle = () => {
     switch (location.pathname) {
       case '/':
