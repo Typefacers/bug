@@ -1,18 +1,17 @@
 import { motion } from 'framer-motion'
-import { Bug } from '../types/bug'
-import { useBugStore } from '../store'
+import { useBugStore, priorityModel } from '../store'
 import clsx from 'clsx'
 import { getBugImage } from '../utils/utils'
+import { predictPriorityProbability } from '../lib/bug-priority-ml.ts'
+import type { BugCardProps } from '../types/components/BugCard'
 
-interface Props {
-  bug: Bug
-  /** Compact hover preview when true */
-  preview?: boolean
-}
-
-export const BugCard: React.FC<Props> = ({ bug, preview = false }) => {
+export const BugCard: React.FC<BugCardProps> = ({ bug, preview = false }) => {
   const squashBug = useBugStore(s => s.squashBug)
   const bugImage = getBugImage(bug.id)
+  const highProb =
+    priorityModel && bug.bounty
+      ? predictPriorityProbability(bug.bounty, priorityModel)
+      : null
 
   return (
     <motion.div
@@ -70,6 +69,23 @@ export const BugCard: React.FC<Props> = ({ bug, preview = false }) => {
           <span className="ml-2 inline-block rounded-full bg-emerald-600 px-2 py-1 text-xs font-mono text-white">
             +{bug.bounty}
           </span>
+          {bug.priority && (
+            <span
+              className={clsx(
+                'ml-2 inline-block rounded-full px-2 py-1 text-xs font-mono text-white',
+                bug.priority === 'high' && 'bg-red-600',
+                bug.priority === 'medium' && 'bg-yellow-500',
+                bug.priority === 'low' && 'bg-gray-500'
+              )}
+            >
+              {bug.priority}
+            </span>
+          )}
+          {highProb !== null && (
+            <span className="ml-2 text-xs text-gray-500 font-mono">
+              {Math.round(highProb * 100)}%
+            </span>
+          )}
         </div>
 
         <p className="mb-4 mx-4 text-sm text-gray-600">{bug.description}</p>
