@@ -31,6 +31,7 @@ import {
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import BugTrendsChart from '../components/BugTrendsChart'
+import BugForecast from '../components/BugForecast'
 import { useNavigate } from 'react-router-dom'
 import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
 
@@ -370,6 +371,7 @@ export default function Dashboard() {
       </div>
 
       <BugTrendsChart bugs={bugs} />
+      <BugForecast bugs={bugs} />
 
       {/* Top row stats */}
       <div className="grid gap-6 md:grid-cols-2 mb-6">
