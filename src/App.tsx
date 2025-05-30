@@ -16,6 +16,7 @@ const Dashboard = lazy(() => import('./routes/Dashboard'))
 const NewBug = lazy(() => import('./routes/NewBug'))
 const NotFound = lazy(() => import('./routes/NotFound'))
 const EasterEgg = lazy(() => import('./routes/EasterEgg'))
+const Weather = lazy(() => import('./routes/Weather'))
 import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import { raised, windowShadow } from './utils/win95'
 import Taskbar from './components/Taskbar'
@@ -45,6 +46,8 @@ function AppContent() {
         return 'File a Bug'
       case '/easter-egg':
         return 'Secret Bug Found'
+      case '/weather':
+        return 'Weather Forecast'
       default:
         if (location.pathname.startsWith('/user/')) return 'User Profile'
         return 'Page Not Found'
@@ -141,6 +144,12 @@ function AppContent() {
                   >
                     🏆 Leaderboard
                   </Link>
+                  <Link
+                    to="/weather"
+                    className={`px-4 py-1 ${location.pathname === '/weather' ? 'bg-[#E0E0E0] font-semibold' : 'hover:bg-[#D0D0D0]'}`}
+                  >
+                    🌦️ Weather
+                  </Link>
                 </div>
 
                 {/* Route Content */}
@@ -153,6 +162,7 @@ function AppContent() {
                         path="/bounty-leaderboard"
                         element={<Leaderboard />}
                       />
+                      <Route path="/weather" element={<Weather />} />
                       <Route path="/user/:userId" element={<UserProfile />} />
                       <Route path="/bug/new" element={<NewBug />} />
                       <Route path="/easter-egg" element={<EasterEgg />} />

@@ -60,6 +60,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🔍 **Search & Filter**: Hunt bugs and leaderboard entries like a pro
 - 🧹 **Automatic Cleanup**: Squashed bugs vanish on their own, only to respawn
 - 🚫 **Comical 404 Page**: Getting lost has never been so entertaining
+- 🌦️ **Weather Forecast**: Plan your bug hunts around the faux forecast
 - 🌑 **Konami Code Dark Mode**: Enter the secret code for a darker UI
 
 ### 🎪 The Technology Circus
