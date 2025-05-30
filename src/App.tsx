@@ -16,6 +16,7 @@ const Dashboard = lazy(() => import('./routes/Dashboard'))
 const NewBug = lazy(() => import('./routes/NewBug'))
 const NotFound = lazy(() => import('./routes/NotFound'))
 const EasterEgg = lazy(() => import('./routes/EasterEgg'))
+const SignUp = lazy(() => import('./routes/SignUp'))
 import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import { raised, windowShadow } from './utils/win95'
 import Taskbar from './components/Taskbar'
@@ -43,6 +44,8 @@ function AppContent() {
         return 'Bug Bounty Leaderboard'
       case '/bug/new':
         return 'File a Bug'
+      case '/sign-up':
+        return 'Sign Up'
       case '/easter-egg':
         return 'Secret Bug Found'
       default:
@@ -141,6 +144,12 @@ function AppContent() {
                   >
                     🏆 Leaderboard
                   </Link>
+                  <Link
+                    to="/sign-up"
+                    className={`px-4 py-1 ${location.pathname === '/sign-up' ? 'bg-[#E0E0E0] font-semibold' : 'hover:bg-[#D0D0D0]'}`}
+                  >
+                    ✍️ Sign Up
+                  </Link>
                 </div>
 
                 {/* Route Content */}
@@ -155,6 +164,7 @@ function AppContent() {
                       />
                       <Route path="/user/:userId" element={<UserProfile />} />
                       <Route path="/bug/new" element={<NewBug />} />
+                      <Route path="/sign-up" element={<SignUp />} />
                       <Route path="/easter-egg" element={<EasterEgg />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
