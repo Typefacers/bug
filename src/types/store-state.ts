@@ -9,6 +9,7 @@ export interface StoreState {
   inspectBug: (id: string | null) => void
   squashBug: (id: string) => void
   addBug: (bug: Bug) => void
+  addUser: (user: User) => void
   removeBug: (id: string) => void
   startAutomaticSystems: () => void
   stopAutomaticSystems: () => void

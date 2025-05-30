@@ -64,3 +64,17 @@ test('respawn timer adds bugs when below minimum', () => {
   useBugStore.getState().stopAutomaticSystems()
   timers.reset()
 })
+
+// Test that addUser inserts user and updates activeUserId
+
+test('addUser adds user and sets active user', () => {
+  resetStore()
+
+  const user = { id: 123, name: 'Tester', avatar: '', bugs: [], bounty: 0 }
+
+  useBugStore.getState().addUser(user)
+
+  const users = useBugStore.getState().users
+  assert.ok(users.find(u => u.id === 123))
+  assert.strictEqual(useBugStore.getState().activeUserId, 123)
+})
