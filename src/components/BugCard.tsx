@@ -76,6 +76,9 @@ export const BugCard: React.FC<BugCardProps> = ({
           <span className="ml-2 inline-block rounded-full bg-emerald-600 px-2 py-1 text-xs font-mono text-white">
             +{bug.bounty}
           </span>
+          <span className="ml-2 inline-block rounded-full bg-blue-600 px-2 py-1 text-xs font-mono text-white">
+            {bug.pto}h PTO
+          </span>
           {bug.priority && (
             <span
               className={clsx(
