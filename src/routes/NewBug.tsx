@@ -24,6 +24,7 @@ import { motion } from 'framer-motion'
 import { Bug } from '../types/bug'
 import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
 import Meta from '../components/Meta'
+import Captcha from '../components/Captcha'
 
 export default function NewBug() {
   const navigate = useNavigate()
@@ -32,6 +33,7 @@ export default function NewBug() {
   const [bounty, setBounty] = useState(50)
   const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium')
   const [error, setError] = useState('')
+  const [captchaValid, setCaptchaValid] = useState(false)
 
   const addBug = useBugStore(s => s.addBug)
 
@@ -43,6 +45,11 @@ export default function NewBug() {
 
     if (!description) {
       setError('Please enter a description for the bug')
+      return
+    }
+
+    if (!captchaValid) {
+      setError('Please solve the captcha')
       return
     }
 
@@ -145,6 +152,8 @@ export default function NewBug() {
                 </Select>
               </div>
             </div>
+
+            <Captcha onChange={setCaptchaValid} />
           </CardContent>
           <CardFooter className="flex justify-between">
             <Button
@@ -155,6 +164,7 @@ export default function NewBug() {
             </Button>
             <Button
               className={`${raised} bg-[#008080] hover:bg-[#006666] text-white`}
+              disabled={!captchaValid}
               onClick={createBug}
             >
               Submit Bug
