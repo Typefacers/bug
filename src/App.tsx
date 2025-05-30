@@ -18,6 +18,7 @@ const NotFound = lazy(() => import('./routes/NotFound'))
 const EasterEgg = lazy(() => import('./routes/EasterEgg'))
 const Weather = lazy(() => import('./routes/Weather'))
 const SignUp = lazy(() => import('./routes/SignUp'))
+const Fortune = lazy(() => import('./routes/Fortune'))
 import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import { raised, windowShadow } from './utils/win95'
 import Taskbar from './components/Taskbar'
@@ -51,6 +52,8 @@ function AppContent() {
         return 'Secret Bug Found'
       case '/weather':
         return 'Weather Forecast'
+      case '/fortune':
+        return 'Fortune Cookie'
       default:
         if (location.pathname.startsWith('/user/')) return 'User Profile'
         return 'Page Not Found'
@@ -154,6 +157,12 @@ function AppContent() {
                     🌦️ Weather
                   </Link>
                   <Link
+                    to="/fortune"
+                    className={`px-4 py-1 ${location.pathname === '/fortune' ? 'bg-[#E0E0E0] font-semibold' : 'hover:bg-[#D0D0D0]'}`}
+                  >
+                    🥠 Fortune
+                  </Link>
+                  <Link
                     to="/sign-up"
                     className={`px-4 py-1 ${location.pathname === '/sign-up' ? 'bg-[#E0E0E0] font-semibold' : 'hover:bg-[#D0D0D0]'}`}
                   >
@@ -172,6 +181,7 @@ function AppContent() {
                         element={<Leaderboard />}
                       />
                       <Route path="/weather" element={<Weather />} />
+                      <Route path="/fortune" element={<Fortune />} />
                       <Route path="/user/:userId" element={<UserProfile />} />
                       <Route path="/bug/new" element={<NewBug />} />
                       <Route path="/sign-up" element={<SignUp />} />

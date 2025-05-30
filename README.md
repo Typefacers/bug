@@ -64,7 +64,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🌦️ **Weather Forecast**: Plan your bug hunts around the faux forecast
 - 🌑 **Konami Code Dark Mode**: Enter the secret code for a darker UI
 - ☕ **Coffee Overflow Bug**: Demo data now includes a caffeinated crash
-- 🥠 **Fortune Cookie**: Random words of wisdom on the Bugs page
+- 🥠 **Fortune Cookie**: Random words of wisdom on its own tab
 - 🧩 **Captcha Protection**: Basic math challenge to keep bots at bay
 - ✍️ **Sign Up Form**: Create your own bug-bashing persona
 
