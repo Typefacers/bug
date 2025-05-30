@@ -58,6 +58,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🎬 **Framer Motion**: Animated everything because static websites are for quitters
 - 🖥️ **Windows 95 Taskbar**: Because productivity peaks with a retro clock
 - 🔍 **Search & Filter**: Hunt bugs and leaderboard entries like a pro
+- ⏰ **PTO Rewards**: Earn ridiculous amounts of time off for each bug you squash
 - 🧹 **Automatic Cleanup**: Squashed bugs vanish on their own, only to respawn
 - 🔮 **Bug Forecast**: Peer into tomorrow's infestation with predictive charts
 - 🚫 **Comical 404 Page**: Getting lost has never been so entertaining

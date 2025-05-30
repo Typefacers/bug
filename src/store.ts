@@ -126,6 +126,7 @@ export const useBugStore = create<StoreState>((set, get) => ({
             title: template.title,
             description: template.description,
             bounty,
+            pto: Math.floor(Math.random() * 8) + 1,
             active: true,
             priority,
             createdAt: new Date().toISOString(),
