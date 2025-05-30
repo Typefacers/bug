@@ -61,6 +61,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🧹 **Automatic Cleanup**: Squashed bugs vanish on their own, only to respawn
 - 🚫 **Comical 404 Page**: Getting lost has never been so entertaining
 - 🌑 **Konami Code Dark Mode**: Enter the secret code for a darker UI
+- 🥠 **Fortune Cookie**: Random words of wisdom on the Bugs page
 
 ### 🎪 The Technology Circus
 
