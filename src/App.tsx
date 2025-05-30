@@ -9,6 +9,7 @@ import { Suspense, lazy, useEffect, useState } from 'react'
 import { useKonamiDarkMode } from './hooks/use-konami-dark-mode'
 import { useBugStore } from './store'
 
+const Landing = lazy(() => import('./routes/Landing'))
 const Bugs = lazy(() => import('./routes/Bugs'))
 const Leaderboard = lazy(() => import('./routes/Leaderboard'))
 const UserProfile = lazy(() => import('./routes/UserProfile'))
@@ -37,6 +38,8 @@ function AppContent() {
     switch (location.pathname) {
       case '/':
         return 'Bug Basher'
+      case '/bugs':
+        return 'Bug Arena'
       case '/dashboard':
         return 'Bug Dashboard'
       case '/bounty-leaderboard':
@@ -127,6 +130,12 @@ function AppContent() {
                     to="/"
                     className={`px-4 py-1 ${location.pathname === '/' ? 'bg-[#E0E0E0] font-semibold' : 'hover:bg-[#D0D0D0]'}`}
                   >
+                    🏠 Home
+                  </Link>
+                  <Link
+                    to="/bugs"
+                    className={`px-4 py-1 ${location.pathname === '/bugs' ? 'bg-[#E0E0E0] font-semibold' : 'hover:bg-[#D0D0D0]'}`}
+                  >
                     🐛 Bugs
                   </Link>
                   <Link
@@ -147,7 +156,8 @@ function AppContent() {
                 <div className="p-2 overflow-auto relative z-0 flex-grow flex flex-col">
                   <Suspense fallback={<div className="p-4">Loading...</div>}>
                     <Routes>
-                      <Route path="/" element={<Bugs />} />
+                      <Route path="/" element={<Landing />} />
+                      <Route path="/bugs" element={<Bugs />} />
                       <Route path="/dashboard" element={<Dashboard />} />
                       <Route
                         path="/bounty-leaderboard"
