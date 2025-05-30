@@ -24,6 +24,11 @@ export const useBugStore = create<StoreState>((set, get) => ({
   activeUserId: 1, // assume first user is the current hacker
   inspectedId: null,
   addBug: bug => set(state => ({ bugs: [...state.bugs, bug] })),
+  addUser: user =>
+    set(state => ({
+      users: [...state.users, user].sort((a, b) => b.bounty - a.bounty),
+      activeUserId: user.id,
+    })),
   inspectBug: id => set({ inspectedId: id }),
   removeBug: id =>
     set(state => ({
