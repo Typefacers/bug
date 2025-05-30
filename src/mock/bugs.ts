@@ -106,4 +106,14 @@ export const bugs: Bug[] = [
     createdAt: daysAgo(0),
     priority: 'high',
   },
+  {
+    id: 'b11',
+    title: 'Coffee Overflow',
+    description:
+      'Repeated coffee orders slowly chew through memory until the app crashes.',
+    bounty: 75,
+    active: true,
+    createdAt: daysAgo(0),
+    priority: 'medium',
+  },
 ]
