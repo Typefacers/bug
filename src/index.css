@@ -1,15 +1,7 @@
 @import 'tailwindcss';
 
-@font-face {
-  font-family: 'Pixelated MS Sans Serif';
-  src: url('./assets/fonts/PixelatedMSSansSerif.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
 body {
   font-family:
-    'Pixelated MS Sans Serif',
     -apple-system,
     BlinkMacSystemFont,
     'Segoe UI',
@@ -131,8 +123,7 @@ body {
   text-align: center;
   border: 1px solid #000000; /* Black border */
   padding: 2px 5px;
-  font-family:
-    'Pixelated MS Sans Serif', Arial, sans-serif; /* Ensure correct font */
+  font-family: Arial, sans-serif; /* Ensure correct font */
   font-size: 10px; /* Tooltips usually have small text */
   white-space: nowrap; /* Prevent wrapping for short tooltips */
 
