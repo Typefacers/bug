@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { raised, sunken } from '../utils/win95'
 import type { TaskbarProps } from '../types/taskbar-props'
 import StartMenu from './StartMenu'
-import Win95Logo from '../assets/win95-logo.png'
+// import Win95Logo from '../assets/win95-logo.png'; // Removed logo import
 
 // Define the structure for an application window
 interface AppWindow {
@@ -84,7 +84,7 @@ export default function Taskbar({
           onClick={toggleStartMenu}
           className={`flex items-center h-6 px-2 gap-1 bg-[#C0C0C0] ${raised} active:${sunken} win95-button`}
         >
-          <img src={Win95Logo} alt="Win95 Logo" className="w-5 h-5 mr-1" />
+          <span className="mr-1 text-base" role="img" aria-label="Start menu icon">🪟</span> {/* Emoji with styling */}
           <span className="text-sm font-bold">Start</span>
         </button>
         <span className="win95-tooltip-text">Click here to begin.</span>
