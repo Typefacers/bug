@@ -1,55 +1,55 @@
-import { useEffect, useState, useRef } from 'react';
-import { raised, sunken } from '../utils/win95';
-import type { TaskbarProps } from '../types/taskbar-props';
-import StartMenu from './StartMenu';
-import Win95Logo from '../assets/win95-logo.png';
+import { useEffect, useState, useRef } from 'react'
+import { raised, sunken } from '../utils/win95'
+import type { TaskbarProps } from '../types/taskbar-props'
+import StartMenu from './StartMenu'
+import Win95Logo from '../assets/win95-logo.png'
 
 // Define the structure for an application window
 interface AppWindow {
-  id: string;
-  title: string;
-  icon: string; // For now, a string placeholder for an icon
-  isActive: boolean;
+  id: string
+  title: string
+  icon: string // For now, a string placeholder for an icon
+  isActive: boolean
 }
 
 const getTime = () =>
-  new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
 export default function Taskbar({
   windowTitle, // This might represent the main application window title
-  minimized,   // This might relate to the main application window
-  onToggle,    // This might relate to the main application window
+  minimized, // This might relate to the main application window
+  onToggle, // This might relate to the main application window
 }: TaskbarProps) {
-  const [time, setTime] = useState(getTime());
+  const [time, setTime] = useState(getTime())
   // State for simulated open applications
   const [openApps, setOpenApps] = useState<AppWindow[]>([
     { id: '1', title: 'My Computer', icon: '[C]', isActive: true },
     { id: '2', title: 'Recycle Bin', icon: '[RB]', isActive: false },
     { id: '3', title: 'Notepad - Untitled', icon: '[N]', isActive: false },
-  ]);
-  const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
-  const startButtonRef = useRef<HTMLButtonElement>(null);
-  const startMenuRef = useRef<HTMLDivElement>(null);
+  ])
+  const [isStartMenuOpen, setIsStartMenuOpen] = useState(false)
+  const startButtonRef = useRef<HTMLButtonElement>(null)
+  const startMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const id = setInterval(() => setTime(getTime()), 1000);
-    return () => clearInterval(id);
-  }, []);
+    const id = setInterval(() => setTime(getTime()), 1000)
+    return () => clearInterval(id)
+  }, [])
 
   const toggleStartMenu = () => {
-    setIsStartMenuOpen((prev) => !prev);
-  };
+    setIsStartMenuOpen(prev => !prev)
+  }
 
   const handleAppButtonClick = (appId: string) => {
-    setOpenApps((prevApps) =>
-      prevApps.map((app) => ({
+    setOpenApps(prevApps =>
+      prevApps.map(app => ({
         ...app,
         isActive: app.id === appId,
       }))
-    );
+    )
     // Note: If the main `windowTitle` prop functionality needs to interact with this,
     // further logic might be needed here or in how `onToggle` and `minimized` are handled.
-  };
+  }
 
   // Effect to handle clicks outside the StartMenu to close it
   useEffect(() => {
@@ -61,22 +61,24 @@ export default function Taskbar({
         startMenuRef.current &&
         !startMenuRef.current.contains(event.target as Node)
       ) {
-        setIsStartMenuOpen(false);
+        setIsStartMenuOpen(false)
       }
-    };
+    }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isStartMenuOpen]);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isStartMenuOpen])
 
   return (
     <div
       className={`h-8 bg-[#C0C0C0] flex items-center px-1 justify-between ${sunken} relative`} // Added relative for positioning StartMenu
     >
       {/* Start Button with Tooltip */}
-      <div className="relative has-tooltip"> {/* Ensure this outer div is relative if not already by parent */}
+      <div className="relative has-tooltip">
+        {' '}
+        {/* Ensure this outer div is relative if not already by parent */}
         <button
           ref={startButtonRef}
           onClick={toggleStartMenu}
@@ -88,7 +90,10 @@ export default function Taskbar({
         <span className="win95-tooltip-text">Click here to begin.</span>
         {/* Render StartMenu conditionally */}
         <div ref={startMenuRef}>
-          <StartMenu isOpen={isStartMenuOpen} onClose={() => setIsStartMenuOpen(false)} />
+          <StartMenu
+            isOpen={isStartMenuOpen}
+            onClose={() => setIsStartMenuOpen(false)}
+          />
         </div>
       </div>
 
@@ -110,7 +115,7 @@ export default function Taskbar({
         )}
 
         {/* Buttons for simulated open applications */}
-        {openApps.map((app) => (
+        {openApps.map(app => (
           <div key={app.id} className="has-tooltip">
             <button
               onClick={() => handleAppButtonClick(app.id)}
@@ -129,7 +134,9 @@ export default function Taskbar({
 
       {/* System Tray and Clock grouped together */}
       <div className="flex items-center">
-        <div className={`h-6 px-1 mr-1 flex items-center space-x-1 bg-[#C0C0C0] ${sunken}`}>
+        <div
+          className={`h-6 px-1 mr-1 flex items-center space-x-1 bg-[#C0C0C0] ${sunken}`}
+        >
           {/* Placeholder System Tray Icons with Tooltips */}
           <div className="has-tooltip">
             <span className="text-sm cursor-default">🔊</span>
@@ -140,7 +147,9 @@ export default function Taskbar({
             <span className="win95-tooltip-text">Network Status</span>
           </div>
         </div>
-        <div className={`h-6 px-2 bg-[#C0C0C0] ${raised} win95-button font-mono text-sm flex items-center`}>
+        <div
+          className={`h-6 px-2 bg-[#C0C0C0] ${raised} win95-button font-mono text-sm flex items-center`}
+        >
           {time}
         </div>
       </div>

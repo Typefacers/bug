@@ -8,7 +8,18 @@
 }
 
 body {
-  font-family: 'Pixelated MS Sans Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    'Pixelated MS Sans Serif',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
   background-color: #008080; /* Windows 95 teal background */
   color: #000000;
   font-size: 12px; /* Default font size for many Win95 elements */
@@ -16,8 +27,8 @@ body {
 
 /* Windows 95 specific styles */
 .win95-border-outset {
-  border-top: 1px solid #FFFFFF;
-  border-left: 1px solid #FFFFFF;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
   border-right: 1px solid #000000;
   border-bottom: 1px solid #000000;
   box-shadow: 1px 1px 0 #000000;
@@ -26,26 +37,31 @@ body {
 .win95-border-inset {
   border-top: 1px solid #000000;
   border-left: 1px solid #000000;
-  border-right: 1px solid #FFFFFF;
-  border-bottom: 1px solid #FFFFFF;
+  border-right: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
 }
 
 .win95-button {
-  background-color: #C0C0C0; /* Silver */
-  border: 1px solid #C0C0C0;
-  box-shadow: inset -1px -1px 0 #000000, inset 1px 1px 0 #FFFFFF, 1px 1px 0 #000000; /* Simpler shadow for buttons */
+  background-color: #c0c0c0; /* Silver */
+  border: 1px solid #c0c0c0;
+  box-shadow:
+    inset -1px -1px 0 #000000,
+    inset 1px 1px 0 #ffffff,
+    1px 1px 0 #000000; /* Simpler shadow for buttons */
   padding: 2px 6px;
 }
 
 .win95-button:active {
-  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #FFFFFF;
+  box-shadow:
+    inset 1px 1px 0 #000000,
+    inset -1px -1px 0 #ffffff;
   padding: 3px 5px 1px 7px; /* Adjust padding for pressed effect */
 }
 
 .win95-start-menu {
-  background-color: #C0C0C0; /* Silver */
-  border-top: 1px solid #FFFFFF;
-  border-left: 1px solid #FFFFFF;
+  background-color: #c0c0c0; /* Silver */
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
   border-right: 1px solid #000000;
   border-bottom: 1px solid #000000;
   box-shadow: 1px 1px 0px #000000; /* Shadow for the menu */
@@ -60,7 +76,7 @@ body {
 
 .win95-start-menu-item:hover {
   background-color: #000080; /* Dark blue */
-  color: #FFFFFF; /* White text */
+  color: #ffffff; /* White text */
 }
 
 .win95-start-menu-item-arrow {
@@ -74,13 +90,15 @@ body {
 .win95-start-menu-separator {
   height: 1px;
   background-color: #808080; /* Gray */
-  border-bottom: 1px solid #FFFFFF;
+  border-bottom: 1px solid #ffffff;
   margin: 2px 1px;
 }
 
 /* This is a more accurate shadow for general elements if needed */
 .win95-shadow {
-  box-shadow: 1px 1px 0px #000000, 2px 2px 0px #000000;
+  box-shadow:
+    1px 1px 0px #000000,
+    2px 2px 0px #000000;
 }
 
 /* For the Start button specific styling with logo */
@@ -96,7 +114,7 @@ body {
 
 /* Simple shadow for now, will be refined */
 .simple-shadow {
-  box-shadow: 2px 2px 0px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.75);
 }
 
 /* Tooltip Styles */
@@ -108,12 +126,13 @@ body {
   visibility: hidden;
   width: auto; /* Auto width based on content */
   min-width: 80px; /* Minimum width */
-  background-color: #FFFFE1; /* Light yellow */
+  background-color: #ffffe1; /* Light yellow */
   color: #000000; /* Black text */
   text-align: center;
   border: 1px solid #000000; /* Black border */
   padding: 2px 5px;
-  font-family: 'Pixelated MS Sans Serif', Arial, sans-serif; /* Ensure correct font */
+  font-family:
+    'Pixelated MS Sans Serif', Arial, sans-serif; /* Ensure correct font */
   font-size: 10px; /* Tooltips usually have small text */
   white-space: nowrap; /* Prevent wrapping for short tooltips */
 

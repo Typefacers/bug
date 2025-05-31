@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
 
 interface StartMenuProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen: boolean
+  onClose: () => void
 }
 
 const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose }) => {
   if (!isOpen) {
-    return null;
+    return null
   }
 
   const menuItems = [
@@ -19,7 +19,7 @@ const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose }) => {
     { name: 'Run...', submenu: false, type: 'item' },
     { type: 'separator' }, // Separator
     { name: 'Shut Down...', submenu: false, type: 'item' },
-  ];
+  ]
 
   return (
     <div
@@ -31,26 +31,29 @@ const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose }) => {
       <ul className="list-none p-0 m-0">
         {menuItems.map((item, index) => {
           if (item.type === 'separator') {
-            return <li key={index} className="win95-start-menu-separator"></li>;
+            return <li key={index} className="win95-start-menu-separator"></li>
           }
           return (
             <li
               key={index}
               className="win95-start-menu-item flex justify-between items-center" // Use new class
               onClick={() => {
-                if (item.name) console.log(`${item.name} clicked`);
+                if (item.name) console.log(`${item.name} clicked`)
                 // Basic close on item click for now
-                onClose();
+                onClose()
               }}
             >
               <span>{item.name}</span>
-              {item.submenu && <span className="win95-start-menu-item-arrow">▶</span>} {/* Use new class */}
+              {item.submenu && (
+                <span className="win95-start-menu-item-arrow">▶</span>
+              )}{' '}
+              {/* Use new class */}
             </li>
-          );
+          )
         })}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default StartMenu;
+export default StartMenu
