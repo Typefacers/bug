@@ -14,7 +14,7 @@ export const bugs: Bug[] = [
     description:
       'Safari rage-quits the instant you press "Log In."  It just nopes out.',
     bounty: 200,
-    pto: 8,
+    pto: Infinity,
     active: true,
     createdAt: daysAgo(6),
     priority: 'high',
@@ -25,7 +25,7 @@ export const bugs: Bug[] = [
     description:
       'Loader spins so long we suspect it entered a parallel universe.',
     bounty: 80,
-    pto: 3,
+    pto: Infinity,
     active: true,
     createdAt: daysAgo(6),
     priority: 'medium',
@@ -36,7 +36,7 @@ export const bugs: Bug[] = [
     description:
       'Blasts a full-screen white flash before night-theme.  Vampires displeased.',
     bounty: 50,
-    pto: 2,
+    pto: Infinity,
     active: true,
     createdAt: daysAgo(5),
     priority: 'low',
@@ -47,7 +47,7 @@ export const bugs: Bug[] = [
     description:
       'Sending a single 🐙 turns the whole chat thread into hieroglyphics.',
     bounty: 120,
-    pto: 4,
+    pto: Infinity,
     active: true,
     createdAt: daysAgo(5),
     priority: 'medium',
@@ -58,7 +58,7 @@ export const bugs: Bug[] = [
     description:
       'Page politely scrolls to the top every 42 seconds (Douglas Adams approves).',
     bounty: 70,
-    pto: 2,
+    pto: Infinity,
     active: true,
     createdAt: daysAgo(4),
     priority: 'low',
@@ -69,7 +69,7 @@ export const bugs: Bug[] = [
     description:
       'Disappears the moment DevTools is open, reappears when you glance away.',
     bounty: 150,
-    pto: 6,
+    pto: Infinity,
     active: true,
     createdAt: daysAgo(3),
     priority: 'high',
@@ -79,7 +79,7 @@ export const bugs: Bug[] = [
     title: 'Cache Me Outside',
     description: 'Old avatar refuses to leave—cache is just vibing.',
     bounty: 60,
-    pto: 1,
+    pto: Infinity,
     active: true,
     createdAt: daysAgo(2),
     priority: 'low',
@@ -89,7 +89,7 @@ export const bugs: Bug[] = [
     title: 'CSS Houdini',
     description: 'Button makes a great escape by floating off-screen on hover.',
     bounty: 90,
-    pto: 3,
+    pto: Infinity,
     active: true,
     createdAt: daysAgo(1),
     priority: 'medium',
@@ -100,7 +100,7 @@ export const bugs: Bug[] = [
     description:
       'Modal opens, close button missing… gamers call it a soft-lock.',
     bounty: 110,
-    pto: 4,
+    pto: Infinity,
     active: true,
     createdAt: daysAgo(1),
     priority: 'medium',
@@ -111,7 +111,7 @@ export const bugs: Bug[] = [
     description:
       'Users receive a push saying "…" at 3 AM.  Spooky season, every season.',
     bounty: 130,
-    pto: 5,
+    pto: Infinity,
     active: true,
     createdAt: daysAgo(0),
     priority: 'high',
@@ -122,7 +122,7 @@ export const bugs: Bug[] = [
     description:
       'Repeated coffee orders slowly chew through memory until the app crashes.',
     bounty: 75,
-    pto: 2,
+    pto: Infinity,
     active: true,
     createdAt: daysAgo(0),
     priority: 'medium',
