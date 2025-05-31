@@ -68,6 +68,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🥠 **Fortune Cookie**: Random words of wisdom on its own tab
 - 🧩 **Captcha Protection**: Basic math challenge to keep bots at bay
 - ✍️ **Sign Up Form**: Create your own bug-bashing persona
+- 📄 **Job Description Page**: Read about the prestigious Bug Basher role
 
 ### 🎪 The Technology Circus
 
