@@ -19,6 +19,7 @@ const EasterEgg = lazy(() => import('./routes/EasterEgg'))
 const Weather = lazy(() => import('./routes/Weather'))
 const SignUp = lazy(() => import('./routes/SignUp'))
 const Fortune = lazy(() => import('./routes/Fortune'))
+const JobDescription = lazy(() => import('./routes/JobDescription'))
 import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import { raised, windowShadow } from './utils/win95'
 import Taskbar from './components/Taskbar'
@@ -54,6 +55,8 @@ function AppContent() {
         return 'Weather Forecast'
       case '/fortune':
         return 'Fortune Cookie'
+      case '/job-description':
+        return 'Job Description'
       default:
         if (location.pathname.startsWith('/user/')) return 'User Profile'
         return 'Page Not Found'
@@ -168,6 +171,12 @@ function AppContent() {
                   >
                     ✍️ Sign Up
                   </Link>
+                  <Link
+                    to="/job-description"
+                    className={`px-4 py-1 ${location.pathname === '/job-description' ? 'bg-[#E0E0E0] font-semibold' : 'hover:bg-[#D0D0D0]'}`}
+                  >
+                    📄 Job Description
+                  </Link>
                 </div>
 
                 {/* Route Content */}
@@ -185,6 +194,10 @@ function AppContent() {
                       <Route path="/user/:userId" element={<UserProfile />} />
                       <Route path="/bug/new" element={<NewBug />} />
                       <Route path="/sign-up" element={<SignUp />} />
+                      <Route
+                        path="/job-description"
+                        element={<JobDescription />}
+                      />
                       <Route path="/easter-egg" element={<EasterEgg />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
