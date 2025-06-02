@@ -18,6 +18,13 @@ export default function FortuneCookie() {
     setFortune(msg)
   }
 
+  const speakFortune = () => {
+    if (fortune) {
+      const utter = new SpeechSynthesisUtterance(fortune)
+      window.speechSynthesis.speak(utter)
+    }
+  }
+
   useEffect(() => {
     randomFortune()
   }, [])
@@ -25,12 +32,20 @@ export default function FortuneCookie() {
   return (
     <div className={`mt-2 text-center bg-[#C0C0C0] p-2 ${raised}`}>
       <p className="text-sm">🥠 {fortune}</p>
-      <button
-        onClick={randomFortune}
-        className={`mt-2 px-2 py-1 bg-[#E0E0E0] ${raised} hover:bg-[#D0D0D0]`}
-      >
-        New Fortune
-      </button>
+      <div className="flex justify-center gap-2 mt-2">
+        <button
+          onClick={randomFortune}
+          className={`px-2 py-1 bg-[#E0E0E0] ${raised} hover:bg-[#D0D0D0]`}
+        >
+          New Fortune
+        </button>
+        <button
+          onClick={speakFortune}
+          className={`px-2 py-1 bg-[#E0E0E0] ${raised} hover:bg-[#D0D0D0]`}
+        >
+          🔈 Read Aloud
+        </button>
+      </div>
     </div>
   )
 }
