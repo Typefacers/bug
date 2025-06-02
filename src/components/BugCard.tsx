@@ -4,6 +4,7 @@ import { useBugStore, priorityModel } from '../store'
 import clsx from 'clsx'
 import { getBugImage } from '../utils/utils'
 import { predictPriorityProbability } from '../lib/bug-priority-ml.ts'
+import { useAudioContext } from '../contexts/AudioContext'
 
 export const BugCard: React.FC<BugCardProps> = ({
   bug,
@@ -11,6 +12,7 @@ export const BugCard: React.FC<BugCardProps> = ({
   modal = false,
 }) => {
   const squashBug = useBugStore(s => s.squashBug)
+  const audio = useAudioContext()
   const bugImage = getBugImage(bug.id)
   const highProb =
     priorityModel && bug.bounty
@@ -32,7 +34,10 @@ export const BugCard: React.FC<BugCardProps> = ({
       )}
       onClick={e => {
         e.stopPropagation()
-        if (bug.active) squashBug(bug.id)
+        if (bug.active) {
+          squashBug(bug.id)
+          audio?.playBugSquash?.()
+        }
       }}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}

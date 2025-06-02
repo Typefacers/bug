@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import { Suspense, lazy, useEffect, useState } from 'react'
 import { useKonamiDarkMode } from './hooks/use-konami-dark-mode'
+import { useAudio } from './hooks/use-audio'
 import { useBugStore } from './store'
 
 const Bugs = lazy(() => import('./routes/Bugs'))
@@ -23,6 +24,7 @@ const JobDescription = lazy(() => import('./routes/JobDescription'))
 import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import { raised, windowShadow } from './utils/win95'
 import Taskbar from './components/Taskbar'
+import { AudioContext } from './contexts/AudioContext'
 
 function AppContent() {
   const location = useLocation()
@@ -220,7 +222,9 @@ function AppContent() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AppContent />
+      <AudioContext.Provider value={useAudio()}>
+        <AppContent />
+      </AudioContext.Provider>
     </BrowserRouter>
   )
 }
