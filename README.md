@@ -62,6 +62,8 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - ⏰ **PTO Rewards**: Earn ridiculous amounts of time off for each bug you squash
 - 🧹 **Automatic Cleanup**: Squashed bugs vanish on their own, only to respawn
 - 🔮 **Bug Forecast**: Peer into tomorrow's infestation with predictive charts
+- 🧮 **Dashboard Helpers**: Bounty totals and date formatting now live in a
+  shared module
 - 🚫 **Comical 404 Page**: Getting lost has never been so entertaining
 - 🌦️ **Weather Forecast**: Plan your bug hunts around the faux forecast
 - 🌑 **Konami Code Dark Mode**: Enter the secret code for a darker UI
