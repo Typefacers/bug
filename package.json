@@ -11,7 +11,7 @@
     "lint:ci": "eslint . --max-warnings=0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "node --experimental-transform-types --loader ./png-loader.js --test"
+    "test": "node --experimental-transform-types --loader ./png-loader.js --experimental-test-coverage --test-coverage-include=src/components/** --test-coverage-include=src/routes/** --test"
   },
   "dependencies": {
     "@radix-ui/react-navigation-menu": "^1.2.13",

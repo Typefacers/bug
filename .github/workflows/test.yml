@@ -28,6 +28,8 @@ jobs:
           node --experimental-transform-types \
             --loader ./png-loader.js \
             --experimental-test-coverage \
+            --test-coverage-include=src/components/** \
+            --test-coverage-include=src/routes/** \
             --test 2>&1 | tee coverage.txt
 
       - name: Upload coverage summary
