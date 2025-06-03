@@ -204,6 +204,7 @@ See [docs/NAMING_CONVENTIONS.md](docs/NAMING_CONVENTIONS.md) for the complete gu
 - Score persistence not yet implemented
 - Displays achievements for playing alone
 - Searchable table to find your imaginary rivals
+- Helper functions exported for easier testing
 
 ### 🎭 Performance Notes
 
