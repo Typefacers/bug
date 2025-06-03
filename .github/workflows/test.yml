@@ -25,7 +25,10 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          NODE_OPTIONS='--experimental-test-coverage' npm test 2>&1 | tee coverage.txt
+          node --experimental-transform-types \
+            --loader ./png-loader.js \
+            --experimental-test-coverage \
+            --test 2>&1 | tee coverage.txt
 
       - name: Upload coverage summary
         uses: actions/upload-artifact@v4
