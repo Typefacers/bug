@@ -9,17 +9,17 @@
 [![License](https://img.shields.io/badge/License-None%20Specified-darkred?style=for-the-badge&logo=warning)](README.md)
 
 [![Vite](https://img.shields.io/badge/Vite-6.3.5-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
-[![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
+[![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
 [![D3.js](https://img.shields.io/badge/D3.js-7.9.0-F7931E?style=flat-square&logo=d3.js&logoColor=white)](https://d3js.org)
-[![Zustand](https://img.shields.io/badge/Zustand-4.5.0-FF6B6B?style=flat-square&logo=react&logoColor=white)](https://github.com/pmndrs/zustand)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.4.3-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.1.4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-10.16.4-0055FF?style=flat-square&logo=framer&logoColor=white)](https://www.framer.com/motion)
+[![Zustand](https://img.shields.io/badge/Zustand-5.0.5-FF6B6B?style=flat-square&logo=react&logoColor=white)](https://github.com/pmndrs/zustand)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.1.8-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-12.16.0-0055FF?style=flat-square&logo=framer&logoColor=white)](https://www.framer.com/motion)
 
-[![ESLint](https://img.shields.io/badge/ESLint-8.56.0-4B32C3?style=flat-square&logo=eslint)](https://eslint.org)
+[![ESLint](https://img.shields.io/badge/ESLint-9.28.0-4B32C3?style=flat-square&logo=eslint)](https://eslint.org)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![Prettier](https://img.shields.io/badge/Prettier-3.5.3-F7B93E?style=flat-square&logo=prettier&logoColor=black)](https://prettier.io)
-[![Lucide React](https://img.shields.io/badge/Lucide%20React-0.503.0-F56565?style=flat-square&logo=lucide&logoColor=white)](https://lucide.dev)
+[![Lucide React](https://img.shields.io/badge/Lucide%20React-0.511.0-F56565?style=flat-square&logo=lucide&logoColor=white)](https://lucide.dev)
 [![Radix UI](https://img.shields.io/badge/Radix%20UI-Multiple%20Versions-161618?style=flat-square&logo=radix-ui&logoColor=white)](https://www.radix-ui.com)
 
 [![Bundle Size](https://img.shields.io/badge/Bundle%20Size-Astronomical-purple?style=flat-square&logo=webpack)](vite.config.ts)
@@ -69,13 +69,14 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🔊 **Web Audio Effects**: Ambient drones and juicier bug-squash splats (even when shooting bugs on the canvas), plus a talking fortune cookie
 - 🧩 **Captcha Protection**: Basic math challenge to keep bots at bay
 - ✍️ **Sign Up Form**: Create your own bug-bashing persona
+- 🔄 **Dependency Update**: All packages bumped to their latest versions
 - 📄 **Job Description Page**: Read about the prestigious Bug Basher role
 
 ### 🎪 The Technology Circus
 
 This project showcases the fine art of using 30 dependencies to accomplish what could be done with 3. We've got:
 
-- **React 18**: For building a user interface that could've been static HTML
+- **React 19**: For building a user interface that could've been static HTML
 - **TypeScript**: Because JavaScript wasn't confusing enough
 - **Tailwind CSS**: Why write 10 lines of CSS when you can write 100 class names?
 - **Radix UI**: Premium headless components for basic HTML elements
