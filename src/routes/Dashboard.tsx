@@ -34,18 +34,7 @@ import BugTrendsChart from '../components/BugTrendsChart'
 import BugForecast from '../components/BugForecast'
 import { useNavigate } from 'react-router-dom'
 import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
-
-// Helper function to calculate total bounty
-const calculateTotalBounty = (bugs: Bug[]): number =>
-  bugs.reduce((total, bug) => total + bug.bounty, 0)
-
-// Helper function to format date
-const formatDate = (date: Date): string =>
-  new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  }).format(date)
+import { calculateTotalBounty, formatDate } from '../utils/dashboard'
 
 // Simple chart component for bug priority distribution
 const PriorityChart = ({ bugs }: { bugs: Bug[] }) => {
