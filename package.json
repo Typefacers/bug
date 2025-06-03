@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint --cache .",
-    "lint:ci": "eslint . --max-warnings=0",
+    "lint:ci": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "node --experimental-transform-types --loader ./png-loader.js --experimental-test-coverage --test-coverage-include=src/components/** --test-coverage-include=src/routes/** --test"

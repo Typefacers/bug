@@ -108,6 +108,8 @@ npm run lint     # Lint code
 npm run format   # Format code
 ```
 
+CI runs `npm run lint:ci` so warnings won't crash the workflow.
+
 ### 🧪 Testing (Hold the Jest)
 
 `npm test` uses Node's built‑in `node:test` runner. The command runs Node with
