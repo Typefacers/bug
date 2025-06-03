@@ -10,9 +10,9 @@ const daysAgo = (days: number): string => {
 export const bugs: Bug[] = [
   {
     id: 'b1',
-    title: 'Safari Login Face-Plant',
+    title: 'Abacus ERP File Read (CVE-2025-0001)',
     description:
-      'Safari rage-quits the instant you press "Log In."  It just nopes out.',
+      'Abacus ERP versions older than 2024.210.16036 allow authenticated arbitrary file read.',
     bounty: 200,
     pto: 8,
     active: true,
@@ -21,9 +21,9 @@ export const bugs: Bug[] = [
   },
   {
     id: 'b2',
-    title: 'Quantum Loading Spinner',
+    title: 'Mali GPU Out-of-Bounds (CVE-2025-0050)',
     description:
-      'Loader spins so long we suspect it entered a parallel universe.',
+      'Improper bounds checking in Arm GPU drivers lets a user access memory past buffer limits.',
     bounty: 80,
     pto: 3,
     active: true,
@@ -32,9 +32,9 @@ export const bugs: Bug[] = [
   },
   {
     id: 'b3',
-    title: 'Dark-mode Flashbang',
+    title: 'SAP GUI Info Leak (CVE-2025-0055)',
     description:
-      'Blasts a full-screen white flash before night-theme.  Vampires displeased.',
+      "Cached user input can be read by attackers with access to the victim's user directory.",
     bounty: 50,
     pto: 2,
     active: true,
@@ -43,9 +43,9 @@ export const bugs: Bug[] = [
   },
   {
     id: 'b4',
-    title: 'Emoji Implosion',
+    title: 'Eyewear Shop SQLi (CVE-2025-0173)',
     description:
-      'Sending a single 🐙 turns the whole chat thread into hieroglyphics.',
+      'The id parameter in view_order.php allows SQL injection in SourceCodester Online Eyewear Shop.',
     bounty: 120,
     pto: 4,
     active: true,
@@ -54,9 +54,9 @@ export const bugs: Bug[] = [
   },
   {
     id: 'b5',
-    title: 'Scroll-Jacking Jitters',
+    title: 'TMD Header Menu SQLi (CVE-2025-0214)',
     description:
-      'Page politely scrolls to the top every 42 seconds (Douglas Adams approves).',
+      'Headermenu_id in admin/index.php of TMD Custom Header Menu is vulnerable to SQL injection.',
     bounty: 70,
     pto: 2,
     active: true,
@@ -65,9 +65,9 @@ export const bugs: Bug[] = [
   },
   {
     id: 'b6',
-    title: 'Heisenbug',
+    title: 'ENOVIA XSS (CVE-2025-0600)',
     description:
-      'Disappears the moment DevTools is open, reappears when you glance away.',
+      'Stored XSS in ENOVIA Product Explorer lets attackers execute scripts in user sessions.',
     bounty: 150,
     pto: 6,
     active: true,
@@ -76,8 +76,9 @@ export const bugs: Bug[] = [
   },
   {
     id: 'b7',
-    title: 'Cache Me Outside',
-    description: 'Old avatar refuses to leave—cache is just vibing.',
+    title: 'PAN-OS File Peek (CVE-2025-0111)',
+    description:
+      'Authenticated users could read system files via the management web interface.',
     bounty: 60,
     pto: 1,
     active: true,
@@ -86,8 +87,9 @@ export const bugs: Bug[] = [
   },
   {
     id: 'b8',
-    title: 'CSS Houdini',
-    description: 'Button makes a great escape by floating off-screen on hover.',
+    title: 'Tailoring System SQLi (CVE-2025-0944)',
+    description:
+      'Customerview.php in Tailoring Management System has an id parameter vulnerable to SQL injection.',
     bounty: 90,
     pto: 3,
     active: true,
@@ -96,9 +98,9 @@ export const bugs: Bug[] = [
   },
   {
     id: 'b9',
-    title: 'Modal Soul-Trap',
+    title: 'PAN-OS GlobalProtect RCE (CVE-2024-3400)',
     description:
-      'Modal opens, close button missing… gamers call it a soft-lock.',
+      'Arbitrary file creation in GlobalProtect can lead to command execution on the firewall.',
     bounty: 110,
     pto: 4,
     active: true,
@@ -107,9 +109,9 @@ export const bugs: Bug[] = [
   },
   {
     id: 'b10',
-    title: 'Phantom Push @ 3 AM',
+    title: 'xz Backdoor (CVE-2024-3094)',
     description:
-      'Users receive a push saying "…" at 3 AM.  Spooky season, every season.',
+      'Malicious code in xz 5.6.0+ modifies liblzma to intercept and alter data.',
     bounty: 130,
     pto: 5,
     active: true,
@@ -118,13 +120,24 @@ export const bugs: Bug[] = [
   },
   {
     id: 'b11',
-    title: 'Coffee Overflow',
+    title: 'FileCatalyst Workflow RCE (CVE-2024-25153)',
     description:
-      'Repeated coffee orders slowly chew through memory until the app crashes.',
+      'Directory traversal in the ftpservlet allows file uploads that enable remote code execution.',
     bounty: 75,
     pto: 2,
     active: true,
     createdAt: daysAgo(0),
     priority: 'medium',
+  },
+  {
+    id: 'b12',
+    title: 'mailcow XSS (CVE-2024-31204)',
+    description:
+      'Unsanitized exception details render in the admin panel, allowing cross-site scripting.',
+    bounty: 300,
+    pto: 8,
+    active: true,
+    createdAt: daysAgo(0),
+    priority: 'high',
   },
 ]
