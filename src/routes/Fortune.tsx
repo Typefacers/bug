@@ -8,7 +8,7 @@ export default function Fortune() {
         title="Fortune Cookie"
         description="Get a random bug-themed fortune."
       />
-      <div className="max-w-md mx-auto">
+      <div className="space-y-4">
         <h1 className="text-2xl font-bold">Fortune Cookie</h1>
         <FortuneCookie />
       </div>

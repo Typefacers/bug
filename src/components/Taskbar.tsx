@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { raised, sunken } from '../utils/win95'
+import StartMenu from './StartMenu'
 import type { TaskbarProps } from '../types/taskbar-props'
 
 const getTime = () =>
@@ -11,6 +12,7 @@ export default function Taskbar({
   onToggle,
 }: TaskbarProps) {
   const [time, setTime] = useState(getTime())
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     const id = setInterval(() => setTime(getTime()), 1000)
@@ -22,6 +24,7 @@ export default function Taskbar({
       className={`h-8 bg-[#C0C0C0] flex items-center px-1 justify-between ${sunken}`}
     >
       <button
+        onClick={() => setOpen(v => !v)}
         className={`flex items-center h-6 px-2 gap-1 bg-[#C0C0C0] ${raised} active:${sunken}`}
       >
         <span className="w-3 h-3 bg-[#000080]" />
@@ -40,6 +43,12 @@ export default function Taskbar({
       <div className={`h-6 px-2 bg-[#C0C0C0] ${raised} font-mono text-sm`}>
         {time}
       </div>
+      {open && (
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <StartMenu onClose={() => setOpen(false)} />
+        </>
+      )}
     </div>
   )
 }
