@@ -43,9 +43,31 @@ jobs:
           script: |
             const fs = require('fs');
             const coverage = fs.readFileSync('coverage.txt', 'utf8');
+            const lines = coverage.split('\n');
+            const start = lines.findIndex((l) => l.includes('# file'));
+            const end = lines.findIndex((l) => l.includes('# end of coverage report'));
+            let table;
+            if (start !== -1 && end !== -1) {
+              const header = lines[start].replace(/^#\s*/, '').trim();
+              const headers = header.split('|').map((h) => h.trim()).filter(Boolean);
+              const headRow = `| ${headers.join(' | ')} |`;
+              const dividerRow = `| ${headers.map(() => '---').join(' | ')} |`;
+              const rows = [];
+              for (let i = start + 1; i < end; i++) {
+                const line = lines[i];
+                if (!line.startsWith('#') || line.includes('---')) continue;
+                const cells = line.replace(/^#\s*/, '').trim().split('|').map((c) => c.trim());
+                if (cells.length === headers.length) {
+                  rows.push(`| ${cells.join(' | ')} |`);
+                }
+              }
+              table = [headRow, dividerRow, ...rows].join('\n');
+            } else {
+              table = `\`\`\`\n${coverage}\n\`\`\``;
+            }
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## Test Coverage\n\n\`\`\`\n${coverage}\n\`\`\``
+              body: `## Test Coverage\n\n${table}`
             });
