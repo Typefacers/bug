@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { raised } from '../utils/win95'
+import { motion } from 'framer-motion'
+import { raised, sunken, windowShadow } from '../utils/win95'
 
 const FORTUNES = [
   'A bug in time saves nine more bugs.',
@@ -30,8 +31,18 @@ export default function FortuneCookie() {
   }, [])
 
   return (
-    <div className={`mt-2 text-center bg-[#C0C0C0] p-2 ${raised}`}>
-      <p className="text-sm">🥠 {fortune}</p>
+    <div
+      className={`mt-2 text-center bg-[#C0C0C0] p-4 ${raised} ${windowShadow} rounded`}
+    >
+      <motion.p
+        key={fortune}
+        initial={{ opacity: 0, y: -4 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className={`text-sm mb-2 px-2 py-1 bg-white inline-block ${sunken}`}
+      >
+        🥠 {fortune}
+      </motion.p>
       <div className="flex justify-center gap-2 mt-2">
         <button
           onClick={randomFortune}
