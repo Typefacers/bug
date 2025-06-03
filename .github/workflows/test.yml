@@ -28,6 +28,8 @@ jobs:
           node --experimental-transform-types \
             --loader ./png-loader.js \
             --experimental-test-coverage \
+            --test-coverage-include=src/components/** \
+            --test-coverage-include=src/routes/** \
             --test 2>&1 | tee coverage.txt
 
       - name: Upload coverage summary
@@ -53,13 +55,26 @@ jobs:
               const headRow = `| ${headers.join(' | ')} |`;
               const dividerRow = `| ${headers.map(() => '---').join(' | ')} |`;
               const rows = [];
+              const stack = [];
               for (let i = start + 1; i < end; i++) {
                 const line = lines[i];
                 if (!line.startsWith('#') || line.includes('---')) continue;
-                const cells = line.replace(/^#\s*/, '').trim().split('|').map((c) => c.trim());
-                if (cells.length === headers.length) {
-                  rows.push(`| ${cells.join(' | ')} |`);
+                const content = line.replace(/^#/, '');
+                const indentMatch = content.match(/^(\s*)/);
+                const indent = indentMatch ? indentMatch[1].length : 0;
+                const level = Math.max(0, indent - 1);
+                const cells = content.trim().split('|').map((c) => c.trim());
+                if (cells.length !== headers.length) continue;
+                const name = cells[0];
+                const isDir = cells.slice(1).every((c) => c === '');
+                stack.length = level;
+                if (isDir) {
+                  stack.push(name);
+                  cells[0] = stack.join('/') + '/';
+                } else {
+                  cells[0] = [...stack, name].join('/');
                 }
+                rows.push(`| ${cells.join(' | ')} |`);
               }
               table = [headRow, dividerRow, ...rows].join('\n');
             } else {

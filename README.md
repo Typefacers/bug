@@ -108,6 +108,27 @@ npm run lint     # Lint code
 npm run format   # Format code
 ```
 
+CI runs `npm run lint:ci` so warnings won't crash the workflow.
+
+### 🧪 Testing (Hold the Jest)
+
+`npm test` uses Node's built‑in `node:test` runner. The command runs Node with
+coverage enabled:
+
+```bash
+node --experimental-transform-types \
+  --loader ./png-loader.js \
+  --experimental-test-coverage \
+  --test-coverage-include=src/components/** \
+  --test-coverage-include=src/routes/** \
+  --test
+```
+
+Coverage is limited to files in `src/components` and `src/routes`. Any `.ts`,
+`.tsx`, `.js`, or `.jsx` file executed from those folders will appear in the
+coverage summary. Results are saved to `coverage.txt` and the Test workflow
+uploads them as an artifact and comments a short summary on pull requests.
+
 The test suite now includes coverage for every page and component.
 Coverage results are uploaded as an artifact in the Test workflow.
 The workflow also comments a short coverage summary on pull requests.
