@@ -109,6 +109,8 @@ npm run format   # Format code
 ```
 
 The test suite now includes coverage for every page and component.
+Coverage results are uploaded as an artifact in the Test workflow.
+The workflow also comments a short coverage summary on pull requests.
 
 ### 🎭 Getting Started (Abandon Hope, All Ye Who Enter Here)
 
