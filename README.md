@@ -57,6 +57,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🎨 **Tailwind CSS**: 47KB of utility classes to style 3 buttons
 - 🎬 **Framer Motion**: Animated everything because static websites are for quitters
 - 🖥️ **Windows 95 Taskbar**: Because productivity peaks with a retro clock
+- 📂 **Start Menu**: Authentic start menu for quick navigation
 - 🔍 **Search & Filter**: Hunt bugs and leaderboard entries like a pro
 - ⏰ **PTO Rewards**: Earn ridiculous amounts of time off for each bug you squash
 - 🧹 **Automatic Cleanup**: Squashed bugs vanish on their own, only to respawn
@@ -65,7 +66,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🌦️ **Weather Forecast**: Plan your bug hunts around the faux forecast
 - 🌑 **Konami Code Dark Mode**: Enter the secret code for a darker UI
 - 🔐 **Real CVE Demo Data**: Bug list now features recent vulnerabilities like PAN-OS File Peek (CVE-2025-0111).
-- 🥠 **Fortune Cookie**: Random words of wisdom on its own tab
+- 🥠 **Fortune Cookie**: Random words of wisdom on its own tab, now full width with subtle animations
 - 🔊 **Web Audio Effects**: Ambient drones and juicier bug-squash splats (even when shooting bugs on the canvas), plus a talking fortune cookie
 - 🧩 **Captcha Protection**: Basic math challenge to keep bots at bay
 - ✍️ **Sign Up Form**: Create your own bug-bashing persona
@@ -180,6 +181,7 @@ See [docs/NAMING_CONVENTIONS.md](docs/NAMING_CONVENTIONS.md) for the complete gu
 - `AimCursor.tsx`: Mouse cursor replacement nobody asked for
 - `BugTrendsChart.tsx`: Gradient-filled line chart with zoomable timelines
 - `Taskbar.tsx`: Windows 95 clock for peak nostalgia
+- `StartMenu.tsx`: Clickable start button menu
 - `NotFound.tsx`: A 404 page with jokes for when routing fails
 
 **📊 Dashboard Extravaganza:**
