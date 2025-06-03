@@ -65,6 +65,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🚫 **Comical 404 Page**: Getting lost has never been so entertaining
 - 🌦️ **Weather Forecast**: Plan your bug hunts around the faux forecast
 - 🌑 **Konami Code Dark Mode**: Enter the secret code for a darker UI
+- 🔐 **Real CVE Demo Data**: Bug list now features recent vulnerabilities like PAN-OS File Peek (CVE-2025-0111).
 - ☕ **Coffee Overflow Bug**: Demo data now includes a caffeinated crash
 - 🥠 **Fortune Cookie**: Random words of wisdom on its own tab, now full width with subtle animations
 - 🔊 **Web Audio Effects**: Ambient drones and juicier bug-squash splats (even when shooting bugs on the canvas), plus a talking fortune cookie
