@@ -1,7 +1,8 @@
 import Meta from '../components/Meta'
 import FortuneCookie from '../components/FortuneCookie'
+import { memo } from 'react'
 
-export default function Fortune() {
+function Fortune() {
   return (
     <>
       <Meta
@@ -15,3 +16,5 @@ export default function Fortune() {
     </>
   )
 }
+
+export default memo(Fortune)

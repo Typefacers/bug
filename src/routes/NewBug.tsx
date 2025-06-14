@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../components/ui/button'
 import {
@@ -26,7 +26,7 @@ import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
 import Meta from '../components/Meta'
 import Captcha from '../components/Captcha'
 
-export default function NewBug() {
+function NewBug() {
   const navigate = useNavigate()
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -175,3 +175,5 @@ export default function NewBug() {
     </>
   )
 }
+
+export default memo(NewBug)

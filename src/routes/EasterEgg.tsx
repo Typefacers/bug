@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import Meta from '../components/Meta'
+import { memo } from 'react'
 
-export default function EasterEgg() {
+function EasterEgg() {
   return (
     <>
       <Meta
@@ -21,3 +22,5 @@ export default function EasterEgg() {
     </>
   )
 }
+
+export default memo(EasterEgg)

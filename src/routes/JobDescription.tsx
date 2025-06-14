@@ -1,6 +1,7 @@
 import Meta from '../components/Meta'
+import { memo } from 'react'
 
-export default function JobDescription() {
+function JobDescription() {
   return (
     <>
       <Meta
@@ -22,3 +23,5 @@ export default function JobDescription() {
     </>
   )
 }
+
+export default memo(JobDescription)

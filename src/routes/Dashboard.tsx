@@ -29,7 +29,7 @@ import {
   CrownIcon,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo, useCallback, memo } from 'react'
 import BugTrendsChart from '../components/BugTrendsChart'
 import BugForecast from '../components/BugForecast'
 import { useNavigate } from 'react-router-dom'
@@ -66,6 +66,8 @@ const PriorityChart = ({ bugs }: { bugs: Bug[] }) => {
     </div>
   )
 }
+
+export default memo(Dashboard)
 
 // Activity timeline component
 const ActivityTimeline = ({ bugs }: { bugs: Bug[] }) => {
@@ -108,19 +110,30 @@ const ActivityTimeline = ({ bugs }: { bugs: Bug[] }) => {
   )
 }
 
-export default function Dashboard() {
+function Dashboard() {
   const bugs = useBugStore(s => s.bugs)
   // Sort active bugs by bounty in descending order for display
   const [searchTerm, setSearchTerm] = useState('')
-  const activeBugs = bugs
-    .filter(bug => bug.active)
-    .sort((a, b) => b.bounty - a.bounty)
-  const squashedBugs = bugs.filter(bug => !bug.active)
-  const matchesSearch = (bug: Bug) =>
-    bug.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    bug.description.toLowerCase().includes(searchTerm.toLowerCase())
-  const filteredActiveBugs = activeBugs.filter(b => matchesSearch(b))
-  const filteredSquashedBugs = squashedBugs.filter(b => matchesSearch(b))
+  const activeBugs = useMemo(
+    () =>
+      [...bugs].filter(bug => bug.active).sort((a, b) => b.bounty - a.bounty),
+    [bugs]
+  )
+  const squashedBugs = useMemo(() => bugs.filter(bug => !bug.active), [bugs])
+  const matchesSearch = useCallback(
+    (bug: Bug) =>
+      bug.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      bug.description.toLowerCase().includes(searchTerm.toLowerCase()),
+    [searchTerm]
+  )
+  const filteredActiveBugs = useMemo(
+    () => activeBugs.filter(b => matchesSearch(b)),
+    [activeBugs, matchesSearch]
+  )
+  const filteredSquashedBugs = useMemo(
+    () => squashedBugs.filter(b => matchesSearch(b)),
+    [squashedBugs, matchesSearch]
+  )
   const [stats, setStats] = useState({
     active: 0,
     squashed: 0,
@@ -129,16 +142,25 @@ export default function Dashboard() {
   })
   const navigate = useNavigate()
 
-  const activeBountyTotal = calculateTotalBounty(activeBugs)
-  const squashedBountyTotal = calculateTotalBounty(squashedBugs)
+  const activeBountyTotal = useMemo(
+    () => calculateTotalBounty(activeBugs),
+    [activeBugs]
+  )
+  const squashedBountyTotal = useMemo(
+    () => calculateTotalBounty(squashedBugs),
+    [squashedBugs]
+  )
 
   // Find highest bounty bug
-  const highestBountyBug =
-    bugs.length > 0
-      ? bugs.reduce((prev, current) =>
-          prev.bounty > current.bounty ? prev : current
-        )
-      : null
+  const highestBountyBug = useMemo(
+    () =>
+      bugs.length > 0
+        ? bugs.reduce((prev, current) =>
+            prev.bounty > current.bounty ? prev : current
+          )
+        : null,
+    [bugs]
+  )
 
   // Animated counter effect
   useEffect(() => {

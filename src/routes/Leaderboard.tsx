@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { useBugStore } from '../store'
 import Meta from '../components/Meta'
@@ -93,7 +93,7 @@ export const sortUsers = (
   return list
 }
 
-export default function Leaderboard() {
+function Leaderboard() {
   const users = useBugStore(s => s.users)
 
   /** Local sort state */
@@ -262,3 +262,5 @@ export default function Leaderboard() {
     </>
   )
 }
+
+export default memo(Leaderboard)

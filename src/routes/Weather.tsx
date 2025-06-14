@@ -4,6 +4,7 @@ import { raised as raisedBase } from '../utils/win95'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { SunIcon, CloudIcon, CloudRainIcon, SnowflakeIcon } from 'lucide-react'
 import type { ForecastDay } from '../types/weather'
+import { memo, useMemo } from 'react'
 
 const iconFor = (condition: ForecastDay['condition']) => {
   switch (condition) {
@@ -18,6 +19,8 @@ const iconFor = (condition: ForecastDay['condition']) => {
   }
 }
 
+export default memo(Weather)
+
 const formatDate = (date: string) =>
   new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
@@ -25,8 +28,8 @@ const formatDate = (date: string) =>
     day: 'numeric',
   }).format(new Date(date))
 
-export default function Weather() {
-  const raised = `${raisedBase} shadow-sm`
+function Weather() {
+  const raised = useMemo(() => `${raisedBase} shadow-sm`, [])
 
   return (
     <>

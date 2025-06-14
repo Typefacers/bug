@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../components/ui/button'
 import {
@@ -24,7 +24,7 @@ import mothAvatar from '../assets/moth.png'
 import cockroachAvatar from '../assets/cockroach.png'
 import caterpillarAvatar from '../assets/caterpillar.png'
 
-export default function SignUp() {
+function SignUp() {
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [error, setError] = useState('')
@@ -113,3 +113,5 @@ export default function SignUp() {
     </>
   )
 }
+
+export default memo(SignUp)
