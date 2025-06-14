@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import Meta from '../components/Meta'
+import { memo } from 'react'
 
-export default function NotFound() {
+function NotFound() {
   return (
     <>
       <Meta
@@ -25,3 +26,5 @@ export default function NotFound() {
     </>
   )
 }
+
+export default memo(NotFound)

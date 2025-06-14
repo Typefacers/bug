@@ -226,6 +226,7 @@ See [docs/NAMING_CONVENTIONS.md](docs/NAMING_CONVENTIONS.md) for the complete gu
 - Displays achievements for playing alone
 - Searchable table to find your imaginary rivals
 - Helper functions exported for easier testing
+- Pages wrapped in `React.memo` for smoother rendering
 
 ### 🎭 Performance Notes
 

@@ -2,13 +2,26 @@ import { useParams, Link } from 'react-router-dom'
 import { useBugStore } from '../store'
 import { raised } from '../utils/win95'
 import Meta from '../components/Meta'
+import { memo, useMemo } from 'react'
 
-export default function UserProfile() {
+function UserProfile() {
   const { userId } = useParams<{ userId: string }>()
   const { users, bugs } = useBugStore()
 
   const id = Number(userId)
   const user = users.find(u => u.id === id)
+
+  const squashedBugs = useMemo(
+    () =>
+      user?.bugsSquashed
+        ? bugs.filter(bug => user.bugsSquashed!.includes(bug.id))
+        : [],
+    [bugs, user?.bugsSquashed]
+  )
+  const totalBounty = useMemo(
+    () => squashedBugs.reduce((sum, bug) => sum + bug.bounty, 0),
+    [squashedBugs]
+  )
 
   if (!user) {
     return (
@@ -28,12 +41,6 @@ export default function UserProfile() {
       </>
     )
   }
-
-  /* Derived data */
-  const squashedBugs = user.bugsSquashed
-    ? bugs.filter(bug => user.bugsSquashed!.includes(bug.id))
-    : []
-  const totalBounty = squashedBugs.reduce((sum, bug) => sum + bug.bounty, 0)
 
   return (
     <>
@@ -110,3 +117,5 @@ export default function UserProfile() {
     </>
   )
 }
+
+export default memo(UserProfile)

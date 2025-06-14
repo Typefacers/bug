@@ -2,8 +2,9 @@ import BugArea from '../components/BugArea'
 import { useBugStore } from '../store'
 import { raised } from '../utils/win95'
 import Meta from '../components/Meta'
+import { memo } from 'react'
 
-export default function Bugs() {
+function Bugs() {
   const bugs = useBugStore(s => s.bugs)
 
   return (
@@ -32,3 +33,5 @@ export default function Bugs() {
     </>
   )
 }
+
+export default memo(Bugs)
