@@ -73,7 +73,8 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🔊 **Web Audio Effects**: Ambient drones and juicier bug-squash splats (even when shooting bugs on the canvas), plus a talking fortune cookie
 - 🧩 **Captcha Protection**: Basic math challenge to keep bots at bay
 - ✍️ **Sign Up Form**: Create your own bug-bashing persona
-- 🔄 **Dependency Update**: All packages bumped to their latest versions
+- 🔄 **Dependency Update**: Packages bumped to latest versions and unused
+  dependencies removed
 - 📄 **Job Description Page**: Read about the prestigious Bug Basher role
 
 ### 🎪 The Technology Circus
