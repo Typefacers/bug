@@ -70,10 +70,14 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
 
   /* -------------- main rAF loop -------------- */
   useEffect(() => {
-    const step = () => {
+    let last = performance.now()
+
+    const step = (now: number) => {
       if (!isAlive) return
 
-      const now = Date.now()
+      const dt = (now - last) / 1000 // seconds since last frame
+      last = now
+
       const elapsed = now - lastTurn.current
       const changeHeading = elapsed > 2000 + Math.random() * 2000
 
@@ -85,10 +89,10 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
         lastTurn.current = now
       }
 
-      const speed = 0.6 // px / frame ≈36 px/s @60fps (not 37)
+      const speed = 36 // px per second
       const bugSize = 40
-      let newX = positionRef.current.x + directionRef.current.x * speed
-      let newY = positionRef.current.y + directionRef.current.y * speed
+      let newX = positionRef.current.x + directionRef.current.x * speed * dt
+      let newY = positionRef.current.y + directionRef.current.y * speed * dt
       const maxX = (containerWidth || window.innerWidth) - bugSize
       const maxY = (containerHeight || window.innerHeight) - bugSize
 
