@@ -205,6 +205,7 @@ See [docs/NAMING_CONVENTIONS.md](docs/NAMING_CONVENTIONS.md) for the complete gu
 - `BugArea.tsx`: Where bugs live rent-free
 - `BugCard.tsx`: Instagram for insects
 - `BugCrawler.tsx`: AI pathfinding for 2D sprites
+- `BugCrawler.tsx` now updates positions using frame delta for smoother motion
 - `bug-priority-ml.ts`: Logistic regression that pretends to rank urgency
 - `AimCursor.tsx`: Mouse cursor replacement nobody asked for
 - `BugTrendsChart.tsx`: Gradient-filled line chart with zoomable timelines
