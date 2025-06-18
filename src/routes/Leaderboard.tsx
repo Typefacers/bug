@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useBugStore } from '../store'
 import Meta from '../components/Meta'
 import { Input } from '../components/ui/input'
+import { Button } from '@nattui/react-components'
 import type { Bug } from '../types/bug.ts'
 
 /** Map bounty → tier name */
@@ -155,59 +156,59 @@ function Leaderboard() {
           <thead>
             <tr className="bg-[#000080] text-white">
               <th className="py-2 px-3 text-left font-semibold w-16 whitespace-nowrap">
-                <button
+                <Button
                   type="button"
                   onClick={() => handleSort('rank')}
                   className="w-full text-left"
                 >
                   #<span className="ml-1">{sortArrow('rank')}</span>
-                </button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-left font-semibold">
-                <button
+                <Button
                   type="button"
                   onClick={() => handleSort('name')}
                   className="w-full text-left"
                 >
                   Hunter <span className="ml-1">{sortArrow('name')}</span>
-                </button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-right font-semibold w-24">
-                <button
+                <Button
                   type="button"
                   onClick={() => handleSort('bugs')}
                   className="w-full text-right"
                 >
                   Bugs <span className="ml-1">{sortArrow('bugs')}</span>
-                </button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-right font-semibold w-28">
-                <button
+                <Button
                   type="button"
                   onClick={() => handleSort('bounty')}
                   className="w-full text-right"
                 >
                   Bounty <span className="ml-1">{sortArrow('bounty')}</span>
-                </button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-right font-semibold w-32">
-                <button
+                <Button
                   type="button"
                   onClick={() => handleSort('efficiency')}
                   className="w-full text-right"
                 >
                   Efficiency{' '}
                   <span className="ml-1">{sortArrow('efficiency')}</span>
-                </button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-center font-semibold w-28">
-                <button
+                <Button
                   type="button"
                   onClick={() => handleSort('level')}
                   className="w-full text-center"
                 >
                   Level <span className="ml-1">{sortArrow('level')}</span>
-                </button>
+                </Button>
               </th>
             </tr>
           </thead>

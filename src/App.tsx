@@ -24,6 +24,7 @@ const JobDescription = lazy(() => import('./routes/JobDescription'))
 import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import { raised, windowShadow } from './utils/win95'
 import Taskbar from './components/Taskbar'
+import { Button } from '@nattui/react-components'
 import { AudioContext } from './contexts/AudioContext'
 
 function AppContent() {
@@ -69,12 +70,12 @@ function AppContent() {
     return (
       <div className="min-h-screen bg-[#008080] p-4 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
         <div className="flex-grow flex items-center justify-center">
-          <button
+          <Button
             className={`px-4 py-2 bg-[#C0C0C0] ${raised} ${windowShadow}`}
             onClick={() => setHidden(false)}
           >
             Reopen Window
-          </button>
+          </Button>
         </div>
         <Taskbar
           windowTitle={getWindowTitle()}
@@ -120,14 +121,14 @@ function AppContent() {
                         onClick: () => setHidden(true),
                       },
                     ].map(({ Icon, label, onClick }) => (
-                      <button
+                      <Button
                         key={label}
                         aria-label={label}
                         onClick={onClick}
                         className={`flex h-6 w-6 items-center justify-center bg-[#C0C0C0] ${raised} transition-colors hover:bg-[#A0A0A0] active:bg-[#A0A0A0]`}
                       >
                         <Icon className="h-3 w-3 text-black" />
-                      </button>
+                      </Button>
                     ))}
                   </div>
                 </div>

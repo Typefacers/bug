@@ -6,6 +6,7 @@ import { BugCard } from './BugCard'
 import ReactDOM from 'react-dom'
 import clsx from 'clsx'
 import { useBugStore } from '../store'
+import { Button } from '@nattui/react-components'
 
 /** -----------------------------------------------------------------------
  *  BugCrawler — makes a bug sprite wander with a lightweight 3-D effect
@@ -198,7 +199,7 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
               e.stopPropagation()
             }}
           >
-            <button
+            <Button
               aria-label="Close"
               onClick={e => {
                 e.stopPropagation()
@@ -207,7 +208,7 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
               className="absolute top-2 right-2 size-8 rounded-full bg-white p-1"
             >
               ✕
-            </button>
+            </Button>
             <BugCard bug={bug} modal />
           </div>
         </div>
