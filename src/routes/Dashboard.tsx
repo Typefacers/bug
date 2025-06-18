@@ -13,7 +13,7 @@ import { useBugStore } from '../store'
 import { Bug } from '../types/bug'
 import { Badge } from '../components/ui/badge'
 import { Progress } from '../components/ui/progress'
-import { Button } from '../components/ui/button'
+import { Button } from '@nattui/react-components'
 import Meta from '../components/Meta'
 import {
   CalendarIcon,

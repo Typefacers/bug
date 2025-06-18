@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { Badge } from './badge.tsx'
-import { Button } from './button.tsx'
+import { Button } from '@nattui/react-components'
 import {
   Card,
   CardHeader,

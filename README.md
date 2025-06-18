@@ -90,6 +90,7 @@ This project showcases the fine art of using 30 dependencies to accomplish what 
 - **Zustand**: State management for 3 variables that could've been `useState`
 - **UUID**: Industrial-strength ID generation for a client-side game
 - **Lucide Icons**: 1000+ icons imported to use exactly 7
+- **NattUI React Components**: Because we needed yet another button library
 
 ### 🚀 Quick Start
 

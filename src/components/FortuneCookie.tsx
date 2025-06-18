@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { raised, sunken, windowShadow } from '../utils/win95'
+import { Button } from '@nattui/react-components'
 
 const FORTUNES = [
   'A bug in time saves nine more bugs.',
@@ -44,18 +45,18 @@ export default function FortuneCookie() {
         🥠 {fortune}
       </motion.p>
       <div className="flex justify-center gap-2 mt-2">
-        <button
+        <Button
           onClick={randomFortune}
           className={`px-2 py-1 bg-[#E0E0E0] ${raised} hover:bg-[#D0D0D0]`}
         >
           New Fortune
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={speakFortune}
           className={`px-2 py-1 bg-[#E0E0E0] ${raised} hover:bg-[#D0D0D0]`}
         >
           🔈 Read Aloud
-        </button>
+        </Button>
       </div>
     </div>
   )
