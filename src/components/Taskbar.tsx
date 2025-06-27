@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { raised, sunken } from '../utils/win95'
 import StartMenu from './StartMenu'
 import type { TaskbarProps } from '../types/taskbar-props'
-import { Button } from '@nattui/react-components'
+import Win95Button from './Win95Button'
 
 const getTime = () =>
   new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -22,26 +22,26 @@ export default function Taskbar({
 
   return (
     <div
-      className={`h-8 bg-[#C0C0C0] flex items-center px-1 justify-between ${sunken}`}
+      className={`fixed bottom-0 left-0 right-0 h-7 bg-[#C0C0C0] flex items-center px-0.5 justify-between ${sunken} z-50`}
     >
-      <Button
+      <Win95Button
         onClick={() => setOpen(v => !v)}
-        className={`flex items-center h-6 px-2 gap-1 bg-[#C0C0C0] ${raised} active:${sunken}`}
+        variant="start"
+        pressed={open}
       >
-        <span className="w-3 h-3 bg-[#000080]" />
-        <span className="text-sm font-bold">Start</span>
-      </Button>
-      <div className="flex-1 flex items-center px-1">
-        <Button
+        <div className="w-4 h-3 win95-start-icon"></div>
+        <span className="font-bold">Start</span>
+      </Win95Button>
+      <div className="flex-1 flex items-center px-0.5">
+        <Win95Button
           onClick={onToggle}
-          className={`h-6 px-2 flex items-center truncate bg-[#C0C0C0] ${raised} ${
-            minimized ? '' : sunken
-          } active:${sunken}`}
+          pressed={!minimized}
+          className="flex-1 h-5 flex items-center justify-start truncate"
         >
           {windowTitle}
-        </Button>
+        </Win95Button>
       </div>
-      <div className={`h-6 px-2 bg-[#C0C0C0] ${raised} font-mono text-sm`}>
+      <div className={`h-5 px-1.5 bg-[#C0C0C0] ${raised} font-['MS_Sans_Serif',_sans-serif] text-xs flex items-center`}>
         {time}
       </div>
       {open && (

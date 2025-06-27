@@ -1,6 +1,6 @@
 import { useState, memo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button } from '@nattui/react-components'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,

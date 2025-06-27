@@ -24,7 +24,7 @@ const JobDescription = lazy(() => import('./routes/JobDescription'))
 import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import { raised, windowShadow } from './utils/win95'
 import Taskbar from './components/Taskbar'
-import { Button } from '@nattui/react-components'
+import { Button } from '@/components/ui/button'
 import { AudioContext } from './contexts/AudioContext'
 
 function AppContent() {
@@ -68,7 +68,7 @@ function AppContent() {
 
   if (hidden) {
     return (
-      <div className="min-h-screen bg-[#008080] p-4 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
+      <div className="min-h-screen bg-[#008080] p-4 pb-7 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
         <div className="flex-grow flex items-center justify-center">
           <Button
             className={`px-4 py-2 bg-[#C0C0C0] ${raised} ${windowShadow}`}
@@ -87,7 +87,7 @@ function AppContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#008080] p-4 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
+    <div className="min-h-screen bg-[#008080] p-4 pb-7 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
       <div className="flex-grow flex">
         {!minimized && (
           <div

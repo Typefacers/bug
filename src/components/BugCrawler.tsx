@@ -6,7 +6,7 @@ import { BugCard } from './BugCard'
 import ReactDOM from 'react-dom'
 import clsx from 'clsx'
 import { useBugStore } from '../store'
-import { Button } from '@nattui/react-components'
+import { Button } from '@/components/ui/button'
 
 /** -----------------------------------------------------------------------
  *  BugCrawler — makes a bug sprite wander with a lightweight 3-D effect
