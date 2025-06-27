@@ -8,18 +8,18 @@
 [![Code Quality](https://img.shields.io/badge/Code%20Quality-Questionable-yellow?style=for-the-badge&logo=code-climate)](src/)
 [![License](https://img.shields.io/badge/License-None%20Specified-darkred?style=for-the-badge&logo=warning)](README.md)
 
-[![Vite](https://img.shields.io/badge/Vite-6.3.5-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
+[![Vite](https://img.shields.io/badge/Vite-7.0.0-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
 [![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
 [![D3.js](https://img.shields.io/badge/D3.js-7.9.0-F7931E?style=flat-square&logo=d3.js&logoColor=white)](https://d3js.org)
-[![Zustand](https://img.shields.io/badge/Zustand-5.0.5-FF6B6B?style=flat-square&logo=react&logoColor=white)](https://github.com/pmndrs/zustand)
+[![Zustand](https://img.shields.io/badge/Zustand-5.0.6-FF6B6B?style=flat-square&logo=react&logoColor=white)](https://github.com/pmndrs/zustand)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.1.8-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-12.16.0-0055FF?style=flat-square&logo=framer&logoColor=white)](https://www.framer.com/motion)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.1.11-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-12.19.2-0055FF?style=flat-square&logo=framer&logoColor=white)](https://www.framer.com/motion)
 
-[![ESLint](https://img.shields.io/badge/ESLint-9.28.0-4B32C3?style=flat-square&logo=eslint)](https://eslint.org)
+[![ESLint](https://img.shields.io/badge/ESLint-9.29.0-4B32C3?style=flat-square&logo=eslint)](https://eslint.org)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
-[![Prettier](https://img.shields.io/badge/Prettier-3.5.3-F7B93E?style=flat-square&logo=prettier&logoColor=black)](https://prettier.io)
-[![Lucide React](https://img.shields.io/badge/Lucide%20React-0.511.0-F56565?style=flat-square&logo=lucide&logoColor=white)](https://lucide.dev)
+[![Prettier](https://img.shields.io/badge/Prettier-3.6.2-F7B93E?style=flat-square&logo=prettier&logoColor=black)](https://prettier.io)
+[![Lucide React](https://img.shields.io/badge/Lucide%20React-0.523.0-F56565?style=flat-square&logo=lucide&logoColor=white)](https://lucide.dev)
 [![Radix UI](https://img.shields.io/badge/Radix%20UI-Multiple%20Versions-161618?style=flat-square&logo=radix-ui&logoColor=white)](https://www.radix-ui.com)
 
 [![Bundle Size](https://img.shields.io/badge/Bundle%20Size-Astronomical-purple?style=flat-square&logo=webpack)](vite.config.ts)
@@ -73,8 +73,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🔊 **Web Audio Effects**: Ambient drones and juicier bug-squash splats (even when shooting bugs on the canvas), plus a talking fortune cookie
 - 🧩 **Captcha Protection**: Basic math challenge to keep bots at bay
 - ✍️ **Sign Up Form**: Create your own bug-bashing persona
-- 🔄 **Dependency Update**: Packages bumped to latest versions and unused
-  dependencies removed
+- 🔄 **Dependency Update**: All packages updated to their latest versions
 - 📄 **Job Description Page**: Read about the prestigious Bug Basher role
 
 ### 🎪 The Technology Circus
