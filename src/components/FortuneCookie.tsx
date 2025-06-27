@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { raised, sunken, windowShadow } from '../utils/win95'
-import { Button } from '@nattui/react-components'
+import { Button } from '@/components/ui/button'
 
 const FORTUNES = [
   'A bug in time saves nine more bugs.',

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useBugStore } from '../store'
 import Meta from '../components/Meta'
 import { Input } from '../components/ui/input'
-import { Button } from '@nattui/react-components'
+import { Button } from '@/components/ui/button'
 import type { Bug } from '../types/bug.ts'
 
 /** Map bounty → tier name */

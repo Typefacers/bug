@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom'
-import { raised, sunken, windowShadow } from '../utils/win95'
+import { raised, windowShadow } from '../utils/win95'
 
 export default function StartMenu({ onClose }: { onClose: () => void }) {
-  const itemClass = `block px-2 py-1 ${raised} bg-[#E0E0E0] hover:${sunken}`
+  const itemClass = `block px-2 py-1 bg-[#C0C0C0] hover:bg-[#0000FF] hover:text-white text-black font-['MS_Sans_Serif',_sans-serif] text-xs transition-none`
   return (
     <div
-      className={`absolute bottom-8 left-0 w-40 p-2 bg-[#C0C0C0] ${raised} ${windowShadow} text-sm`}
+      className={`absolute bottom-7 left-0 w-36 p-1 bg-[#C0C0C0] ${raised} ${windowShadow} text-xs font-['MS_Sans_Serif',_sans-serif] z-50`}
     >
-      <ul className="space-y-1">
+      <ul className="space-y-0">
         <li>
           <Link to="/" onClick={onClose} className={itemClass}>
-            🐛 Bugs
+            Bugs
           </Link>
         </li>
         <li>
           <Link to="/dashboard" onClick={onClose} className={itemClass}>
-            📊 Dashboard
+            Dashboard
           </Link>
         </li>
         <li>
@@ -24,17 +24,17 @@ export default function StartMenu({ onClose }: { onClose: () => void }) {
             onClick={onClose}
             className={itemClass}
           >
-            🏆 Leaderboard
+            Leaderboard
           </Link>
         </li>
         <li>
           <Link to="/weather" onClick={onClose} className={itemClass}>
-            🌦️ Weather
+            Weather
           </Link>
         </li>
         <li>
           <Link to="/sign-up" onClick={onClose} className={itemClass}>
-            ✍️ Sign Up
+            Sign Up
           </Link>
         </li>
       </ul>
