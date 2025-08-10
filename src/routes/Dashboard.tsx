@@ -425,9 +425,7 @@ function Dashboard() {
                     >
                       {highestBountyBug.priority} priority
                     </Badge>
-                    <Win95Button
-                      className="bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black"
-                    >
+                    <Win95Button className="bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black">
                       View details
                     </Win95Button>
                   </div>
