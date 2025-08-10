@@ -80,9 +80,30 @@ jobs:
             } else {
               table = `\`\`\`\n${coverage}\n\`\`\``;
             }
-            github.rest.issues.createComment({
+            const comments = await github.rest.issues.listComments({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## Test Coverage\n\n${table}`
             });
+
+            const existingComment = comments.data.find(comment => 
+              comment.body.startsWith('## Test Coverage')
+            );
+
+            const body = `## Test Coverage\n\n${table}`;
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                comment_id: existingComment.id,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+            }
