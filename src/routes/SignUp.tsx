@@ -1,6 +1,6 @@
 import { useState, memo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button } from '@nattui/react-components'
+import Win95Button from '../components/win95/Button'
 import {
   Card,
   CardContent,
@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '../components/ui/card'
-import { Input } from '../components/ui/input'
+import Input from '../components/win95/Input'
 import { Label } from '../components/ui/label'
 import { useBugStore } from '../store'
 import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
@@ -95,18 +95,18 @@ function SignUp() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button
+            <Win95Button
               className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black`}
               onClick={() => navigate('/bounty-leaderboard')}
             >
               Cancel
-            </Button>
-            <Button
+            </Win95Button>
+            <Win95Button
               className={`${raised} bg-[#008080] hover:bg-[#006666] text-white`}
               onClick={createUser}
             >
               Create Account
-            </Button>
+            </Win95Button>
           </CardFooter>
         </Card>
       </div>
