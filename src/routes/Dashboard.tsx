@@ -8,12 +8,12 @@ import {
 } from '../components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 
-import { Input } from '../components/ui/input'
+import Input from '../components/win95/Input'
 import { useBugStore } from '../store'
 import { Bug } from '../types/bug'
 import { Badge } from '../components/ui/badge'
 import { Progress } from '../components/ui/progress'
-import { Button } from '@nattui/react-components'
+import Win95Button from '../components/win95/Button'
 import Meta from '../components/Meta'
 import {
   CalendarIcon,
@@ -217,13 +217,13 @@ function Dashboard() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <Button
+          <Win95Button
             className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black flex items-center gap-2`}
             onClick={() => navigate('/bug/new')}
           >
             <BugIcon className="h-4 w-4" />
             File a Bug
-          </Button>
+          </Win95Button>
         </motion.div>
       </div>
 
@@ -425,12 +425,9 @@ function Dashboard() {
                     >
                       {highestBountyBug.priority} priority
                     </Badge>
-                    <Button
-                      size="sm"
-                      className="bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black"
-                    >
+                    <Win95Button className="bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black">
                       View details
-                    </Button>
+                    </Win95Button>
                   </div>
                 </div>
               ) : (

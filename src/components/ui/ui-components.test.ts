@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { Badge } from './badge.tsx'
-import { Button } from '@nattui/react-components'
+import Win95Button from '../win95/Button'
 import {
   Card,
   CardHeader,
@@ -40,7 +40,7 @@ test('Badge renders', () => {
 })
 
 test('Button renders', () => {
-  const html = wrap(h(Button, null, 'Click'))
+  const html = wrap(h(Win95Button, null, 'Click'))
   assert.ok(html.includes('Click'))
 })
 

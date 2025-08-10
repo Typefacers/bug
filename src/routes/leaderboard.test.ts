@@ -3,11 +3,8 @@ import assert from 'node:assert/strict'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import Leaderboard, {
-  levelFromBounty,
-  levelTier,
-  sortUsers,
-} from './Leaderboard.tsx'
+import Leaderboard from './Leaderboard.tsx'
+import { levelFromBounty, levelTier, sortUsers } from './leaderboard-helpers.ts'
 import { MemoryRouter } from 'react-router-dom'
 import { users as mockUsers } from '../mock/users.ts'
 import { useBugStore } from '../store'

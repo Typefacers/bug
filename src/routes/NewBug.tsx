@@ -1,6 +1,6 @@
 import { useState, memo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button } from '@nattui/react-components'
+import Win95Button from '../components/win95/Button'
 import {
   Card,
   CardContent,
@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '../components/ui/card'
-import { Input } from '../components/ui/input'
+import Input from '../components/win95/Input'
 import { Label } from '../components/ui/label'
 import { Textarea } from '../components/ui/textarea'
 import {
@@ -58,6 +58,7 @@ function NewBug() {
       title,
       description,
       bounty,
+      pto: 0,
       active: true,
       priority,
       createdAt: new Date().toISOString(),
@@ -156,19 +157,19 @@ function NewBug() {
             <Captcha onChange={setCaptchaValid} />
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button
+            <Win95Button
               className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black`}
               onClick={() => navigate('/dashboard')}
             >
               Cancel
-            </Button>
-            <Button
+            </Win95Button>
+            <Win95Button
               className={`${raised} bg-[#008080] hover:bg-[#006666] text-white`}
               disabled={!captchaValid}
               onClick={createBug}
             >
               Submit Bug
-            </Button>
+            </Win95Button>
           </CardFooter>
         </Card>
       </motion.div>
