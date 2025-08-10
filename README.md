@@ -1,7 +1,5 @@
 # 🐞 Bug Bounty Hackathon: Where Dreams Go to Debug
 
-<!-- Testing CI comment update functionality -->
-
 <!-- The Badge Wall of Shame: Because Nothing Says "Professional" Like 20+ Meaningless Icons -->
 <div align="center">
 
