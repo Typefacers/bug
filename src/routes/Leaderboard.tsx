@@ -4,11 +4,7 @@ import { useBugStore } from '../store'
 import Meta from '../components/Meta'
 import Input from '../components/win95/Input'
 import Win95Button from '../components/win95/Button'
-import {
-  levelFromBounty,
-  sortUsers,
-  type SortKey,
-} from './leaderboard-helpers'
+import { levelFromBounty, sortUsers, type SortKey } from './leaderboard-helpers'
 
 function Leaderboard() {
   const users = useBugStore(s => s.users)
