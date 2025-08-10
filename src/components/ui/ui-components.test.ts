@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { Badge } from './badge.tsx'
-import Win95Button from '../../win95/Button'
+import Win95Button from '../win95/Button'
 import {
   Card,
   CardHeader,
