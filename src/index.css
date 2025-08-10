@@ -1,7 +1,9 @@
 @import 'tailwindcss';
 
 @layer base {
-  html, body, #root {
+  html,
+  body,
+  #root {
     height: 100%;
   }
 
@@ -9,7 +11,9 @@
     @apply bg-[#C0C0C0] transition-colors hover:bg-[#A0A0A0] active:bg-[#A0A0A0] focus:outline-none focus-visible:ring-2 focus-visible:ring-black px-3 py-1;
   }
 
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     @apply bg-[#E0E0E0] px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-black;
   }
 }

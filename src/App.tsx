@@ -1,9 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useLocation,
-} from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { Suspense, lazy, useEffect, useState } from 'react'
 import { useKonamiDarkMode } from './hooks/use-konami-dark-mode'
 import { useAudio } from './hooks/use-audio'
@@ -87,7 +82,9 @@ function AppContent() {
     <div className="min-h-screen bg-[#008080] p-4 font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col">
       <div className="flex-grow flex">
         {!minimized && (
-          <div className={`mx-auto w-full flex-grow flex ${maximized ? '' : 'max-w-7xl'}`}>
+          <div
+            className={`mx-auto w-full flex-grow flex ${maximized ? '' : 'max-w-7xl'}`}
+          >
             <Window>
               <TitleBar
                 title={getWindowTitle()}
@@ -124,26 +121,64 @@ function AppContent() {
               />
               <div className="bg-[#E0E0E0] p-3 flex flex-col flex-grow">
                 <div className="mb-4 bg-[#C0C0C0] flex gap-1 p-1 sticky top-0 z-10">
-                  <TabLink to="/" active={location.pathname === '/'}>🐛 Bugs</TabLink>
-                  <TabLink to="/dashboard" active={location.pathname === '/dashboard'}>📊 Dashboard</TabLink>
-                  <TabLink to="/bounty-leaderboard" active={location.pathname === '/bounty-leaderboard'}>🏆 Leaderboard</TabLink>
-                  <TabLink to="/weather" active={location.pathname === '/weather'}>🌦️ Weather</TabLink>
-                  <TabLink to="/fortune" active={location.pathname === '/fortune'}>🥠 Fortune</TabLink>
-                  <TabLink to="/sign-up" active={location.pathname === '/sign-up'}>✍️ Sign Up</TabLink>
-                  <TabLink to="/job-description" active={location.pathname === '/job-description'}>📄 Job Description</TabLink>
+                  <TabLink to="/" active={location.pathname === '/'}>
+                    🐛 Bugs
+                  </TabLink>
+                  <TabLink
+                    to="/dashboard"
+                    active={location.pathname === '/dashboard'}
+                  >
+                    📊 Dashboard
+                  </TabLink>
+                  <TabLink
+                    to="/bounty-leaderboard"
+                    active={location.pathname === '/bounty-leaderboard'}
+                  >
+                    🏆 Leaderboard
+                  </TabLink>
+                  <TabLink
+                    to="/weather"
+                    active={location.pathname === '/weather'}
+                  >
+                    🌦️ Weather
+                  </TabLink>
+                  <TabLink
+                    to="/fortune"
+                    active={location.pathname === '/fortune'}
+                  >
+                    🥠 Fortune
+                  </TabLink>
+                  <TabLink
+                    to="/sign-up"
+                    active={location.pathname === '/sign-up'}
+                  >
+                    ✍️ Sign Up
+                  </TabLink>
+                  <TabLink
+                    to="/job-description"
+                    active={location.pathname === '/job-description'}
+                  >
+                    📄 Job Description
+                  </TabLink>
                 </div>
                 <div className="p-2 overflow-auto relative z-0 flex-grow flex flex-col">
                   <Suspense fallback={<div className="p-4">Loading...</div>}>
                     <Routes>
                       <Route path="/" element={<Bugs />} />
                       <Route path="/dashboard" element={<Dashboard />} />
-                      <Route path="/bounty-leaderboard" element={<Leaderboard />} />
+                      <Route
+                        path="/bounty-leaderboard"
+                        element={<Leaderboard />}
+                      />
                       <Route path="/weather" element={<Weather />} />
                       <Route path="/fortune" element={<Fortune />} />
                       <Route path="/user/:userId" element={<UserProfile />} />
                       <Route path="/bug/new" element={<NewBug />} />
                       <Route path="/sign-up" element={<SignUp />} />
-                      <Route path="/job-description" element={<JobDescription />} />
+                      <Route
+                        path="/job-description"
+                        element={<JobDescription />}
+                      />
                       <Route path="/easter-egg" element={<EasterEgg />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>

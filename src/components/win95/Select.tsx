@@ -5,7 +5,10 @@ type Props = SelectHTMLAttributes<HTMLSelectElement> & {
   className?: string
 }
 
-const Select = forwardRef<HTMLSelectElement, Props>(function Select({ className = '', ...props }, ref) {
+const Select = forwardRef<HTMLSelectElement, Props>(function Select(
+  { className = '', ...props },
+  ref
+) {
   return (
     <select
       ref={ref}

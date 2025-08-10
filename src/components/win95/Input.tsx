@@ -5,7 +5,10 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   className?: string
 }
 
-const Input = forwardRef<HTMLInputElement, Props>(function Input({ className = '', ...props }, ref) {
+const Input = forwardRef<HTMLInputElement, Props>(function Input(
+  { className = '', ...props },
+  ref
+) {
   return (
     <input
       ref={ref}
