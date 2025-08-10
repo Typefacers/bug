@@ -8,7 +8,7 @@ import {
 } from '../components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 
-import { Input } from '../components/ui/input'
+import Input from '../components/win95/Input'
 import { useBugStore } from '../store'
 import { Bug } from '../types/bug'
 import { Badge } from '../components/ui/badge'
