@@ -85,13 +85,13 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            
+
             const existingComment = comments.data.find(comment => 
               comment.body.startsWith('## Test Coverage')
             );
-            
+
             const body = `## Test Coverage\n\n${table}`;
-            
+
             if (existingComment) {
               await github.rest.issues.updateComment({
                 comment_id: existingComment.id,
