@@ -29,12 +29,13 @@ import {
   CrownIcon,
 } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { useEffect, useState, useMemo, useCallback, memo } from 'react'
+import { useEffect, useState, useMemo, useCallback, memo, type FC } from 'react'
 import BugTrendsChart from '../components/BugTrendsChart'
 import BugForecast from '../components/BugForecast'
-import { useNavigate } from 'react-router-dom'
 import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
 import { calculateTotalBounty, formatDate } from '../utils/dashboard'
+import { useWindowManager } from '../contexts/WindowManagerContext'
+import type { WindowComponentProps } from '../types/window'
 
 // Simple chart component for bug priority distribution
 const PriorityChart = ({ bugs }: { bugs: Bug[] }) => {
@@ -66,8 +67,6 @@ const PriorityChart = ({ bugs }: { bugs: Bug[] }) => {
     </div>
   )
 }
-
-export default memo(Dashboard)
 
 // Activity timeline component
 const ActivityTimeline = ({ bugs }: { bugs: Bug[] }) => {
@@ -110,7 +109,7 @@ const ActivityTimeline = ({ bugs }: { bugs: Bug[] }) => {
   )
 }
 
-function Dashboard() {
+const Dashboard: FC<WindowComponentProps> = () => {
   const bugs = useBugStore(s => s.bugs)
   // Sort active bugs by bounty in descending order for display
   const [searchTerm, setSearchTerm] = useState('')
@@ -140,7 +139,7 @@ function Dashboard() {
     totalBounty: 0,
     resolutionRate: 0,
   })
-  const navigate = useNavigate()
+  const { openWindow } = useWindowManager()
 
   const activeBountyTotal = useMemo(
     () => calculateTotalBounty(activeBugs),
@@ -219,7 +218,7 @@ function Dashboard() {
         >
           <Win95Button
             className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black flex items-center gap-2`}
-            onClick={() => navigate('/bug/new')}
+            onClick={() => openWindow('newBug')}
           >
             <BugIcon className="h-4 w-4" />
             File a Bug
@@ -615,3 +614,5 @@ function Dashboard() {
     </motion.div>
   )
 }
+
+export default memo(Dashboard)

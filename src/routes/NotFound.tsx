@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom'
 import Meta from '../components/Meta'
 import { memo } from 'react'
+import { useWindowManager } from '../contexts/WindowManagerContext'
+import type { WindowComponentProps } from '../types/window'
 
-function NotFound() {
+function NotFound({ windowId }: WindowComponentProps = {}) {
+  const { openWindow, closeWindow } = useWindowManager()
+
   return (
     <>
       <Meta
@@ -19,9 +22,18 @@ function NotFound() {
           Either it never existed or a hungry bug devoured it in a midnight
           snack.
         </p>
-        <Link to="/" className="text-indigo-600 hover:underline">
+        <button
+          type="button"
+          className="text-indigo-600 hover:underline bg-transparent !px-0 !py-0 border-none focus:outline-none focus-visible:underline cursor-pointer"
+          onClick={() => {
+            openWindow('bugs')
+            if (windowId) {
+              closeWindow(windowId)
+            }
+          }}
+        >
           Back to the bug hunt
-        </Link>
+        </button>
       </div>
     </>
   )

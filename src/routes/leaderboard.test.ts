@@ -5,10 +5,10 @@ import { renderToStaticMarkup } from 'react-dom/server'
 
 import Leaderboard from './Leaderboard.tsx'
 import { levelFromBounty, levelTier, sortUsers } from './leaderboard-helpers.ts'
-import { MemoryRouter } from 'react-router-dom'
 import { users as mockUsers } from '../mock/users.ts'
 import { useBugStore } from '../store'
 import { bugs as mockBugs } from '../mock/bugs.ts'
+import { WindowManagerProvider } from '../contexts/WindowManagerContext.tsx'
 
 const h = React.createElement
 
@@ -69,7 +69,9 @@ test('sortUsers orders users by various keys', () => {
 
 test('Leaderboard component renders user rows', () => {
   resetStore()
-  const html = renderToStaticMarkup(h(MemoryRouter, null, h(Leaderboard)))
+  const html = renderToStaticMarkup(
+    h(WindowManagerProvider, null, h(Leaderboard))
+  )
   const first = mockUsers[0]
   assert.ok(html.includes(first.name))
   assert.ok(html.includes('Gold'))

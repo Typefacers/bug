@@ -2,9 +2,10 @@ import BugArea from '../components/BugArea'
 import { useBugStore } from '../store'
 import { raised } from '../utils/win95'
 import Meta from '../components/Meta'
-import { memo } from 'react'
+import { memo, type FC } from 'react'
+import type { WindowComponentProps } from '../types/window'
 
-function Bugs() {
+const Bugs: FC<WindowComponentProps> = () => {
   const bugs = useBugStore(s => s.bugs)
 
   return (
