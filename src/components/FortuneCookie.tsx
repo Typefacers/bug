@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { raised, sunken, windowShadow } from '../utils/win95'
+import { Frame } from 'react95'
 import Win95Button from './win95/Button'
 
 const FORTUNES = [
@@ -32,32 +32,33 @@ export default function FortuneCookie() {
   }, [])
 
   return (
-    <div
-      className={`mt-2 text-center bg-[#C0C0C0] p-4 ${raised} ${windowShadow} rounded`}
+    <Frame
+      variant="window"
+      shadow
+      className="mt-2 rounded bg-[#c6c6c6] p-4 text-center"
     >
-      <motion.p
-        key={fortune}
-        initial={{ opacity: 0, y: -4 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className={`text-sm mb-2 px-2 py-1 bg-white inline-block ${sunken}`}
+      <Frame
+        variant="well"
+        className="mx-auto mb-3 inline-block bg-white px-3 py-2"
       >
-        🥠 {fortune}
-      </motion.p>
-      <div className="flex justify-center gap-2 mt-2">
-        <Win95Button
-          onClick={randomFortune}
-          className={`px-2 py-1 bg-[#E0E0E0] ${raised} hover:bg-[#D0D0D0]`}
+        <motion.p
+          key={fortune}
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="text-sm"
         >
+          🥠 {fortune}
+        </motion.p>
+      </Frame>
+      <div className="mt-2 flex justify-center gap-2">
+        <Win95Button size="sm" onClick={randomFortune}>
           New Fortune
         </Win95Button>
-        <Win95Button
-          onClick={speakFortune}
-          className={`px-2 py-1 bg-[#E0E0E0] ${raised} hover:bg-[#D0D0D0]`}
-        >
+        <Win95Button size="sm" onClick={speakFortune}>
           🔈 Read Aloud
         </Win95Button>
       </div>
-    </div>
+    </Frame>
   )
 }

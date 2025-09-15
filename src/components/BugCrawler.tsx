@@ -205,7 +205,9 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
                 e.stopPropagation()
                 inspectBug(null)
               }}
-              className="absolute top-2 right-2 size-8 rounded-full bg-white p-1"
+              className="absolute top-2 right-2"
+              size="sm"
+              square
             >
               ✕
             </Win95Button>

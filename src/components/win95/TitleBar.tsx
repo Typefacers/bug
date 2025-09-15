@@ -1,10 +1,13 @@
+import clsx from 'clsx'
 import { ReactNode } from 'react'
+import { WindowHeader } from 'react95'
 
 type Props = {
   title: string
   controls?: ReactNode
   className?: string
   onDoubleClick?: () => void
+  active?: boolean
 }
 
 export default function TitleBar({
@@ -12,16 +15,21 @@ export default function TitleBar({
   controls,
   className = '',
   onDoubleClick,
+  active = true,
 }: Props) {
   return (
-    <div
-      className={`win95-title-bar h-8 select-none border-b-2 border-b-white bg-[#000080] px-2 text-white z-10 ${className}`}
+    <WindowHeader
+      className={clsx(
+        'win95-title-bar flex select-none items-center justify-between gap-2 px-2 py-1 text-black',
+        className
+      )}
+      active={active}
       onDoubleClick={onDoubleClick}
     >
-      <div className="flex h-full items-center justify-between">
-        <span className="font-bold tracking-wider">{title}</span>
-        {controls}
-      </div>
-    </div>
+      <span className="font-bold tracking-wider text-white drop-shadow-[1px_1px_0_rgba(0,0,0,0.8)]">
+        {title}
+      </span>
+      {controls}
+    </WindowHeader>
   )
 }

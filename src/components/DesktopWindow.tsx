@@ -3,6 +3,7 @@ import { Rnd } from 'react-rnd'
 import Window from './win95/Window'
 import TitleBar from './win95/TitleBar'
 import Win95Button from './win95/Button'
+import { WindowContent } from 'react95'
 import {
   Win95CloseIcon,
   Win95MaximizeIcon,
@@ -11,8 +12,6 @@ import {
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import { WINDOW_APPS } from '../utils/window-apps'
 import type { WindowSize, WindowState } from '../types/window'
-
-const CONTROL_BUTTON_CLASS = 'h-6 w-6 p-0 flex items-center justify-center'
 
 type Props = {
   windowState: WindowState
@@ -28,6 +27,7 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
     setWindowPosition,
     setWindowSize,
     setWindowTitle,
+    activeWindowId,
   } = useWindowManager()
 
   const definition = WINDOW_APPS[windowState.appId]
@@ -71,33 +71,37 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
         <TitleBar
           title={windowState.title}
           onDoubleClick={handleMaximize}
+          active={activeWindowId === windowState.id && !windowState.minimized}
           controls={
             <div className="flex gap-px">
               <Win95Button
                 onClick={() => toggleMinimize(windowState.id)}
                 aria-label="Minimize"
-                className={CONTROL_BUTTON_CLASS}
+                size="sm"
+                square
               >
                 <Win95MinimizeIcon />
               </Win95Button>
               <Win95Button
                 onClick={handleMaximize}
                 aria-label={windowState.maximized ? 'Restore' : 'Maximize'}
-                className={CONTROL_BUTTON_CLASS}
+                size="sm"
+                square
               >
                 <Win95MaximizeIcon />
               </Win95Button>
               <Win95Button
                 onClick={() => closeWindow(windowState.id)}
                 aria-label="Close"
-                className={CONTROL_BUTTON_CLASS}
+                size="sm"
+                square
               >
                 <Win95CloseIcon />
               </Win95Button>
             </div>
           }
         />
-        <div className="bg-[#E0E0E0] flex-1 overflow-hidden p-3">
+        <WindowContent className="flex-1 overflow-hidden bg-[#E0E0E0] p-3">
           <Suspense fallback={<div className="p-4">Loading...</div>}>
             <Component
               windowId={windowState.id}
@@ -105,7 +109,7 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
               setTitle={title => setWindowTitle(windowState.id, title)}
             />
           </Suspense>
-        </div>
+        </WindowContent>
       </Window>
     </Rnd>
   )

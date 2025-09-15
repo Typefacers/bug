@@ -1,19 +1,22 @@
-import { PropsWithChildren } from 'react'
-import { raised, windowShadow } from '../../utils/win95'
+import clsx from 'clsx'
+import { forwardRef } from 'react'
+import { Window as React95Window, type WindowProps } from 'react95'
 
-type Props = {
-  className?: string
-}
+type Props = WindowProps
 
-export default function Window({
-  children,
-  className = '',
-}: PropsWithChildren<Props>) {
+const Window = forwardRef<HTMLDivElement, Props>(function Window(
+  { className, shadow = true, ...props },
+  ref
+) {
   return (
-    <div
-      className={`w-full bg-[#C0C0C0] ${raised} ${windowShadow} flex flex-col ${className}`}
-    >
-      {children}
-    </div>
+    <React95Window
+      ref={ref}
+      shadow={shadow}
+      className={clsx('flex flex-col overflow-hidden', className)}
+      {...props}
+    />
   )
-}
+})
+
+export type { Props as Win95WindowProps }
+export default Window

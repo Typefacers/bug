@@ -1,16 +1,9 @@
-import { useState, memo } from 'react'
+import { useState, memo, type ChangeEvent } from 'react'
 import Win95Button from '../components/win95/Button'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '../components/ui/card'
 import Input from '../components/win95/Input'
 import { Label } from '../components/ui/label'
+import { Frame } from 'react95'
 import { useBugStore } from '../store'
-import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
 import Meta from '../components/Meta'
 import ladybugAvatar from '../assets/profile-ladybug.png'
 import beeAvatar from '../assets/profile-bee.png'
@@ -69,38 +62,42 @@ function SignUp({ windowId }: WindowComponentProps = {}) {
     }
   }
 
-  const raised = `${raisedBase} shadow-sm`
-  const sunken = `${sunkenBase} shadow-inner`
-
   return (
     <>
       <Meta title="Sign Up" description="Create a new Bug Basher account." />
-      <div className="max-w-md mx-auto">
-        <Card className={`bg-[#E0E0E0] ${raised}`}>
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Sign Up</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {error && (
-              <div className={`${sunken} bg-red-100 text-red-800 p-2 text-sm`}>
-                {error}
-              </div>
-            )}
-            <div className="space-y-1">
-              <Label htmlFor="name">Your Name</Label>
-              <Input
-                id="name"
-                value={name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setName(e.target.value)
-                }
-                className={`bg-white ${sunken}`}
-              />
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-between">
+      <div className="mx-auto max-w-md">
+        <Frame
+          variant="window"
+          shadow
+          className="space-y-4 bg-[#d1d1d1] p-6 text-left"
+        >
+          <header>
+            <h2 className="text-2xl font-bold text-black">Sign Up</h2>
+          </header>
+          {error && (
+            <Frame
+              variant="well"
+              className="bg-[#ffeaea] px-3 py-2 text-sm text-red-700"
+            >
+              {error}
+            </Frame>
+          )}
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-left text-sm font-semibold">
+              Your Name
+            </Label>
+            <Input
+              id="name"
+              value={name}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setName(e.target.value)
+              }
+              fullWidth
+            />
+          </div>
+          <div className="flex justify-between gap-2">
             <Win95Button
-              className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black`}
+              size="sm"
               onClick={() => {
                 openWindow('leaderboard')
                 if (windowId) {
@@ -110,14 +107,11 @@ function SignUp({ windowId }: WindowComponentProps = {}) {
             >
               Cancel
             </Win95Button>
-            <Win95Button
-              className={`${raised} bg-[#008080] hover:bg-[#006666] text-white`}
-              onClick={createUser}
-            >
+            <Win95Button size="sm" primary onClick={createUser}>
               Create Account
             </Win95Button>
-          </CardFooter>
-        </Card>
+          </div>
+        </Frame>
       </div>
     </>
   )
