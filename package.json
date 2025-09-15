@@ -14,7 +14,6 @@
     "test": "node --experimental-transform-types --loader ./png-loader.js --experimental-test-coverage --test-coverage-include=src/components/** --test-coverage-include=src/routes/** --test"
   },
   "dependencies": {
-    "@radix-ui/react-navigation-menu": "^1.2.13",
     "@radix-ui/react-progress": "^1.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.12",
