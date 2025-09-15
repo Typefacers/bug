@@ -1,19 +1,16 @@
-import { PropsWithChildren } from 'react'
-import { raised, windowShadow } from '../../utils/win95'
+import { forwardRef, type PropsWithChildren } from 'react'
+import { Window as React95Window, type WindowProps } from 'react95'
 
-type Props = {
-  className?: string
-}
+type Props = WindowProps
 
-export default function Window({
-  children,
-  className = '',
-}: PropsWithChildren<Props>) {
-  return (
-    <div
-      className={`w-full bg-[#C0C0C0] ${raised} ${windowShadow} flex flex-col ${className}`}
-    >
-      {children}
-    </div>
-  )
-}
+const Window = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
+  function Window({ children, ...props }, ref) {
+    return (
+      <React95Window ref={ref} {...props}>
+        {children}
+      </React95Window>
+    )
+  }
+)
+
+export default Window

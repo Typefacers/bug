@@ -1,10 +1,12 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import { WindowHeader } from 'react95'
 
 type Props = {
   title: string
   controls?: ReactNode
   className?: string
   onDoubleClick?: () => void
+  active?: boolean
 }
 
 export default function TitleBar({
@@ -12,16 +14,16 @@ export default function TitleBar({
   controls,
   className = '',
   onDoubleClick,
+  active = true,
 }: Props) {
   return (
-    <div
-      className={`win95-title-bar h-8 select-none border-b-2 border-b-white bg-[#000080] px-2 text-white z-10 ${className}`}
+    <WindowHeader
+      active={active}
+      className={`win95-title-bar flex items-center justify-between gap-2 pr-1 ${className}`}
       onDoubleClick={onDoubleClick}
     >
-      <div className="flex h-full items-center justify-between">
-        <span className="font-bold tracking-wider">{title}</span>
-        {controls}
-      </div>
-    </div>
+      <span className="truncate">{title}</span>
+      {controls}
+    </WindowHeader>
   )
 }

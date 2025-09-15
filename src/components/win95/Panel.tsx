@@ -1,18 +1,19 @@
-import { PropsWithChildren } from 'react'
-import { raised, sunken } from '../../utils/win95'
+import { forwardRef, type PropsWithChildren } from 'react'
+import { Frame, type FrameProps } from 'react95'
 
 type Props = {
   variant?: 'sunken' | 'raised'
-  className?: string
-}
+} & Omit<FrameProps, 'variant'>
 
-export default function Panel({
-  children,
-  variant = 'sunken',
-  className = '',
-}: PropsWithChildren<Props>) {
-  const border = variant === 'sunken' ? sunken : raised
-  return (
-    <div className={`bg-[#E0E0E0] ${border} p-2 ${className}`}>{children}</div>
-  )
-}
+const Panel = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
+  function Panel({ variant = 'sunken', children, ...props }, ref) {
+    const mappedVariant = variant === 'sunken' ? 'well' : 'window'
+    return (
+      <Frame ref={ref} variant={mappedVariant} {...props}>
+        {children}
+      </Frame>
+    )
+  }
+)
+
+export default Panel
