@@ -6,7 +6,7 @@ import { BugCard } from './BugCard'
 import ReactDOM from 'react-dom'
 import clsx from 'clsx'
 import { useBugStore } from '../store'
-import Win95Button from './win95/Button'
+import { Button } from 'react95'
 
 /** -----------------------------------------------------------------------
  *  BugCrawler — makes a bug sprite wander with a lightweight 3-D effect
@@ -199,16 +199,18 @@ const BugCrawler: React.FC<BugCrawlerProps> = ({
               e.stopPropagation()
             }}
           >
-            <Win95Button
+            <Button
               aria-label="Close"
               onClick={e => {
                 e.stopPropagation()
                 inspectBug(null)
               }}
-              className="absolute top-2 right-2 size-8 rounded-full bg-white p-1"
+              square
+              size="sm"
+              className="absolute right-2 top-2"
             >
               ✕
-            </Win95Button>
+            </Button>
             <BugCard bug={bug} modal />
           </div>
         </div>

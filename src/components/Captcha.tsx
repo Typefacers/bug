@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Label } from './ui/label'
 import type { CaptchaProps } from '../types/captcha-props'
-import { sunken } from '../utils/win95'
+import { TextInput } from 'react95'
 
 export default function Captcha({ onChange }: CaptchaProps) {
   const [a, setA] = useState(0)
@@ -23,11 +23,11 @@ export default function Captcha({ onChange }: CaptchaProps) {
       <Label htmlFor="captcha">
         What is {a} + {b}?
       </Label>
-      <input
+      <TextInput
         id="captcha"
         value={answer}
         onChange={e => setAnswer(e.target.value)}
-        className={`bg-white ${sunken}`}
+        fullWidth
       />
     </div>
   )

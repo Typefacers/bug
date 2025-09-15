@@ -1,18 +1,14 @@
 import { Suspense } from 'react'
 import { Rnd } from 'react-rnd'
-import Window from './win95/Window'
-import TitleBar from './win95/TitleBar'
-import Win95Button from './win95/Button'
+import { Button, Window, WindowContent, WindowHeader } from 'react95'
 import {
   Win95CloseIcon,
   Win95MaximizeIcon,
   Win95MinimizeIcon,
-} from './win95/WindowControlIcons'
+} from './WindowControlIcons'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import { WINDOW_APPS } from '../utils/window-apps'
 import type { WindowSize, WindowState } from '../types/window'
-
-const CONTROL_BUTTON_CLASS = 'h-6 w-6 p-0 flex items-center justify-center'
 
 type Props = {
   windowState: WindowState
@@ -67,37 +63,40 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
       className={`absolute ${windowState.minimized ? 'hidden' : ''}`}
       style={{ zIndex: windowState.zIndex }}
     >
-      <Window className="h-full">
-        <TitleBar
-          title={windowState.title}
+      <Window className="flex h-full flex-col" shadow>
+        <WindowHeader
+          className="win95-title-bar flex items-center justify-between gap-2"
           onDoubleClick={handleMaximize}
-          controls={
-            <div className="flex gap-px">
-              <Win95Button
-                onClick={() => toggleMinimize(windowState.id)}
-                aria-label="Minimize"
-                className={CONTROL_BUTTON_CLASS}
-              >
-                <Win95MinimizeIcon />
-              </Win95Button>
-              <Win95Button
-                onClick={handleMaximize}
-                aria-label={windowState.maximized ? 'Restore' : 'Maximize'}
-                className={CONTROL_BUTTON_CLASS}
-              >
-                <Win95MaximizeIcon />
-              </Win95Button>
-              <Win95Button
-                onClick={() => closeWindow(windowState.id)}
-                aria-label="Close"
-                className={CONTROL_BUTTON_CLASS}
-              >
-                <Win95CloseIcon />
-              </Win95Button>
-            </div>
-          }
-        />
-        <div className="bg-[#E0E0E0] flex-1 overflow-hidden p-3">
+        >
+          <span className="truncate pr-2">{windowState.title}</span>
+          <div className="flex gap-1">
+            <Button
+              square
+              size="sm"
+              aria-label="Minimize"
+              onClick={() => toggleMinimize(windowState.id)}
+            >
+              <Win95MinimizeIcon />
+            </Button>
+            <Button
+              square
+              size="sm"
+              aria-label={windowState.maximized ? 'Restore' : 'Maximize'}
+              onClick={handleMaximize}
+            >
+              <Win95MaximizeIcon />
+            </Button>
+            <Button
+              square
+              size="sm"
+              aria-label="Close"
+              onClick={() => closeWindow(windowState.id)}
+            >
+              <Win95CloseIcon />
+            </Button>
+          </div>
+        </WindowHeader>
+        <WindowContent className="flex-1 overflow-hidden">
           <Suspense fallback={<div className="p-4">Loading...</div>}>
             <Component
               windowId={windowState.id}
@@ -105,7 +104,7 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
               setTitle={title => setWindowTitle(windowState.id, title)}
             />
           </Suspense>
-        </div>
+        </WindowContent>
       </Window>
     </Rnd>
   )

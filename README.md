@@ -50,7 +50,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🐛 **Virtual Bug Extermination**: Because squashing real bugs requires actual skill
 - 📊 **Dashboard with Fancy Charts**: D3.js charts now sport gradients, grids, and zoom
 - 🏆 **Leaderboard System**: Compete with yourself since you're probably the only user
-- 🎨 **Windows 95 UI**: Nothing says "modern web development" like nostalgic 30-year-old design
+- 🎨 **Windows 95 UI**: Powered by React95 components so every window, button, and menu looks like it came straight from 1995
 - 🪟 **Pixel-Perfect Window Controls**: Title bars now rock the classic `_`, `□`, and `X` glyphs straight out of Windows 95
 - 🖱️ **Authentic Desktop Shell**: Draggable, resizable windows with minimize/maximize controls, a living taskbar, and a Start menu that launches every feature
 - 🗃️ **Zustand State Management**: Because Redux wasn't complicated enough, we needed something "simpler"
@@ -93,7 +93,7 @@ This project showcases the fine art of using 30 dependencies to accomplish what 
 - **Zustand**: State management for 3 variables that could've been `useState`
 - **UUID**: Industrial-strength ID generation for a client-side game
 - **Lucide Icons**: 1000+ icons imported to use exactly 7
-- **NattUI React Components**: Because we needed yet another button library
+- **React95**: Authentic Windows 95 components without hand-rolled clones
 
 ### 🚀 Quick Start
 

@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Button, Frame } from 'react95'
 import StartMenu from './StartMenu'
-import Win95Button from './win95/Button'
 import { useWindowManager } from '../contexts/WindowManagerContext'
-import { sunken } from '../utils/win95'
 
 const getTime = () =>
   new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -10,34 +9,22 @@ const getTime = () =>
 const taskbarFrame =
   'shadow-[inset_0_1px_0_0_#ffffff,inset_0_2px_0_0_#dfdfdf,inset_0_-1px_0_0_#808080,inset_0_-2px_0_0_#404040]'
 
-const thinSunken =
-  'border border-t-[#808080] border-l-[#808080] border-b-white border-r-white'
-
 type StartButtonProps = {
   open: boolean
   onClick: () => void
 }
 
 function StartButton({ open, onClick }: StartButtonProps) {
-  const base =
-    'relative flex h-9 items-center gap-2 px-4 text-[13px] font-semibold tracking-tight text-black select-none'
-  const gradient =
-    'bg-[linear-gradient(180deg,#3fc162_0%,#35a854_35%,#2b8a45_70%,#1f6d37_100%)]'
-  const raisedStyles =
-    'border-[2px] border-t-[#f5f5f5] border-l-[#f5f5f5] border-r-[#404040] border-b-[#404040] shadow-[inset_1px_1px_0_0_#5fd27a,inset_-1px_-1px_0_0_#1b6f2b]'
-  const sunkenStyles =
-    'border-[2px] border-t-[#404040] border-l-[#404040] border-r-[#f5f5f5] border-b-[#f5f5f5] shadow-[inset_1px_1px_0_0_#1b6f2b,inset_-1px_-1px_0_0_#5fd27a]'
-
   return (
-    <button
-      type="button"
-      aria-pressed={open}
+    <Button
       onClick={onClick}
-      className={`${base} ${gradient} ${open ? sunkenStyles : raisedStyles} focus:outline-none focus-visible:ring-2 focus-visible:ring-black`}
+      active={open}
+      primary
+      className="flex h-9 items-center gap-2 px-4 text-[13px] font-semibold tracking-tight"
     >
       <WindowsLogo className="h-4 w-4" />
       <span className="tracking-[0.02em]">Start</span>
-    </button>
+    </Button>
   )
 }
 
@@ -128,15 +115,17 @@ export default function Taskbar() {
 
       <Divider />
 
-      <div
-        className={`flex h-9 flex-1 items-center gap-1 overflow-x-auto overflow-y-hidden bg-[#BDBDBD] px-2 ${thinSunken}`}
+      <Frame
+        variant="well"
+        shadow
+        className="flex h-9 flex-1 items-center gap-1 overflow-x-auto overflow-y-hidden bg-[#BDBDBD] px-2"
       >
         {orderedWindows.map(window => {
           const definition = apps[window.appId]
           const isActive = activeWindowId === window.id && !window.minimized
 
           return (
-            <Win95Button
+            <Button
               key={window.id}
               onClick={() => {
                 if (window.minimized || isActive) {
@@ -145,31 +134,35 @@ export default function Taskbar() {
                   focusWindow(window.id)
                 }
               }}
-              className={`flex h-7 min-w-[140px] flex-shrink-0 items-center gap-2 truncate bg-[#C0C0C0] px-3 text-left ${
-                isActive ? sunken : ''
-              }`}
+              active={isActive}
+              variant="thin"
+              className="flex h-7 min-w-[140px] flex-shrink-0 items-center gap-2 truncate bg-[#C0C0C0] px-3 text-left"
             >
               <span aria-hidden>{definition?.icon ?? '🪟'}</span>
               <span className="truncate text-left">{window.title}</span>
-            </Win95Button>
+            </Button>
           )
         })}
-      </div>
+      </Frame>
 
       <Divider />
 
       <div className="flex h-9 items-center gap-2">
-        <div
-          className={`flex h-full items-center gap-2 px-2 ${thinSunken} bg-[#C0C0C0]`}
+        <Frame
+          variant="well"
+          shadow
+          className="flex h-full items-center gap-2 bg-[#C0C0C0] px-2"
         >
           <MonitorIcon className="h-4 w-4" />
           <SpeakerIcon className="h-4 w-4" />
-        </div>
-        <div
-          className={`flex h-full min-w-[88px] items-center justify-center px-3 font-['MS_Sans_Serif','Tahoma',sans-serif] ${thinSunken} bg-[#C0C0C0]`}
+        </Frame>
+        <Frame
+          variant="well"
+          shadow
+          className="flex h-full min-w-[88px] items-center justify-center bg-[#C0C0C0] px-3 font-['MS_Sans_Serif','Tahoma',sans-serif]"
         >
           {time}
-        </div>
+        </Frame>
       </div>
 
       {open && (
