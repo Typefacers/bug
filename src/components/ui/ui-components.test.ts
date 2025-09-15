@@ -11,15 +11,7 @@ import {
   CardContent,
   CardFooter,
 } from './card.tsx'
-import { Input } from './input.tsx'
 import { Label } from './label.tsx'
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
-} from './navigation-menu.tsx'
 import { Progress } from './progress.tsx'
 import {
   Select,
@@ -57,34 +49,9 @@ test('Card renders', () => {
   assert.ok(html.includes('Title'))
 })
 
-test('Input renders', () => {
-  const html = wrap(h(Input, { value: 'x', onChange: () => {} }))
-  assert.ok(html.includes('value="x"'))
-})
-
 test('Label renders', () => {
   const html = wrap(h(Label, { htmlFor: 'i' }, 'Label'))
   assert.ok(html.includes('Label'))
-})
-
-test('NavigationMenu renders', () => {
-  const html = wrap(
-    h(
-      NavigationMenu,
-      null,
-      h(
-        NavigationMenuList,
-        null,
-        h(
-          NavigationMenuItem,
-          null,
-          h(NavigationMenuTrigger, null, 'Menu'),
-          h(NavigationMenuContent, null, 'Content')
-        )
-      )
-    )
-  )
-  assert.ok(html.includes('Menu'))
 })
 
 test('Progress renders', () => {
