@@ -11,6 +11,8 @@ export default function Taskbar({
   windowTitle,
   minimized,
   onToggle,
+  hidden,
+  onOpenWindow,
 }: TaskbarProps) {
   const [time, setTime] = useState(getTime())
   const [open, setOpen] = useState(false)
@@ -32,14 +34,18 @@ export default function Taskbar({
         <span className="text-sm font-bold">Start</span>
       </Win95Button>
       <div className="flex-1 flex items-center px-1">
-        <Win95Button
-          onClick={onToggle}
-          className={`h-6 px-2 flex items-center truncate bg-[#C0C0C0] ${raised} ${
-            minimized ? '' : sunken
-          } active:${sunken}`}
-        >
-          {windowTitle}
-        </Win95Button>
+        {!hidden ? (
+          <Win95Button
+            onClick={onToggle}
+            className={`h-6 px-2 flex items-center truncate bg-[#C0C0C0] ${raised} ${
+              minimized ? '' : sunken
+            } active:${sunken}`}
+          >
+            {windowTitle}
+          </Win95Button>
+        ) : (
+          <div className="h-6 flex-1" aria-hidden />
+        )}
       </div>
       <div className={`h-6 px-2 bg-[#C0C0C0] ${raised} font-mono text-sm`}>
         {time}
@@ -47,7 +53,10 @@ export default function Taskbar({
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <StartMenu onClose={() => setOpen(false)} />
+          <StartMenu
+            onClose={() => setOpen(false)}
+            onOpenWindow={onOpenWindow}
+          />
         </>
       )}
     </div>
