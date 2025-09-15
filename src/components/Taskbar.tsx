@@ -129,7 +129,7 @@ export default function Taskbar() {
       <Divider />
 
       <div
-        className={`flex h-9 flex-1 items-center gap-1 overflow-hidden bg-[#BDBDBD] px-2 ${thinSunken}`}
+        className={`flex h-9 flex-1 items-center gap-1 overflow-x-auto overflow-y-hidden bg-[#BDBDBD] px-2 ${thinSunken}`}
       >
         {orderedWindows.map(window => {
           const definition = apps[window.appId]
