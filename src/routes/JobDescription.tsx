@@ -1,7 +1,8 @@
 import Meta from '../components/Meta'
-import { memo } from 'react'
+import { memo, type FC } from 'react'
+import type { WindowComponentProps } from '../types/window'
 
-function JobDescription() {
+const JobDescription: FC<WindowComponentProps> = () => {
   return (
     <>
       <Meta

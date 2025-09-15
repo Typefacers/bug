@@ -1,13 +1,15 @@
-import React, { memo } from 'react'
-import { Link } from 'react-router-dom'
+import React, { memo, type FC } from 'react'
 import { useBugStore } from '../store'
 import Meta from '../components/Meta'
 import Input from '../components/win95/Input'
 import Win95Button from '../components/win95/Button'
 import { levelFromBounty, sortUsers, type SortKey } from './leaderboard-helpers'
+import { useWindowManager } from '../contexts/WindowManagerContext'
+import type { WindowComponentProps } from '../types/window'
 
-function Leaderboard() {
+const Leaderboard: FC<WindowComponentProps> = () => {
   const users = useBugStore(s => s.users)
+  const { openWindow } = useWindowManager()
 
   /** Local sort state */
   const [sortKey, setSortKey] = React.useState<SortKey>('bounty')
@@ -149,12 +151,18 @@ function Leaderboard() {
                         className="w-6 h-6 border border-gray-700"
                       />
                     )}
-                    <Link
-                      to={`/user/${u.id}`}
-                      className="text-indigo-600 hover:underline"
+                    <button
+                      type="button"
+                      className="text-indigo-600 hover:underline bg-transparent !px-0 !py-0 border-none focus:outline-none focus-visible:underline cursor-pointer"
+                      onClick={() =>
+                        openWindow('userProfile', {
+                          instanceId: `user-${u.id}`,
+                          context: { userId: u.id },
+                        })
+                      }
                     >
                       {u.name}
-                    </Link>
+                    </button>
                   </td>
                   <td className="py-1 px-3 text-right tabular-nums">
                     {bugCount}

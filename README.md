@@ -51,6 +51,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 📊 **Dashboard with Fancy Charts**: D3.js charts now sport gradients, grids, and zoom
 - 🏆 **Leaderboard System**: Compete with yourself since you're probably the only user
 - 🎨 **Windows 95 UI**: Nothing says "modern web development" like nostalgic 30-year-old design
+- 🖱️ **Authentic Desktop Shell**: Draggable, resizable windows with minimize/maximize controls, a living taskbar, and a Start menu that launches every feature
 - 🗃️ **Zustand State Management**: Because Redux wasn't complicated enough, we needed something "simpler"
 - ⚡ **Blazing Fast Vite**: The only thing fast about this project
 - 🎭 **TypeScript**: Added types everywhere except where they're actually needed
@@ -212,6 +213,7 @@ See [docs/NAMING_CONVENTIONS.md](docs/NAMING_CONVENTIONS.md) for the complete gu
 - `BugTrendsChart.tsx`: Gradient-filled line chart with zoomable timelines
 - `Taskbar.tsx`: Windows 95 clock for peak nostalgia
 - `StartMenu.tsx`: Clickable start button menu
+- `Desktop.tsx` & `WindowManagerContext.tsx`: Full Win95 window manager with icons, z-order, and taskbar integration
 - `NotFound.tsx`: A 404 page with jokes for when routing fails
 
 **📊 Dashboard Extravaganza:**

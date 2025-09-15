@@ -2,7 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { MemoryRouter } from 'react-router-dom'
+import { WindowManagerProvider } from '../contexts/WindowManagerContext.tsx'
 
 import AimCursor from './AimCursor.tsx'
 import BugArea from './BugArea.tsx'
@@ -22,6 +22,8 @@ const sampleBug = bugs[0]
 const h = React.createElement
 
 const wrap = (element: React.ReactElement) => renderToStaticMarkup(element)
+const withProvider = (element: React.ReactElement) =>
+  renderToStaticMarkup(h(WindowManagerProvider, null, element))
 
 test('AimCursor renders', () => {
   const html = wrap(h(AimCursor, { x: 5, y: 5 }))
@@ -77,23 +79,11 @@ test('Meta renders', () => {
 })
 
 test('StartMenu renders', () => {
-  const html = renderToStaticMarkup(
-    h(MemoryRouter, null, h(StartMenu, { onClose: () => {} }))
-  )
+  const html = withProvider(h(StartMenu, { onClose: () => {} }))
   assert.ok(html.includes('Bugs'))
 })
 
 test('Taskbar renders', () => {
-  const html = renderToStaticMarkup(
-    h(
-      MemoryRouter,
-      null,
-      h(Taskbar, {
-        windowTitle: 'Window',
-        minimized: false,
-        onToggle: () => {},
-      })
-    )
-  )
+  const html = withProvider(h(Taskbar))
   assert.ok(html.includes('Start'))
 })

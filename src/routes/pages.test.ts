@@ -2,7 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { MemoryRouter, Routes, Route } from 'react-router-dom'
+import { WindowManagerProvider } from '../contexts/WindowManagerContext.tsx'
 
 import Bugs from './Bugs.tsx'
 import Dashboard from './Dashboard.tsx'
@@ -18,8 +18,8 @@ import Weather from './Weather.tsx'
 
 const h = React.createElement
 
-const wrap = (element: React.ReactElement, path = '/') =>
-  renderToStaticMarkup(h(MemoryRouter, { initialEntries: [path] }, element))
+const wrap = (element: React.ReactElement) =>
+  renderToStaticMarkup(h(WindowManagerProvider, null, element))
 
 test('Bugs page renders', () => {
   const html = wrap(h(Bugs))
@@ -67,17 +67,7 @@ test('SignUp page renders', () => {
 })
 
 test('UserProfile page renders', () => {
-  const html = renderToStaticMarkup(
-    h(
-      MemoryRouter,
-      { initialEntries: ['/user/1'] },
-      h(
-        Routes,
-        null,
-        h(Route, { path: '/user/:userId', element: h(UserProfile) })
-      )
-    )
-  )
+  const html = wrap(h(UserProfile, { context: { userId: 1 } }))
   assert.ok(html.length > 0)
 })
 

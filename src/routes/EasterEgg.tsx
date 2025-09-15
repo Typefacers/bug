@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom'
 import Meta from '../components/Meta'
 import { memo } from 'react'
+import { useWindowManager } from '../contexts/WindowManagerContext'
+import type { WindowComponentProps } from '../types/window'
 
-function EasterEgg() {
+function EasterEgg({ windowId }: WindowComponentProps = {}) {
+  const { openWindow, closeWindow } = useWindowManager()
+
   return (
     <>
       <Meta
@@ -15,9 +18,18 @@ function EasterEgg() {
           You found the hidden page! There isn't much here, but enjoy the
           bragging rights.
         </p>
-        <Link to="/" className="text-indigo-600 hover:underline">
+        <button
+          type="button"
+          className="text-indigo-600 hover:underline bg-transparent !px-0 !py-0 border-none focus:outline-none focus-visible:underline cursor-pointer"
+          onClick={() => {
+            openWindow('bugs')
+            if (windowId) {
+              closeWindow(windowId)
+            }
+          }}
+        >
           Back to squashing bugs
-        </Link>
+        </button>
       </div>
     </>
   )

@@ -1,5 +1,4 @@
 import { useState, memo } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Win95Button from '../components/win95/Button'
 import {
   Card,
@@ -23,13 +22,15 @@ import antAvatar from '../assets/ant.png'
 import mothAvatar from '../assets/moth.png'
 import cockroachAvatar from '../assets/cockroach.png'
 import caterpillarAvatar from '../assets/caterpillar.png'
+import { useWindowManager } from '../contexts/WindowManagerContext'
+import type { WindowComponentProps } from '../types/window'
 
-function SignUp() {
-  const navigate = useNavigate()
+function SignUp({ windowId }: WindowComponentProps = {}) {
   const [name, setName] = useState('')
   const [error, setError] = useState('')
 
   const addUser = useBugStore(s => s.addUser)
+  const { openWindow, closeWindow } = useWindowManager()
 
   const avatars = [
     ladybugAvatar,
@@ -62,7 +63,10 @@ function SignUp() {
       bugsSquashed: [],
     })
 
-    navigate('/bounty-leaderboard')
+    openWindow('leaderboard')
+    if (windowId) {
+      closeWindow(windowId)
+    }
   }
 
   const raised = `${raisedBase} shadow-sm`
@@ -97,7 +101,12 @@ function SignUp() {
           <CardFooter className="flex justify-between">
             <Win95Button
               className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black`}
-              onClick={() => navigate('/bounty-leaderboard')}
+              onClick={() => {
+                openWindow('leaderboard')
+                if (windowId) {
+                  closeWindow(windowId)
+                }
+              }}
             >
               Cancel
             </Win95Button>

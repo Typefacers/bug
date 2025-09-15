@@ -1,5 +1,4 @@
 import { useState, memo } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Win95Button from '../components/win95/Button'
 import {
   Card,
@@ -25,9 +24,10 @@ import { Bug } from '../types/bug'
 import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
 import Meta from '../components/Meta'
 import Captcha from '../components/Captcha'
+import { useWindowManager } from '../contexts/WindowManagerContext'
+import type { WindowComponentProps } from '../types/window'
 
-function NewBug() {
-  const navigate = useNavigate()
+function NewBug({ windowId }: WindowComponentProps = {}) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [bounty, setBounty] = useState(50)
@@ -36,6 +36,7 @@ function NewBug() {
   const [captchaValid, setCaptchaValid] = useState(false)
 
   const addBug = useBugStore(s => s.addBug)
+  const { openWindow, closeWindow } = useWindowManager()
 
   const createBug = () => {
     if (!title) {
@@ -65,7 +66,10 @@ function NewBug() {
     }
 
     addBug(newBug)
-    navigate('/dashboard')
+    openWindow('dashboard')
+    if (windowId) {
+      closeWindow(windowId)
+    }
   }
 
   /* 3-D border helpers with enhanced styles */
@@ -159,7 +163,12 @@ function NewBug() {
           <CardFooter className="flex justify-between">
             <Win95Button
               className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black`}
-              onClick={() => navigate('/dashboard')}
+              onClick={() => {
+                openWindow('dashboard')
+                if (windowId) {
+                  closeWindow(windowId)
+                }
+              }}
             >
               Cancel
             </Win95Button>
