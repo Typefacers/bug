@@ -8,7 +8,7 @@ export default function StartMenu({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className={`absolute bottom-8 left-0 w-48 p-2 bg-[#C0C0C0] ${raised} ${windowShadow} text-sm z-50`}
+      className={`absolute left-0 bottom-[calc(100%-2px)] w-48 p-2 bg-[#C0C0C0] ${raised} ${windowShadow} text-sm z-50`}
     >
       <ul className="space-y-1">
         {START_MENU_APPS.map(app => (
