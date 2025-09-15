@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { Badge } from './badge.tsx'
-import Win95Button from '../win95/Button'
+import { Button, Select } from 'react95'
 import {
   Card,
   CardHeader,
@@ -21,13 +21,6 @@ import {
   NavigationMenuContent,
 } from './navigation-menu.tsx'
 import { Progress } from './progress.tsx'
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from './select.tsx'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs.tsx'
 import { Textarea } from './textarea.tsx'
 
@@ -40,7 +33,7 @@ test('Badge renders', () => {
 })
 
 test('Button renders', () => {
-  const html = wrap(h(Win95Button, null, 'Click'))
+  const html = wrap(h(Button, null, 'Click'))
   assert.ok(html.includes('Click'))
 })
 
@@ -94,14 +87,17 @@ test('Progress renders', () => {
 
 test('Select renders', () => {
   const html = wrap(
-    h(
-      Select,
-      { value: 'a', onValueChange: () => {} },
-      h(SelectTrigger, null, h(SelectValue, { placeholder: 'sel' })),
-      h(SelectContent, null, h(SelectItem, { value: 'a' }, 'A'))
-    )
+    h(Select, {
+      options: [
+        { value: 'a', label: 'A' },
+        { value: 'b', label: 'B' },
+      ],
+      value: 'a',
+      onChange: () => {},
+      width: '120px',
+    })
   )
-  assert.ok(html.includes('relative'))
+  assert.ok(html.includes('A'))
 })
 
 test('Tabs renders', () => {

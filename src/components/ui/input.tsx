@@ -1,12 +1,14 @@
-import * as React from 'react'
+import { forwardRef, type Ref } from 'react'
+import { TextInput } from 'react95'
 import type { InputProps } from '../../types/input-props'
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => {
     return (
-      <input
-        className={`flex h-10 w-full rounded-md px-3 py-2 text-sm ${className}`}
-        ref={ref}
+      <TextInput
+        ref={ref as unknown as Ref<HTMLInputElement>}
+        className={className}
+        fullWidth
         {...props}
       />
     )

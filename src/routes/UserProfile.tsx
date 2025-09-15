@@ -1,5 +1,5 @@
 import { useBugStore } from '../store'
-import { raised } from '../utils/win95'
+import { Button, Frame } from 'react95'
 import Meta from '../components/Meta'
 import { memo, useEffect, useMemo } from 'react'
 import { useWindowManager } from '../contexts/WindowManagerContext'
@@ -46,9 +46,8 @@ function UserProfile({
           description="The requested user profile could not be located."
         />
         <div className="text-center space-y-4">
-          <button
-            type="button"
-            className="text-indigo-600 hover:underline bg-transparent !px-0 !py-0 border-none focus:outline-none focus-visible:underline cursor-pointer"
+          <Button
+            variant="flat"
             onClick={() => {
               openWindow('leaderboard')
               if (windowId) {
@@ -57,7 +56,7 @@ function UserProfile({
             }}
           >
             Back to Leaderboard
-          </button>
+          </Button>
         </div>
       </>
     )
@@ -70,8 +69,8 @@ function UserProfile({
         description={`Stats and achievements for ${user.name} in Bug Basher.`}
       />
       <div className="mx-auto max-w-md space-y-6">
-        <div className={`bg-[#E0E0E0] ${raised}`}>
-          <div className="p-6 space-y-6">
+        <Frame variant="window" className="bg-material">
+          <div className="space-y-6 p-6">
             <div className="text-center">
               <h2 className="text-2xl font-bold">{user.name}</h2>
               <p className="mt-1 text-lg font-mono text-emerald-700">
@@ -102,11 +101,11 @@ function UserProfile({
               </div>
             </div>
           </div>
-        </div>
+        </Frame>
 
         {squashedBugs.length > 0 && (
-          <div className={`bg-[#E0E0E0] ${raised}`}>
-            <div className="p-6 space-y-2">
+          <Frame variant="window" className="bg-material">
+            <div className="space-y-2 p-6">
               <h3 className="mb-3 text-xl font-semibold">Bugs Squashed</h3>
               {squashedBugs.map(bug => (
                 <div
@@ -123,13 +122,12 @@ function UserProfile({
                 </div>
               ))}
             </div>
-          </div>
+          </Frame>
         )}
 
         <div className="text-center">
-          <button
-            type="button"
-            className="text-indigo-600 hover:underline bg-transparent !px-0 !py-0 border-none focus:outline-none focus-visible:underline cursor-pointer"
+          <Button
+            variant="flat"
             onClick={() => {
               openWindow('leaderboard')
               if (windowId) {
@@ -138,7 +136,7 @@ function UserProfile({
             }}
           >
             Back to Leaderboard
-          </button>
+          </Button>
         </div>
       </div>
     </>

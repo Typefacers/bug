@@ -1,8 +1,8 @@
 import React, { memo, type FC } from 'react'
 import { useBugStore } from '../store'
 import Meta from '../components/Meta'
-import Input from '../components/win95/Input'
-import Win95Button from '../components/win95/Button'
+import { Button } from 'react95'
+import { Input } from '../components/ui/input'
 import { levelFromBounty, sortUsers, type SortKey } from './leaderboard-helpers'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import type { WindowComponentProps } from '../types/window'
@@ -62,7 +62,6 @@ const Leaderboard: FC<WindowComponentProps> = () => {
               setQuery(e.target.value)
             }
             placeholder="Search hunters"
-            className="bg-white border px-2 py-1 text-sm"
           />
         </div>
         <table className="w-full text-sm select-none bg-[#E0E0E0]">
@@ -70,59 +69,71 @@ const Leaderboard: FC<WindowComponentProps> = () => {
           <thead>
             <tr className="bg-[#000080] text-white">
               <th className="py-2 px-3 text-left font-semibold w-16 whitespace-nowrap">
-                <Win95Button
+                <Button
                   type="button"
                   onClick={() => handleSort('rank')}
-                  className="w-full text-left"
+                  variant="thin"
+                  fullWidth
+                  className="justify-start"
                 >
                   #<span className="ml-1">{sortArrow('rank')}</span>
-                </Win95Button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-left font-semibold">
-                <Win95Button
+                <Button
                   type="button"
                   onClick={() => handleSort('name')}
-                  className="w-full text-left"
+                  variant="thin"
+                  fullWidth
+                  className="justify-start"
                 >
                   Hunter <span className="ml-1">{sortArrow('name')}</span>
-                </Win95Button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-right font-semibold w-24">
-                <Win95Button
+                <Button
                   type="button"
                   onClick={() => handleSort('bugs')}
-                  className="w-full text-right"
+                  variant="thin"
+                  fullWidth
+                  className="justify-end"
                 >
                   Bugs <span className="ml-1">{sortArrow('bugs')}</span>
-                </Win95Button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-right font-semibold w-28">
-                <Win95Button
+                <Button
                   type="button"
                   onClick={() => handleSort('bounty')}
-                  className="w-full text-right"
+                  variant="thin"
+                  fullWidth
+                  className="justify-end"
                 >
                   Bounty <span className="ml-1">{sortArrow('bounty')}</span>
-                </Win95Button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-right font-semibold w-32">
-                <Win95Button
+                <Button
                   type="button"
                   onClick={() => handleSort('efficiency')}
-                  className="w-full text-right"
+                  variant="thin"
+                  fullWidth
+                  className="justify-end"
                 >
                   Efficiency{' '}
                   <span className="ml-1">{sortArrow('efficiency')}</span>
-                </Win95Button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-center font-semibold w-28">
-                <Win95Button
+                <Button
                   type="button"
                   onClick={() => handleSort('level')}
-                  className="w-full text-center"
+                  variant="thin"
+                  fullWidth
+                  className="justify-center"
                 >
                   Level <span className="ml-1">{sortArrow('level')}</span>
-                </Win95Button>
+                </Button>
               </th>
             </tr>
           </thead>

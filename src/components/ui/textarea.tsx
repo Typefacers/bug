@@ -1,12 +1,15 @@
-import * as React from 'react'
+import { forwardRef, type Ref } from 'react'
+import { TextInput } from 'react95'
 import type { TextareaProps } from '../../types/textarea-props'
 
-const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {
     return (
-      <textarea
-        className={`flex h-20 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm placeholder:text-muted-foreground ${className}`}
-        ref={ref}
+      <TextInput
+        multiline
+        fullWidth
+        className={className}
+        ref={ref as unknown as Ref<HTMLTextAreaElement>}
         {...props}
       />
     )

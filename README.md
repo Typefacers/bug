@@ -30,7 +30,7 @@
 [![Coffee Required](https://img.shields.io/badge/Coffee-IV%20Drip%20Recommended-8B4513?style=flat-square&logo=coffee)](https://en.wikipedia.org/wiki/Caffeine_dependence)
 
 [![Meme Status](https://img.shields.io/badge/Meme%20Status-Peak%20Comedy-FF69B4?style=flat-square&logo=reddit)](README.md)
-[![Windows 95 Nostalgia](https://img.shields.io/badge/Windows%2095-Aesthetic%20Goals-0078D4?style=flat-square&logo=windows95)](src/utils/win95.ts)
+[![Windows 95 Nostalgia](https://img.shields.io/badge/Windows%2095-Aesthetic%20Goals-0078D4?style=flat-square&logo=windows95)](https://react95.io)
 [![Deployed on Netlify](https://img.shields.io/badge/Netlify-Hopefully%20Works-00C7B7?style=flat-square&logo=netlify&logoColor=white)](https://www.netlify.com)
 
 </div>
@@ -50,13 +50,14 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🐛 **Virtual Bug Extermination**: Because squashing real bugs requires actual skill
 - 📊 **Dashboard with Fancy Charts**: D3.js charts now sport gradients, grids, and zoom
 - 🏆 **Leaderboard System**: Compete with yourself since you're probably the only user
-- 🎨 **Windows 95 UI**: Nothing says "modern web development" like nostalgic 30-year-old design
+- 🎨 **Windows 95 UI**: Powered by the React95 component library for pixel-perfect retro vibes
 - 🪟 **Pixel-Perfect Window Controls**: Title bars now rock the classic `_`, `□`, and `X` glyphs straight out of Windows 95
 - 🖱️ **Authentic Desktop Shell**: Draggable, resizable windows with minimize/maximize controls, a living taskbar, and a Start menu that launches every feature
 - 🗃️ **Zustand State Management**: Because Redux wasn't complicated enough, we needed something "simpler"
 - ⚡ **Blazing Fast Vite**: The only thing fast about this project
 - 🎭 **TypeScript**: Added types everywhere except where they're actually needed
 - 🎨 **Tailwind CSS**: 47KB of utility classes to style 3 buttons
+- 🖱️ **React95**: Styled-components powered Win95 widgets layered on top for full nostalgia
 - 🎬 **Framer Motion**: Animated everything because static websites are for quitters
 - 🖥️ **Windows 95 Taskbar**: Pixel-perfect Start button, beveled task list, and system tray clock straight from 1995
 - 📂 **Start Menu**: Authentic start menu for quick navigation
@@ -93,7 +94,7 @@ This project showcases the fine art of using 30 dependencies to accomplish what 
 - **Zustand**: State management for 3 variables that could've been `useState`
 - **UUID**: Industrial-strength ID generation for a client-side game
 - **Lucide Icons**: 1000+ icons imported to use exactly 7
-- **NattUI React Components**: Because we needed yet another button library
+- **React95**: Because our homemade Win95 clone finally retired
 
 ### 🚀 Quick Start
 

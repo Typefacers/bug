@@ -1,5 +1,5 @@
 import { useState, memo } from 'react'
-import Win95Button from '../components/win95/Button'
+import { Button, Frame } from 'react95'
 import {
   Card,
   CardContent,
@@ -7,10 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from '../components/ui/card'
-import Input from '../components/win95/Input'
+import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { useBugStore } from '../store'
-import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
 import Meta from '../components/Meta'
 import ladybugAvatar from '../assets/profile-ladybug.png'
 import beeAvatar from '../assets/profile-bee.png'
@@ -69,22 +68,22 @@ function SignUp({ windowId }: WindowComponentProps = {}) {
     }
   }
 
-  const raised = `${raisedBase} shadow-sm`
-  const sunken = `${sunkenBase} shadow-inner`
-
   return (
     <>
       <Meta title="Sign Up" description="Create a new Bug Basher account." />
       <div className="max-w-md mx-auto">
-        <Card className={`bg-[#E0E0E0] ${raised}`}>
+        <Card>
           <CardHeader>
             <CardTitle className="text-2xl font-bold">Sign Up</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {error && (
-              <div className={`${sunken} bg-red-100 text-red-800 p-2 text-sm`}>
+              <Frame
+                variant="field"
+                className="bg-red-100 px-3 py-2 text-sm text-red-800"
+              >
                 {error}
-              </div>
+              </Frame>
             )}
             <div className="space-y-1">
               <Label htmlFor="name">Your Name</Label>
@@ -94,13 +93,11 @@ function SignUp({ windowId }: WindowComponentProps = {}) {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setName(e.target.value)
                 }
-                className={`bg-white ${sunken}`}
               />
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Win95Button
-              className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black`}
+            <Button
               onClick={() => {
                 openWindow('leaderboard')
                 if (windowId) {
@@ -109,13 +106,10 @@ function SignUp({ windowId }: WindowComponentProps = {}) {
               }}
             >
               Cancel
-            </Win95Button>
-            <Win95Button
-              className={`${raised} bg-[#008080] hover:bg-[#006666] text-white`}
-              onClick={createUser}
-            >
+            </Button>
+            <Button onClick={createUser} primary>
               Create Account
-            </Win95Button>
+            </Button>
           </CardFooter>
         </Card>
       </div>

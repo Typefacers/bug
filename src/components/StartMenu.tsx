@@ -1,34 +1,33 @@
-import { raised, sunken, windowShadow } from '../utils/win95'
+import { Frame, MenuList, MenuListItem } from 'react95'
 import { START_MENU_APPS } from '../utils/window-apps'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 
-export default function StartMenu({ onClose }: { onClose: () => void }) {
+type Props = { onClose: () => void }
+
+export default function StartMenu({ onClose }: Props) {
   const { openWindow } = useWindowManager()
-  const itemClass = `block w-full text-left px-2 py-1 ${raised} bg-[#E0E0E0] hover:${sunken}`
 
   return (
-    <div
-      className={`absolute left-[4px] bottom-[calc(100%+4px)] w-48 p-2 bg-[#C0C0C0] ${raised} ${windowShadow} text-sm z-50`}
+    <Frame
+      variant="window"
+      shadow
+      className="absolute left-[4px] bottom-[calc(100%+4px)] w-48 p-2"
     >
-      <ul className="space-y-1">
+      <MenuList className="space-y-1 text-sm">
         {START_MENU_APPS.map(app => (
-          <li key={app.id}>
-            <button
-              type="button"
-              className={itemClass}
-              onClick={() => {
-                openWindow(app.id)
-                onClose()
-              }}
-            >
-              <span className="mr-2" aria-hidden>
-                {app.icon}
-              </span>
-              {app.title}
-            </button>
-          </li>
+          <MenuListItem
+            key={app.id}
+            onClick={() => {
+              openWindow(app.id)
+              onClose()
+            }}
+            className="flex cursor-pointer items-center gap-2"
+          >
+            <span aria-hidden>{app.icon}</span>
+            {app.title}
+          </MenuListItem>
         ))}
-      </ul>
-    </div>
+      </MenuList>
+    </Frame>
   )
 }

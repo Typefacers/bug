@@ -8,12 +8,12 @@ import {
 } from '../components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 
-import Input from '../components/win95/Input'
+import { Input } from '../components/ui/input'
 import { useBugStore } from '../store'
 import { Bug } from '../types/bug'
 import { Badge } from '../components/ui/badge'
 import { Progress } from '../components/ui/progress'
-import Win95Button from '../components/win95/Button'
+import { Button } from 'react95'
 import Meta from '../components/Meta'
 import {
   CalendarIcon,
@@ -32,7 +32,6 @@ import { motion } from 'framer-motion'
 import { useEffect, useState, useMemo, useCallback, memo, type FC } from 'react'
 import BugTrendsChart from '../components/BugTrendsChart'
 import BugForecast from '../components/BugForecast'
-import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
 import { calculateTotalBounty, formatDate } from '../utils/dashboard'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import type { WindowComponentProps } from '../types/window'
@@ -180,9 +179,6 @@ const Dashboard: FC<WindowComponentProps> = () => {
   }, [bugs, activeBugs, squashedBugs, activeBountyTotal, squashedBountyTotal])
 
   /* 3-D border helpers with enhanced styles */
-  const raised = `${raisedBase} shadow-sm`
-  const sunken = `${sunkenBase} shadow-inner`
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -216,13 +212,14 @@ const Dashboard: FC<WindowComponentProps> = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <Win95Button
-            className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black flex items-center gap-2`}
+          <Button
             onClick={() => openWindow('newBug')}
+            className="flex items-center gap-2"
+            primary
           >
             <BugIcon className="h-4 w-4" />
             File a Bug
-          </Win95Button>
+          </Button>
         </motion.div>
       </div>
 
@@ -232,9 +229,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
           whileHover={{ scale: 1.02 }}
           transition={{ type: 'spring', stiffness: 300 }}
         >
-          <Card
-            className={`bg-[#E0E0E0] ${raised} hover:${sunken} transition-all overflow-hidden`}
-          >
+          <Card className="overflow-hidden transition-all">
             <div className="absolute -right-3 -top-3 h-16 w-16 bg-amber-100 rounded-full opacity-40"></div>
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2">
@@ -260,9 +255,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
           whileHover={{ scale: 1.02 }}
           transition={{ type: 'spring', stiffness: 300 }}
         >
-          <Card
-            className={`bg-[#E0E0E0] ${raised} hover:${sunken} transition-all overflow-hidden`}
-          >
+          <Card className="overflow-hidden transition-all">
             <div className="absolute -right-3 -top-3 h-16 w-16 bg-green-100 rounded-full opacity-40"></div>
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2">
@@ -288,9 +281,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
           whileHover={{ scale: 1.02 }}
           transition={{ type: 'spring', stiffness: 300 }}
         >
-          <Card
-            className={`bg-[#E0E0E0] ${raised} hover:${sunken} transition-all overflow-hidden`}
-          >
+          <Card className="overflow-hidden transition-all">
             <div className="absolute -right-3 -top-3 h-16 w-16 bg-blue-100 rounded-full opacity-40"></div>
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2">
@@ -315,7 +306,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
 
       {/* Middle section - stats & charts */}
       <div className="grid gap-6 md:grid-cols-3 mb-6">
-        <Card className={`bg-[#E0E0E0] ${raised} md:col-span-1`}>
+        <Card className="md:col-span-1">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TargetIcon className="h-5 w-5 text-purple-500" />
@@ -341,7 +332,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
           </CardContent>
         </Card>
 
-        <Card className={`bg-[#E0E0E0] ${raised}`}>
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <AreaChartIcon className="h-5 w-5 text-indigo-500" />
@@ -367,7 +358,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
           </CardContent>
         </Card>
 
-        <Card className={`bg-[#E0E0E0] ${raised}`}>
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <ZapIcon className="h-5 w-5 text-amber-500" />
@@ -390,7 +381,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Card className={`bg-[#E0E0E0] ${raised} h-full`}>
+          <Card className="h-full">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUpIcon className="h-5 w-5 text-indigo-500" />
@@ -424,9 +415,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
                     >
                       {highestBountyBug.priority} priority
                     </Badge>
-                    <Win95Button className="bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black">
-                      View details
-                    </Win95Button>
+                    <Button className="text-black">View details</Button>
                   </div>
                 </div>
               ) : (
@@ -441,7 +430,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <Card className={`bg-[#E0E0E0] ${raised} h-full`}>
+          <Card className="h-full">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <RocketIcon className="h-5 w-5 text-pink-500" />
@@ -489,9 +478,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
           />
         </div>
         <Tabs defaultValue="active" className="mb-6">
-          <TabsList
-            className={`mb-4 bg-[#C0C0C0]/80 p-1 w-full justify-start ${raised}`}
-          >
+          <TabsList className="mb-4 bg-[#C0C0C0]/80 p-1 w-full justify-start">
             <TabsTrigger
               value="active"
               className="data-[state=active]:bg-[#E0E0E0] data-[state=active]:text-black px-4 py-1"
@@ -516,9 +503,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
                   transition={{ delay: index * 0.05 }}
                   whileHover={{ scale: 1.02 }}
                 >
-                  <Card
-                    className={`bg-[#E0E0E0] ${raised} hover:${sunken} transition-all h-full`}
-                  >
+                  <Card className="h-full transition-all">
                     <CardHeader className="pb-2">
                       <CardTitle className="flex justify-between items-start">
                         <span>{bug.title}</span>
@@ -576,9 +561,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
                   transition={{ delay: index * 0.05 }}
                   whileHover={{ scale: 1.02 }}
                 >
-                  <Card
-                    className={`bg-[#E0E0E0] ${raised} hover:${sunken} transition-all h-full`}
-                  >
+                  <Card className="h-full transition-all">
                     <CardHeader className="pb-2">
                       <CardTitle className="flex justify-between items-start">
                         <span>{bug.title}</span>
