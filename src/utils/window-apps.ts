@@ -72,7 +72,7 @@ export const WINDOW_APPS: Record<WindowAppId, WindowAppDefinition> = {
     icon: '🥠',
     Component: Fortune,
     defaultSize: { width: 520, height: 480 },
-    desktopShortcut: false,
+    desktopShortcut: true,
     startMenuShortcut: true,
   },
   signUp: {
@@ -81,7 +81,7 @@ export const WINDOW_APPS: Record<WindowAppId, WindowAppDefinition> = {
     icon: '✍️',
     Component: SignUp,
     defaultSize: { width: 560, height: 620 },
-    desktopShortcut: false,
+    desktopShortcut: true,
     startMenuShortcut: true,
   },
   newBug: {
@@ -90,7 +90,7 @@ export const WINDOW_APPS: Record<WindowAppId, WindowAppDefinition> = {
     icon: '🪳',
     Component: NewBug,
     defaultSize: { width: 640, height: 720 },
-    desktopShortcut: false,
+    desktopShortcut: true,
     startMenuShortcut: true,
   },
   jobDescription: {
@@ -99,7 +99,7 @@ export const WINDOW_APPS: Record<WindowAppId, WindowAppDefinition> = {
     icon: '📄',
     Component: JobDescription,
     defaultSize: { width: 720, height: 640 },
-    desktopShortcut: false,
+    desktopShortcut: true,
     startMenuShortcut: true,
   },
   easterEgg: {
