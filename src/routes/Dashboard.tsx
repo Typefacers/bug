@@ -8,12 +8,11 @@ import {
 } from '../components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 
-import Input from '../components/win95/Input'
+import { Button, TextInput } from 'react95'
 import { useBugStore } from '../store'
 import { Bug } from '../types/bug'
 import { Badge } from '../components/ui/badge'
 import { Progress } from '../components/ui/progress'
-import Win95Button from '../components/win95/Button'
 import Meta from '../components/Meta'
 import {
   CalendarIcon,
@@ -216,13 +215,14 @@ const Dashboard: FC<WindowComponentProps> = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <Win95Button
-            className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black flex items-center gap-2`}
+          <Button
+            className="flex items-center gap-2"
             onClick={() => openWindow('newBug')}
+            primary
           >
             <BugIcon className="h-4 w-4" />
             File a Bug
-          </Win95Button>
+          </Button>
         </motion.div>
       </div>
 
@@ -424,9 +424,9 @@ const Dashboard: FC<WindowComponentProps> = () => {
                     >
                       {highestBountyBug.priority} priority
                     </Badge>
-                    <Win95Button className="bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black">
+                    <Button className="bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black">
                       View details
-                    </Win95Button>
+                    </Button>
                   </div>
                 </div>
               ) : (
@@ -481,7 +481,7 @@ const Dashboard: FC<WindowComponentProps> = () => {
         transition={{ duration: 0.5, delay: 0.2 }}
       >
         <div className="flex flex-col md:flex-row gap-2 mb-4">
-          <Input
+          <TextInput
             placeholder="Search bugs..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}

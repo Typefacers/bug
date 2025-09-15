@@ -1,8 +1,7 @@
 import React, { memo, type FC } from 'react'
 import { useBugStore } from '../store'
 import Meta from '../components/Meta'
-import Input from '../components/win95/Input'
-import Win95Button from '../components/win95/Button'
+import { Button, TextInput } from 'react95'
 import { levelFromBounty, sortUsers, type SortKey } from './leaderboard-helpers'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import type { WindowComponentProps } from '../types/window'
@@ -55,14 +54,14 @@ const Leaderboard: FC<WindowComponentProps> = () => {
           <label htmlFor="search" className="sr-only">
             Search
           </label>
-          <Input
+          <TextInput
             id="search"
             value={query}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setQuery(e.target.value)
             }
             placeholder="Search hunters"
-            className="bg-white border px-2 py-1 text-sm"
+            fullWidth
           />
         </div>
         <table className="w-full text-sm select-none bg-[#E0E0E0]">
@@ -70,59 +69,65 @@ const Leaderboard: FC<WindowComponentProps> = () => {
           <thead>
             <tr className="bg-[#000080] text-white">
               <th className="py-2 px-3 text-left font-semibold w-16 whitespace-nowrap">
-                <Win95Button
-                  type="button"
+                <Button
                   onClick={() => handleSort('rank')}
-                  className="w-full text-left"
+                  className="w-full justify-start"
+                  size="sm"
+                  variant="thin"
                 >
                   #<span className="ml-1">{sortArrow('rank')}</span>
-                </Win95Button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-left font-semibold">
-                <Win95Button
-                  type="button"
+                <Button
                   onClick={() => handleSort('name')}
-                  className="w-full text-left"
+                  className="w-full justify-start"
+                  size="sm"
+                  variant="thin"
                 >
                   Hunter <span className="ml-1">{sortArrow('name')}</span>
-                </Win95Button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-right font-semibold w-24">
-                <Win95Button
-                  type="button"
+                <Button
                   onClick={() => handleSort('bugs')}
-                  className="w-full text-right"
+                  className="w-full justify-end"
+                  size="sm"
+                  variant="thin"
                 >
                   Bugs <span className="ml-1">{sortArrow('bugs')}</span>
-                </Win95Button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-right font-semibold w-28">
-                <Win95Button
-                  type="button"
+                <Button
                   onClick={() => handleSort('bounty')}
-                  className="w-full text-right"
+                  className="w-full justify-end"
+                  size="sm"
+                  variant="thin"
                 >
                   Bounty <span className="ml-1">{sortArrow('bounty')}</span>
-                </Win95Button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-right font-semibold w-32">
-                <Win95Button
-                  type="button"
+                <Button
                   onClick={() => handleSort('efficiency')}
-                  className="w-full text-right"
+                  className="w-full justify-end"
+                  size="sm"
+                  variant="thin"
                 >
                   Efficiency{' '}
                   <span className="ml-1">{sortArrow('efficiency')}</span>
-                </Win95Button>
+                </Button>
               </th>
               <th className="py-2 px-3 text-center font-semibold w-28">
-                <Win95Button
-                  type="button"
+                <Button
                   onClick={() => handleSort('level')}
-                  className="w-full text-center"
+                  className="w-full justify-center"
+                  size="sm"
+                  variant="thin"
                 >
                   Level <span className="ml-1">{sortArrow('level')}</span>
-                </Win95Button>
+                </Button>
               </th>
             </tr>
           </thead>

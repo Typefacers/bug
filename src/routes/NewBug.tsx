@@ -1,5 +1,5 @@
 import { useState, memo } from 'react'
-import Win95Button from '../components/win95/Button'
+import { Button, Frame, TextInput } from 'react95'
 import {
   Card,
   CardContent,
@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from '../components/ui/card'
-import Input from '../components/win95/Input'
 import { Label } from '../components/ui/label'
 import { Textarea } from '../components/ui/textarea'
 import {
@@ -21,7 +20,6 @@ import { useBugStore } from '../store'
 import { v4 as uuidv4 } from 'uuid'
 import { motion } from 'framer-motion'
 import { Bug } from '../types/bug'
-import { raised as raisedBase, sunken as sunkenBase } from '../utils/win95'
 import Meta from '../components/Meta'
 import Captcha from '../components/Captcha'
 import { useWindowManager } from '../contexts/WindowManagerContext'
@@ -73,9 +71,6 @@ function NewBug({ windowId }: WindowComponentProps = {}) {
   }
 
   /* 3-D border helpers with enhanced styles */
-  const raised = `${raisedBase} shadow-sm`
-  const sunken = `${sunkenBase} shadow-inner`
-
   return (
     <>
       <Meta
@@ -88,26 +83,29 @@ function NewBug({ windowId }: WindowComponentProps = {}) {
         transition={{ duration: 0.5 }}
         className="max-w-2xl mx-auto"
       >
-        <Card className={`bg-[#E0E0E0] ${raised}`}>
+        <Card className="bg-[#E0E0E0] shadow-sm">
           <CardHeader>
             <CardTitle className="text-2xl font-bold">File a New Bug</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {error && (
-              <div className={`${sunken} bg-red-100 text-red-800 p-2 text-sm`}>
+              <Frame
+                variant="well"
+                className="bg-red-100 p-2 text-sm text-red-800"
+              >
                 {error}
-              </div>
+              </Frame>
             )}
 
             <div className="space-y-1">
               <Label htmlFor="title">Bug Title</Label>
-              <Input
+              <TextInput
                 id="title"
                 value={title}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setTitle(e.target.value)
                 }
-                className={`bg-white ${sunken}`}
+                fullWidth
               />
             </div>
 
@@ -119,14 +117,14 @@ function NewBug({ windowId }: WindowComponentProps = {}) {
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                   setDescription(e.target.value)
                 }
-                className={`bg-white ${sunken} min-h-[100px]`}
+                className="min-h-[100px]"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <Label htmlFor="bounty">Bounty Amount ($)</Label>
-                <Input
+                <TextInput
                   id="bounty"
                   type="number"
                   min={10}
@@ -134,7 +132,7 @@ function NewBug({ windowId }: WindowComponentProps = {}) {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setBounty(Number(e.target.value))
                   }
-                  className={`bg-white ${sunken}`}
+                  fullWidth
                 />
               </div>
 
@@ -146,10 +144,10 @@ function NewBug({ windowId }: WindowComponentProps = {}) {
                     setPriority(value)
                   }
                 >
-                  <SelectTrigger className={`${raised} bg-[#C0C0C0]`}>
+                  <SelectTrigger className="bg-[#C0C0C0]">
                     <SelectValue placeholder="Select priority" />
                   </SelectTrigger>
-                  <SelectContent className={`${raised} bg-[#C0C0C0] w-full`}>
+                  <SelectContent className="bg-[#C0C0C0] w-full">
                     <SelectItem value="high">high</SelectItem>
                     <SelectItem value="medium">medium</SelectItem>
                     <SelectItem value="low">low</SelectItem>
@@ -161,8 +159,7 @@ function NewBug({ windowId }: WindowComponentProps = {}) {
             <Captcha onChange={setCaptchaValid} />
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Win95Button
-              className={`${raised} bg-[#C0C0C0] hover:bg-[#A0A0A0] text-black`}
+            <Button
               onClick={() => {
                 openWindow('dashboard')
                 if (windowId) {
@@ -171,14 +168,10 @@ function NewBug({ windowId }: WindowComponentProps = {}) {
               }}
             >
               Cancel
-            </Win95Button>
-            <Win95Button
-              className={`${raised} bg-[#008080] hover:bg-[#006666] text-white`}
-              disabled={!captchaValid}
-              onClick={createBug}
-            >
+            </Button>
+            <Button primary disabled={!captchaValid} onClick={createBug}>
               Submit Bug
-            </Win95Button>
+            </Button>
           </CardFooter>
         </Card>
       </motion.div>
