@@ -1,14 +1,23 @@
-import { useParams, Link } from 'react-router-dom'
 import { useBugStore } from '../store'
 import { raised } from '../utils/win95'
 import Meta from '../components/Meta'
-import { memo, useMemo } from 'react'
+import { memo, useEffect, useMemo } from 'react'
+import { useWindowManager } from '../contexts/WindowManagerContext'
+import type { WindowComponentProps } from '../types/window'
 
-function UserProfile() {
-  const { userId } = useParams<{ userId: string }>()
+type UserProfileContext = {
+  userId?: number | string
+}
+
+function UserProfile({
+  context,
+  windowId,
+  setTitle,
+}: WindowComponentProps<UserProfileContext> = {}) {
   const { users, bugs } = useBugStore()
+  const { openWindow, closeWindow } = useWindowManager()
 
-  const id = Number(userId)
+  const id = context?.userId !== undefined ? Number(context.userId) : NaN
   const user = users.find(u => u.id === id)
 
   const squashedBugs = useMemo(
@@ -23,6 +32,12 @@ function UserProfile() {
     [squashedBugs]
   )
 
+  useEffect(() => {
+    if (user && setTitle) {
+      setTitle(`User Profile - ${user.name}`)
+    }
+  }, [setTitle, user])
+
   if (!user) {
     return (
       <>
@@ -31,12 +46,18 @@ function UserProfile() {
           description="The requested user profile could not be located."
         />
         <div className="text-center space-y-4">
-          <Link
-            to="/bounty-leaderboard"
-            className="text-indigo-600 hover:underline"
+          <button
+            type="button"
+            className="text-indigo-600 hover:underline bg-transparent !px-0 !py-0 border-none focus:outline-none focus-visible:underline cursor-pointer"
+            onClick={() => {
+              openWindow('leaderboard')
+              if (windowId) {
+                closeWindow(windowId)
+              }
+            }}
           >
             Back to Leaderboard
-          </Link>
+          </button>
         </div>
       </>
     )
@@ -106,12 +127,18 @@ function UserProfile() {
         )}
 
         <div className="text-center">
-          <Link
-            to="/bounty-leaderboard"
-            className="text-indigo-600 hover:underline"
+          <button
+            type="button"
+            className="text-indigo-600 hover:underline bg-transparent !px-0 !py-0 border-none focus:outline-none focus-visible:underline cursor-pointer"
+            onClick={() => {
+              openWindow('leaderboard')
+              if (windowId) {
+                closeWindow(windowId)
+              }
+            }}
           >
             Back to Leaderboard
-          </Link>
+          </button>
         </div>
       </div>
     </>

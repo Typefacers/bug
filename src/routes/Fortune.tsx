@@ -1,8 +1,9 @@
 import Meta from '../components/Meta'
 import FortuneCookie from '../components/FortuneCookie'
-import { memo } from 'react'
+import { memo, type FC } from 'react'
+import type { WindowComponentProps } from '../types/window'
 
-function Fortune() {
+const Fortune: FC<WindowComponentProps> = () => {
   return (
     <>
       <Meta
