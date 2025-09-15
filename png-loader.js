@@ -14,12 +14,6 @@ export async function resolve(specifier, context, defaultResolve) {
       shortCircuit: true,
     }
   }
-  if (specifier.endsWith('.tsx')) {
-    return {
-      url: new URL(specifier, context.parentURL).href,
-      shortCircuit: true,
-    }
-  }
   if (!specifier.startsWith('node:') && !specifier.endsWith('.ts')) {
     for (const ext of ['.ts', '.tsx']) {
       try {
