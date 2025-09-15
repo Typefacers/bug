@@ -50,13 +50,13 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🐛 **Virtual Bug Extermination**: Because squashing real bugs requires actual skill
 - 📊 **Dashboard with Fancy Charts**: D3.js charts now sport gradients, grids, and zoom
 - 🏆 **Leaderboard System**: Compete with yourself since you're probably the only user
-- 🎨 **Windows 95 UI**: Nothing says "modern web development" like nostalgic 30-year-old design
+- 🎨 **Windows 95 Desktop**: Draggable, resizable windows with desktop icons, right-click menus, and a Start menu-powered taskbar
 - 🗃️ **Zustand State Management**: Because Redux wasn't complicated enough, we needed something "simpler"
 - ⚡ **Blazing Fast Vite**: The only thing fast about this project
 - 🎭 **TypeScript**: Added types everywhere except where they're actually needed
 - 🎨 **Tailwind CSS**: 47KB of utility classes to style 3 buttons
 - 🎬 **Framer Motion**: Animated everything because static websites are for quitters
-- 🖥️ **Windows 95 Taskbar**: Because productivity peaks with a retro clock
+- 🖥️ **Windows 95 Taskbar**: Dynamic buttons for every window plus the retro clock you know and love
 - 📂 **Start Menu**: Authentic start menu for quick navigation
 - 🔍 **Search & Filter**: Hunt bugs and leaderboard entries like a pro
 - ⏰ **PTO Rewards**: Earn ridiculous amounts of time off for each bug you squash
@@ -210,8 +210,8 @@ See [docs/NAMING_CONVENTIONS.md](docs/NAMING_CONVENTIONS.md) for the complete gu
 - `bug-priority-ml.ts`: Logistic regression that pretends to rank urgency
 - `AimCursor.tsx`: Mouse cursor replacement nobody asked for
 - `BugTrendsChart.tsx`: Gradient-filled line chart with zoomable timelines
-- `Taskbar.tsx`: Windows 95 clock for peak nostalgia
-- `StartMenu.tsx`: Clickable start button menu
+- `Taskbar.tsx`: Live clock plus dynamic buttons for every open window
+- `StartMenu.tsx`: Clickable start menu that launches any retro app you like
 - `NotFound.tsx`: A 404 page with jokes for when routing fails
 
 **📊 Dashboard Extravaganza:**
