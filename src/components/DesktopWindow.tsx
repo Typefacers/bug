@@ -1,9 +1,13 @@
 import { Suspense } from 'react'
 import { Rnd } from 'react-rnd'
-import { Minus, Square, X as CloseIcon } from 'lucide-react'
 import Window from './win95/Window'
 import TitleBar from './win95/TitleBar'
 import Win95Button from './win95/Button'
+import {
+  Win95CloseIcon,
+  Win95MaximizeIcon,
+  Win95MinimizeIcon,
+} from './win95/WindowControlIcons'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import { WINDOW_APPS } from '../utils/window-apps'
 import type { WindowSize, WindowState } from '../types/window'
@@ -74,21 +78,21 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
                 aria-label="Minimize"
                 className={CONTROL_BUTTON_CLASS}
               >
-                <Minus className="h-3 w-3 text-black" />
+                <Win95MinimizeIcon />
               </Win95Button>
               <Win95Button
                 onClick={handleMaximize}
                 aria-label={windowState.maximized ? 'Restore' : 'Maximize'}
                 className={CONTROL_BUTTON_CLASS}
               >
-                <Square className="h-3 w-3 text-black" />
+                <Win95MaximizeIcon />
               </Win95Button>
               <Win95Button
                 onClick={() => closeWindow(windowState.id)}
                 aria-label="Close"
                 className={CONTROL_BUTTON_CLASS}
               >
-                <CloseIcon className="h-3 w-3 text-black" />
+                <Win95CloseIcon />
               </Win95Button>
             </div>
           }
