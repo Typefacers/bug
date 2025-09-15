@@ -57,7 +57,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🎭 **TypeScript**: Added types everywhere except where they're actually needed
 - 🎨 **Tailwind CSS**: 47KB of utility classes to style 3 buttons
 - 🎬 **Framer Motion**: Animated everything because static websites are for quitters
-- 🖥️ **Windows 95 Taskbar**: Because productivity peaks with a retro clock
+- 🖥️ **Windows 95 Taskbar**: Pixel-perfect Start button, beveled task list, and system tray clock straight from 1995
 - 📂 **Start Menu**: Authentic start menu for quick navigation
 - 🔍 **Search & Filter**: Hunt bugs and leaderboard entries like a pro
 - ⏰ **PTO Rewards**: Earn ridiculous amounts of time off for each bug you squash
