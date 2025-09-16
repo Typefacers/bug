@@ -63,7 +63,7 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
       className={`absolute ${windowState.minimized ? 'hidden' : ''}`}
       style={{ zIndex: windowState.zIndex }}
     >
-      <Window className="flex h-full flex-col" shadow>
+      <Window className="flex h-full w-full flex-col" shadow>
         <WindowHeader
           className="win95-title-bar flex items-center justify-between gap-2"
           onDoubleClick={handleMaximize}
@@ -96,8 +96,14 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
             </Button>
           </div>
         </WindowHeader>
-        <WindowContent className="flex-1 overflow-hidden">
-          <Suspense fallback={<div className="p-4">Loading...</div>}>
+        <WindowContent className="flex-1 w-full overflow-hidden">
+          <Suspense
+            fallback={
+              <div className="flex h-full w-full items-center justify-center p-4">
+                Loading...
+              </div>
+            }
+          >
             <Component
               windowId={windowState.id}
               context={windowState.context}
