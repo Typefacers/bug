@@ -74,7 +74,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🔐 **Real CVE Demo Data**: Bug list now features recent vulnerabilities like PAN-OS File Peek (CVE-2025-0111).
 - ☕ **Coffee Overflow Bug**: Demo data now includes a caffeinated crash
 - 🥠 **Fortune Cookie**: Random words of wisdom on its own tab, now full width with subtle animations
-- 🔊 **Web Audio Effects**: Ambient drones and juicier bug-squash splats (even when shooting bugs on the canvas), plus a talking fortune cookie
+- 🤫 **Quiet Mode**: Ambient drones and bug-squash splats removed for a distraction-free experience, while the fortune cookie keeps chatting
 - 🧩 **Captcha Protection**: Basic math challenge to keep bots at bay
 - ✍️ **Sign Up Form**: Create your own bug-bashing persona
 - 🔄 **Dependency Update**: All packages updated to their latest versions

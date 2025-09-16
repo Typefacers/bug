@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
 import { useKonamiDarkMode } from './hooks/use-konami-dark-mode'
-import { useAudio } from './hooks/use-audio'
 import { useBugStore } from './store'
-import { AudioContext } from './contexts/AudioContext'
 import Desktop from './components/Desktop'
 import { WindowManagerProvider } from './contexts/WindowManagerContext'
 
@@ -20,10 +18,8 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AudioContext.Provider value={useAudio()}>
-      <WindowManagerProvider>
-        <AppContent />
-      </WindowManagerProvider>
-    </AudioContext.Provider>
+    <WindowManagerProvider>
+      <AppContent />
+    </WindowManagerProvider>
   )
 }
