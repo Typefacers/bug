@@ -9,6 +9,7 @@ import Dashboard from './Dashboard.tsx'
 import EasterEgg from './EasterEgg.tsx'
 import Fortune from './Fortune.tsx'
 import JobDescription from './JobDescription.tsx'
+import InternetExplorer from './InternetExplorer.tsx'
 import Leaderboard from './Leaderboard.tsx'
 import NewBug from './NewBug.tsx'
 import NotFound from './NotFound.tsx'
@@ -44,6 +45,11 @@ test('Fortune page renders', () => {
 test('JobDescription page renders', () => {
   const html = wrap(h(JobDescription))
   assert.ok(html.includes('Bug Basher Role'))
+})
+
+test('InternetExplorer page renders', () => {
+  const html = wrap(h(InternetExplorer))
+  assert.ok(html.includes('techmap.dev'))
 })
 
 test('Leaderboard page renders', () => {

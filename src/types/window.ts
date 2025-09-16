@@ -7,6 +7,7 @@ export type WindowAppId =
   | 'signUp'
   | 'newBug'
   | 'jobDescription'
+  | 'internetExplorer'
   | 'easterEgg'
   | 'userProfile'
   | 'notFound'
