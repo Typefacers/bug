@@ -1,12 +1,5 @@
 import clsx from 'clsx'
-import {
-  forwardRef,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { forwardRef, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import StartMenu from './StartMenu'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 
@@ -151,11 +144,6 @@ export default function Taskbar() {
     }
   }, [open])
 
-  const orderedWindows = useMemo(
-    () => [...windows].sort((a, b) => a.zIndex - b.zIndex),
-    [windows]
-  )
-
   return (
     <div
       className={`relative flex h-[40px] items-center gap-2 bg-[#C0C0C0] px-3 text-[13px] ${taskbarFrame}`}
@@ -169,7 +157,7 @@ export default function Taskbar() {
       <Divider />
 
       <div className="flex h-9 flex-1 items-center gap-1 overflow-x-auto overflow-y-hidden border-t border-l border-white border-b-[2px] border-r-[2px] border-[#808080] bg-[#C0C0C0] px-2">
-        {orderedWindows.map(window => {
+        {windows.map(window => {
           const definition = apps[window.appId]
           const isActive = activeWindowId === window.id && !window.minimized
 
