@@ -25,6 +25,7 @@ const Fortune = lazy(() => import('../routes/Fortune'))
 const SignUp = lazy(() => import('../routes/SignUp'))
 const NewBug = lazy(() => import('../routes/NewBug'))
 const JobDescription = lazy(() => import('../routes/JobDescription'))
+const InternetExplorer = lazy(() => import('../routes/InternetExplorer'))
 const EasterEgg = lazy(() => import('../routes/EasterEgg'))
 const UserProfile = lazy(() => import('../routes/UserProfile'))
 const NotFound = lazy(() => import('../routes/NotFound'))
@@ -99,6 +100,15 @@ export const WINDOW_APPS: Record<WindowAppId, WindowAppDefinition> = {
     icon: '📄',
     Component: JobDescription,
     defaultSize: { width: 720, height: 640 },
+    desktopShortcut: true,
+    startMenuShortcut: true,
+  },
+  internetExplorer: {
+    id: 'internetExplorer',
+    title: 'Internet Explorer',
+    icon: '🌐',
+    Component: InternetExplorer,
+    defaultSize: { width: 960, height: 720 },
     desktopShortcut: true,
     startMenuShortcut: true,
   },

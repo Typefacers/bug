@@ -62,6 +62,8 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 📂 **Start Menu**: Rebuilt with the teal sidebar, beveled casing, and Start button alignment from classic Windows 95 for quick navigation
 - 🗂️ **Desktop Shortcuts Everywhere**: Every page now shows up on the desktop for
   quick double-click access
+- 🌐 **Internet Explorer Shortcut**: Launch a faux Windows 95 browser that beams
+  you straight to techmap.dev without leaving the desktop nostalgia bubble
 - 🔍 **Search & Filter**: Hunt bugs and leaderboard entries like a pro
 - ⏰ **PTO Rewards**: Earn ridiculous amounts of time off for each bug you squash
 - 🧹 **Automatic Cleanup**: Squashed bugs vanish on their own, only to respawn
