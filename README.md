@@ -48,6 +48,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 ### 🎪 Features That Will Blow Your Mind (And Your Bundle Size)
 
 - 🐛 **Virtual Bug Extermination**: Because squashing real bugs requires actual skill
+- 🧼 **Bug Basher Arena Fix**: The playfield now stretches to fill the window again so the critters actually show up
 - 📊 **Dashboard with Fancy Charts**: D3.js charts now sport gradients, grids, and zoom
 - 🏆 **Leaderboard System**: Compete with yourself since you're probably the only user
 - 🎨 **Windows 95 UI**: Powered by React95 components so every window, button, and menu looks like it came straight from 1995
