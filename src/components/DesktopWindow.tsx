@@ -5,6 +5,7 @@ import {
   Win95CloseIcon,
   Win95MaximizeIcon,
   Win95MinimizeIcon,
+  Win95RestoreIcon,
 } from './WindowControlIcons'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import { WINDOW_APPS } from '../utils/window-apps'
@@ -84,7 +85,11 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
               aria-label={windowState.maximized ? 'Restore' : 'Maximize'}
               onClick={handleMaximize}
             >
-              <Win95MaximizeIcon />
+              {windowState.maximized ? (
+                <Win95RestoreIcon />
+              ) : (
+                <Win95MaximizeIcon />
+              )}
             </Button>
             <Button
               square
