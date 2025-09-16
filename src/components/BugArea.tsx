@@ -4,7 +4,6 @@ import type { BugAreaProps } from '../types/bug-area-props'
 import BugCrawler from './BugCrawler'
 import AimCursor from './AimCursor'
 import { useBugStore } from '../store'
-import { useAudioContext } from '../contexts/AudioContext'
 
 /** Evenly spreads bugs, then shuffles and jitters them for an organic layout. */
 
@@ -34,7 +33,6 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
   }, [aim])
 
   /* ---------- modal helpers ---------- */
-  const audio = useAudioContext()
   const squashBug = useBugStore(s => s.squashBug)
   const inspectedId = useBugStore(s => s.inspectedId)
   const inspectedIdRef = useRef(inspectedId)
@@ -47,7 +45,6 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
     // If a modal is open, squash that bug and close the modal.
     if (inspectedIdRef.current) {
       squashBug(inspectedIdRef.current)
-      audio?.playBugSquash?.()
       return
     }
 
@@ -65,13 +62,12 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
         const idAttr = node.getAttribute?.('data-bug-id')
         if (idAttr) {
           node.click() // triggers onClick in BugCrawler (opens modal or squashes)
-          audio?.playBugSquash?.()
           return
         }
         node = node.parentElement
       }
     }
-  }, [squashBug, audio])
+  }, [squashBug])
 
   /* ---------- keyboard press state ---------- */
   const pressedRef = useRef({
