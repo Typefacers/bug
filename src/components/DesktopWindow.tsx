@@ -101,7 +101,7 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
             </Button>
           </div>
         </WindowHeader>
-        <WindowContent className="flex-1 w-full overflow-hidden">
+        <WindowContent className="!h-full flex-1 w-full overflow-hidden">
           <Suspense
             fallback={
               <div className="flex h-full w-full items-center justify-center p-4">
