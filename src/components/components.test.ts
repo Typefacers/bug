@@ -79,8 +79,10 @@ test('Meta renders', () => {
 })
 
 test('StartMenu renders', () => {
-  const html = withProvider(h(StartMenu, { onClose: () => {} }))
-  assert.ok(html.includes('Bugs'))
+  const html = withProvider(
+    h(StartMenu, { anchorRect: null, onClose: () => {} })
+  )
+  assert.ok(html.includes('Windows 95'))
 })
 
 test('Taskbar renders', () => {

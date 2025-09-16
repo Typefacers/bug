@@ -59,7 +59,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🎨 **Tailwind CSS**: 47KB of utility classes to style 3 buttons
 - 🎬 **Framer Motion**: Animated everything because static websites are for quitters
 - 🖥️ **Windows 95 Taskbar**: Pixel-perfect Start button, beveled task list, and system tray clock straight from 1995
-- 📂 **Start Menu**: Authentic start menu for quick navigation
+- 📂 **Start Menu**: Rebuilt with the teal sidebar, beveled casing, and Start button alignment from classic Windows 95 for quick navigation
 - 🗂️ **Desktop Shortcuts Everywhere**: Every page now shows up on the desktop for
   quick double-click access
 - 🔍 **Search & Filter**: Hunt bugs and leaderboard entries like a pro
