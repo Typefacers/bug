@@ -320,7 +320,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
     <div
       ref={containerRef}
       onClick={shoot}
-      className="relative w-full h-full overflow-hidden select-none cursor-none"
+      className="absolute inset-0 overflow-hidden select-none cursor-none"
     >
       {/* Aim cross-hair */}
       <AimCursor x={aim.x} y={aim.y} />
