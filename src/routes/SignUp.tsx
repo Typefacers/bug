@@ -1,13 +1,6 @@
 import { useState, memo } from 'react'
+import { styled } from 'styled-components'
 import { Button, Frame, TextInput } from 'react95'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '../components/ui/card'
-import { Label } from '../components/ui/label'
 import { useBugStore } from '../store'
 import Meta from '../components/Meta'
 import ladybugAvatar from '../assets/profile-ladybug.png'
@@ -22,6 +15,51 @@ import cockroachAvatar from '../assets/cockroach.png'
 import caterpillarAvatar from '../assets/caterpillar.png'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import type { WindowComponentProps } from '../types/window'
+
+const FormWrapper = styled.div`
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+`
+
+const FormFrame = styled(Frame).attrs({
+  variant: 'window' as const,
+  shadow: true,
+})`
+  background: ${({ theme }) => theme.material};
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`
+
+const FormTitle = styled.h2`
+  margin: 0;
+  font-size: 22px;
+`
+
+const FieldGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`
+
+const FieldLabel = styled.label`
+  font-size: 13px;
+`
+
+const ActionsRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+`
+
+const ErrorBanner = styled(Frame).attrs({ variant: 'well' as const })`
+  background: #f8d7da;
+  color: #721c24;
+  padding: 8px;
+  font-size: 13px;
+`
 
 function SignUp({ windowId }: WindowComponentProps = {}) {
   const [name, setName] = useState('')
@@ -43,6 +81,13 @@ function SignUp({ windowId }: WindowComponentProps = {}) {
     caterpillarAvatar,
   ]
 
+  const finish = () => {
+    openWindow('leaderboard')
+    if (windowId) {
+      closeWindow(windowId)
+    }
+  }
+
   const createUser = () => {
     if (!name.trim()) {
       setError('Please enter a name')
@@ -61,58 +106,33 @@ function SignUp({ windowId }: WindowComponentProps = {}) {
       bugsSquashed: [],
     })
 
-    openWindow('leaderboard')
-    if (windowId) {
-      closeWindow(windowId)
-    }
+    finish()
   }
 
   return (
     <>
       <Meta title="Sign Up" description="Create a new Bug Basher account." />
-      <div className="max-w-md mx-auto">
-        <Card className="bg-[#E0E0E0] shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Sign Up</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {error && (
-              <Frame
-                variant="well"
-                className="bg-red-100 p-2 text-sm text-red-800"
-              >
-                {error}
-              </Frame>
-            )}
-            <div className="space-y-1">
-              <Label htmlFor="name">Your Name</Label>
-              <TextInput
-                id="name"
-                value={name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setName(e.target.value)
-                }
-                fullWidth
-              />
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button
-              onClick={() => {
-                openWindow('leaderboard')
-                if (windowId) {
-                  closeWindow(windowId)
-                }
-              }}
-            >
-              Cancel
-            </Button>
+      <FormWrapper>
+        <FormFrame>
+          <FormTitle>Sign Up</FormTitle>
+          {error && <ErrorBanner>{error}</ErrorBanner>}
+          <FieldGroup>
+            <FieldLabel htmlFor="name">Your Name</FieldLabel>
+            <TextInput
+              id="name"
+              value={name}
+              onChange={event => setName(event.target.value)}
+              fullWidth
+            />
+          </FieldGroup>
+          <ActionsRow>
+            <Button onClick={finish}>Cancel</Button>
             <Button primary onClick={createUser}>
               Create Account
             </Button>
-          </CardFooter>
-        </Card>
-      </div>
+          </ActionsRow>
+        </FormFrame>
+      </FormWrapper>
     </>
   )
 }

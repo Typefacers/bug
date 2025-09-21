@@ -1,13 +1,95 @@
-import clsx from 'clsx'
-import { forwardRef, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import {
+  forwardRef,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import { styled } from 'styled-components'
+import { AppBar, Toolbar, Button, Frame, Separator } from 'react95'
 import StartMenu from './StartMenu'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 
 const getTime = () =>
   new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
-const taskbarFrame =
-  'shadow-[inset_0_1px_0_0_#ffffff,inset_0_2px_0_0_#dfdfdf,inset_0_-1px_0_0_#808080,inset_0_-2px_0_0_#404040]'
+const TaskbarAppBar = styled(AppBar)`
+  position: relative;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: auto;
+`
+
+const TaskbarToolbar = styled(Toolbar)`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+`
+
+const StyledStartButton = styled(Button)`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  font-weight: 700;
+  font-size: 13px;
+`
+
+const WindowButtonsFrame = styled(Frame).attrs({ variant: 'status' as const })`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-height: 36px;
+`
+
+const WindowButton = styled(Button).attrs({
+  variant: 'thin' as const,
+  size: 'sm' as const,
+})`
+  min-width: 140px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+`
+
+const StatusGroup = styled.div`
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+`
+
+const StatusIconsFrame = styled(Frame).attrs({ variant: 'status' as const })`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+`
+
+const ClockFrame = styled(Frame).attrs({ variant: 'status' as const })`
+  min-width: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  font-variant-numeric: tabular-nums;
+`
+
+const StartMenuBackdrop = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+`
 
 type StartButtonProps = {
   open: boolean
@@ -15,39 +97,24 @@ type StartButtonProps = {
 }
 
 const StartButton = forwardRef<HTMLButtonElement, StartButtonProps>(
-  ({ open, onClick }, ref) => {
-    return (
-      <button
-        ref={ref}
-        type="button"
-        onClick={onClick}
-        aria-pressed={open}
-        className={clsx(
-          'flex h-[32px] items-center gap-2 px-4 text-[13px] font-semibold tracking-tight text-black transition-colors',
-          "font-['MS_Sans_Serif','Tahoma',sans-serif]",
-          open
-            ? 'border-t-[2px] border-l-[2px] border-[#404040] border-b border-r border-white bg-[#9C9C9C] shadow-[inset_1px_1px_0_0_#cfcfcf,inset_-1px_-1px_0_0_#707070]'
-            : 'border-t-[2px] border-l-[2px] border-white border-b border-r border-[#404040] bg-[#C0C0C0] shadow-[inset_-1px_-1px_0_0_#808080,inset_1px_1px_0_0_#dfdfdf] hover:bg-[#d6d6d6]'
-        )}
-      >
-        <Windows95Logo className="h-5 w-5" />
-        <span className="tracking-[0.03em]">Start</span>
-      </button>
-    )
-  }
+  ({ open, onClick }, ref) => (
+    <StyledStartButton
+      ref={ref}
+      onClick={onClick}
+      active={open}
+      aria-pressed={open}
+    >
+      <Windows95Logo />
+      Start
+    </StyledStartButton>
+  )
 )
 
 StartButton.displayName = 'StartButton'
 
-function Windows95Logo({ className = '' }: { className?: string }) {
+function Windows95Logo() {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 26 26"
-      role="presentation"
-      aria-hidden="true"
-      focusable="false"
-    >
+    <svg viewBox="0 0 26 26" role="presentation" aria-hidden="true">
       <path d="M1 8L9 6.8V12.5L1 13.8V8Z" fill="#d40000" />
       <path d="M11 6.3L25 4V12.8L11 11.2V6.3Z" fill="#00a2e8" />
       <path d="M1 15.4L9 16.3V22L1 20.8V15.4Z" fill="#ffc20e" />
@@ -56,24 +123,9 @@ function Windows95Logo({ className = '' }: { className?: string }) {
   )
 }
 
-function Divider() {
+function SpeakerIcon() {
   return (
-    <div className="flex h-[32px] w-[3px] items-stretch" aria-hidden="true">
-      <div className="w-px bg-[#808080]" />
-      <div className="w-px bg-white" />
-    </div>
-  )
-}
-
-function SpeakerIcon({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      className={className}
-      role="presentation"
-      aria-hidden="true"
-      focusable="false"
-    >
+    <svg viewBox="0 0 16 16" role="presentation" aria-hidden="true">
       <path d="M1.5 6.5h2.9L7.5 4v8L4.4 9.5H1.5v-3Z" fill="#000" />
       <path
         d="M10 6v4M12 5v6"
@@ -85,17 +137,11 @@ function SpeakerIcon({ className = '' }: { className?: string }) {
   )
 }
 
-function MonitorIcon({ className = '' }: { className?: string }) {
+function MonitorIcon() {
   return (
-    <svg
-      viewBox="0 0 16 16"
-      className={className}
-      role="presentation"
-      aria-hidden="true"
-      focusable="false"
-    >
+    <svg viewBox="0 0 16 16" role="presentation" aria-hidden="true">
       <rect x="1" y="3" width="14" height="9" fill="#000" />
-      <rect x="2" y="4" width="12" height="7" fill="#C0C0C0" />
+      <rect x="2" y="4" width="12" height="7" fill="#c0c0c0" />
       <rect x="5" y="13" width="6" height="1.5" fill="#000" />
       <rect x="4" y="14.5" width="8" height="1" fill="#808080" />
     </svg>
@@ -132,7 +178,7 @@ export default function Taskbar() {
 
     const resizeObserver =
       typeof ResizeObserver !== 'undefined'
-        ? new ResizeObserver(() => updateRect())
+        ? new ResizeObserver(updateRect)
         : null
 
     resizeObserver?.observe(button)
@@ -144,65 +190,66 @@ export default function Taskbar() {
     }
   }, [open])
 
+  const orderedWindows = useMemo(
+    () => [...windows].sort((a, b) => a.zIndex - b.zIndex),
+    [windows]
+  )
+
   return (
-    <div
-      className={`relative flex h-[40px] items-center gap-2 bg-[#C0C0C0] px-3 text-[13px] ${taskbarFrame}`}
-    >
-      <StartButton
-        ref={startButtonRef}
-        open={open}
-        onClick={() => setOpen(value => !value)}
-      />
+    <TaskbarAppBar position="relative">
+      <TaskbarToolbar>
+        <StartButton
+          ref={startButtonRef}
+          open={open}
+          onClick={() => setOpen(value => !value)}
+        />
 
-      <Divider />
+        <Separator orientation="vertical" size={28} />
 
-      <div className="flex h-9 flex-1 items-center gap-1 overflow-x-auto overflow-y-hidden border-t border-l border-white border-b-[2px] border-r-[2px] border-[#808080] bg-[#C0C0C0] px-2">
-        {windows.map(window => {
-          const definition = apps[window.appId]
-          const isActive = activeWindowId === window.id && !window.minimized
+        <WindowButtonsFrame>
+          {orderedWindows.map(window => {
+            const definition = apps[window.appId]
+            const isActive = activeWindowId === window.id && !window.minimized
 
-          return (
-            <button
-              key={window.id}
-              onClick={() => {
-                if (window.minimized || isActive) {
-                  toggleMinimize(window.id)
-                } else {
-                  focusWindow(window.id)
-                }
-              }}
-              className={clsx(
-                'flex h-7 min-w-[140px] flex-shrink-0 items-center gap-2 truncate px-3 text-left text-[12px] font-semibold transition-colors',
-                isActive
-                  ? 'border-t border-l border-[#404040] border-b-[2px] border-r-[2px] border-white bg-[#9C9C9C] text-black shadow-[inset_1px_1px_0_0_#dfdfdf,inset_-1px_-1px_0_0_#808080]'
-                  : 'border-t border-l border-white border-b-[2px] border-r-[2px] border-[#404040] bg-[#C3C3C3] text-black hover:bg-[#d9d9d9]'
-              )}
-            >
-              <span aria-hidden>{definition?.icon ?? '🪟'}</span>
-              <span className="truncate text-left">{window.title}</span>
-            </button>
-          )
-        })}
-      </div>
+            return (
+              <WindowButton
+                key={window.id}
+                active={isActive}
+                onClick={() => {
+                  if (window.minimized || isActive) {
+                    toggleMinimize(window.id)
+                  } else {
+                    focusWindow(window.id)
+                  }
+                }}
+                title={window.title}
+              >
+                <span aria-hidden>{definition?.icon ?? '🪟'}</span>
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {window.title}
+                </span>
+              </WindowButton>
+            )
+          })}
+        </WindowButtonsFrame>
 
-      <Divider />
+        <Separator orientation="vertical" size={28} />
 
-      <div className="flex h-9 items-center gap-2">
-        <div className="flex h-full items-center gap-2 border-t border-l border-white border-b-[2px] border-r-[2px] border-[#808080] bg-[#C0C0C0] px-2">
-          <MonitorIcon className="h-4 w-4" />
-          <SpeakerIcon className="h-4 w-4" />
-        </div>
-        <div className="flex h-full min-w-[88px] items-center justify-center border-t border-l border-white border-b-[2px] border-r-[2px] border-[#808080] bg-[#C0C0C0] px-3 font-['MS_Sans_Serif','Tahoma',sans-serif]">
-          {time}
-        </div>
-      </div>
+        <StatusGroup>
+          <StatusIconsFrame>
+            <MonitorIcon />
+            <SpeakerIcon />
+          </StatusIconsFrame>
+          <ClockFrame>{time}</ClockFrame>
+        </StatusGroup>
+      </TaskbarToolbar>
 
       {open && (
         <>
-          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <StartMenuBackdrop onClick={() => setOpen(false)} />
           <StartMenu anchorRect={anchorRect} onClose={() => setOpen(false)} />
         </>
       )}
-    </div>
+    </TaskbarAppBar>
   )
 }

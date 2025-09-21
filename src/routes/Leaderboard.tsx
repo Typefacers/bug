@@ -1,45 +1,127 @@
-import React, { memo, type FC } from 'react'
+import { useMemo, useState, memo, type FC } from 'react'
+import { styled } from 'styled-components'
+import {
+  Button,
+  Frame,
+  Table,
+  TableBody,
+  TableDataCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+  TextInput,
+} from 'react95'
 import { useBugStore } from '../store'
 import Meta from '../components/Meta'
-import { Button, TextInput } from 'react95'
 import { levelFromBounty, sortUsers, type SortKey } from './leaderboard-helpers'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import type { WindowComponentProps } from '../types/window'
+
+const LeaderboardFrame = styled(Frame).attrs({
+  variant: 'window' as const,
+  shadow: true,
+})`
+  background: ${({ theme }) => theme.material};
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`
+
+const HeaderActions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+`
+
+const SearchField = styled(TextInput)`
+  width: 100%;
+  max-width: 260px;
+`
+
+const TableScroll = styled.div`
+  overflow-x: auto;
+`
+
+type HeaderButtonProps = { $align?: 'start' | 'center' | 'end' }
+
+const headerJustify = ({ $align }: HeaderButtonProps) =>
+  $align === 'center' ? 'center' : $align === 'end' ? 'flex-end' : 'flex-start'
+
+const HeaderButton = styled(Button)<HeaderButtonProps>`
+  width: 100%;
+  display: inline-flex;
+  justify-content: ${headerJustify};
+  align-items: center;
+  gap: 6px;
+`
+
+const BodyRow = styled(TableRow)`
+  &:nth-of-type(even) {
+    background: ${({ theme }) => theme.flatLight};
+  }
+  &:nth-of-type(odd) {
+    background: ${({ theme }) => theme.material};
+  }
+`
+
+const NameLink = styled.button`
+  background: none;
+  border: none;
+  color: #000080;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 13px;
+
+  &:focus-visible {
+    outline: 1px dotted #000;
+    outline-offset: 2px;
+  }
+`
+
+const AvatarImage = styled.img`
+  width: 24px;
+  height: 24px;
+  border: 1px solid ${({ theme }) => theme.borderDark};
+`
+
+const NameCell = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`
 
 const Leaderboard: FC<WindowComponentProps> = () => {
   const users = useBugStore(s => s.users)
   const { openWindow } = useWindowManager()
 
-  /** Local sort state */
-  const [sortKey, setSortKey] = React.useState<SortKey>('bounty')
-  const [ascending, setAscending] = React.useState(false)
-  const [query, setQuery] = React.useState('')
+  const [sortKey, setSortKey] = useState<SortKey>('bounty')
+  const [ascending, setAscending] = useState(false)
+  const [query, setQuery] = useState('')
 
-  /** Toggle / change sort */
   const handleSort = (key: SortKey) => {
     if (key === sortKey) {
-      setAscending(!ascending)
+      setAscending(prev => !prev)
     } else {
       setSortKey(key)
-      // Default direction: name asc, everything else desc
       setAscending(key === 'name')
     }
   }
 
-  /** Users filtered by search query */
-  const filteredUsers = React.useMemo(() => {
+  const filteredUsers = useMemo(() => {
     const q = query.trim().toLowerCase()
     if (!q) return users
-    return users.filter(u => u.name.toLowerCase().includes(q))
+    return users.filter(user => user.name.toLowerCase().includes(q))
   }, [users, query])
 
-  /** Users sorted according to selected column */
-  const sortedUsers = React.useMemo(
+  const sortedUsers = useMemo(
     () => sortUsers(filteredUsers, sortKey, ascending),
     [filteredUsers, sortKey, ascending]
   )
 
-  /** Helper to render sort arrows */
   const sortArrow = (key: SortKey) =>
     sortKey === key ? (ascending ? '▲' : '▼') : ''
 
@@ -49,142 +131,155 @@ const Leaderboard: FC<WindowComponentProps> = () => {
         title="Bug Bounty Leaderboard"
         description="Check the rankings of top bug squashers and their bounties."
       />
-      <div className="overflow-x-auto">
-        <div className="mb-2 max-w-xs">
-          <label htmlFor="search" className="sr-only">
-            Search
-          </label>
-          <TextInput
+      <LeaderboardFrame>
+        <HeaderActions>
+          <h2 style={{ margin: 0 }}>Top Bug Hunters</h2>
+          <SearchField
             id="search"
-            value={query}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setQuery(e.target.value)
-            }
             placeholder="Search hunters"
-            fullWidth
+            value={query}
+            onChange={event => setQuery(event.target.value)}
           />
-        </div>
-        <table className="w-full text-sm select-none bg-[#E0E0E0]">
-          <caption className="sr-only">Bug bounty rankings</caption>
-          <thead>
-            <tr className="bg-[#000080] text-white">
-              <th className="py-2 px-3 text-left font-semibold w-16 whitespace-nowrap">
-                <Button
-                  onClick={() => handleSort('rank')}
-                  className="w-full justify-start"
-                  size="sm"
-                  variant="thin"
-                >
-                  #<span className="ml-1">{sortArrow('rank')}</span>
-                </Button>
-              </th>
-              <th className="py-2 px-3 text-left font-semibold">
-                <Button
-                  onClick={() => handleSort('name')}
-                  className="w-full justify-start"
-                  size="sm"
-                  variant="thin"
-                >
-                  Hunter <span className="ml-1">{sortArrow('name')}</span>
-                </Button>
-              </th>
-              <th className="py-2 px-3 text-right font-semibold w-24">
-                <Button
-                  onClick={() => handleSort('bugs')}
-                  className="w-full justify-end"
-                  size="sm"
-                  variant="thin"
-                >
-                  Bugs <span className="ml-1">{sortArrow('bugs')}</span>
-                </Button>
-              </th>
-              <th className="py-2 px-3 text-right font-semibold w-28">
-                <Button
-                  onClick={() => handleSort('bounty')}
-                  className="w-full justify-end"
-                  size="sm"
-                  variant="thin"
-                >
-                  Bounty <span className="ml-1">{sortArrow('bounty')}</span>
-                </Button>
-              </th>
-              <th className="py-2 px-3 text-right font-semibold w-32">
-                <Button
-                  onClick={() => handleSort('efficiency')}
-                  className="w-full justify-end"
-                  size="sm"
-                  variant="thin"
-                >
-                  Efficiency{' '}
-                  <span className="ml-1">{sortArrow('efficiency')}</span>
-                </Button>
-              </th>
-              <th className="py-2 px-3 text-center font-semibold w-28">
-                <Button
-                  onClick={() => handleSort('level')}
-                  className="w-full justify-center"
-                  size="sm"
-                  variant="thin"
-                >
-                  Level <span className="ml-1">{sortArrow('level')}</span>
-                </Button>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedUsers.map((u, i) => {
-              const bugCount =
-                (Array.isArray(u.bugs) ? u.bugs.length : u.bugs) ?? 0
-              const bounty = u.bounty ?? 0
-              const efficiency =
-                bugCount > 0 ? (bounty / bugCount).toFixed(1) : '—'
-              const level = levelFromBounty(bounty)
+        </HeaderActions>
 
-              return (
-                <tr
-                  key={u.id}
-                  className={`${
-                    i % 2 ? 'bg-[#D4D0C8]' : 'bg-[#E0E0E0]'
-                  } hover:bg-[#C0C0C0]`}
-                >
-                  <td className="py-1 px-3 font-bold">{i + 1}</td>
-                  <td className="py-1 px-3 flex items-center gap-2">
-                    {u.avatar && (
-                      <img
-                        src={u.avatar}
-                        alt={`${u.name} avatar`}
-                        className="w-6 h-6 border border-gray-700"
-                      />
-                    )}
-                    <button
-                      type="button"
-                      className="text-indigo-600 hover:underline bg-transparent !px-0 !py-0 border-none focus:outline-none focus-visible:underline cursor-pointer"
-                      onClick={() =>
-                        openWindow('userProfile', {
-                          instanceId: `user-${u.id}`,
-                          context: { userId: u.id },
-                        })
-                      }
+        <TableScroll>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableHeadCell style={{ width: '64px' }}>
+                  <HeaderButton
+                    size="sm"
+                    variant="thin"
+                    onClick={() => handleSort('rank')}
+                  >
+                    # {sortArrow('rank')}
+                  </HeaderButton>
+                </TableHeadCell>
+                <TableHeadCell>
+                  <HeaderButton
+                    size="sm"
+                    variant="thin"
+                    onClick={() => handleSort('name')}
+                  >
+                    Hunter {sortArrow('name')}
+                  </HeaderButton>
+                </TableHeadCell>
+                <TableHeadCell style={{ width: '96px', textAlign: 'right' }}>
+                  <HeaderButton
+                    size="sm"
+                    variant="thin"
+                    $align="end"
+                    onClick={() => handleSort('bugs')}
+                  >
+                    Bugs {sortArrow('bugs')}
+                  </HeaderButton>
+                </TableHeadCell>
+                <TableHeadCell style={{ width: '120px', textAlign: 'right' }}>
+                  <HeaderButton
+                    size="sm"
+                    variant="thin"
+                    $align="end"
+                    onClick={() => handleSort('bounty')}
+                  >
+                    Bounty {sortArrow('bounty')}
+                  </HeaderButton>
+                </TableHeadCell>
+                <TableHeadCell style={{ width: '140px', textAlign: 'right' }}>
+                  <HeaderButton
+                    size="sm"
+                    variant="thin"
+                    $align="end"
+                    onClick={() => handleSort('efficiency')}
+                  >
+                    Efficiency {sortArrow('efficiency')}
+                  </HeaderButton>
+                </TableHeadCell>
+                <TableHeadCell style={{ width: '120px', textAlign: 'center' }}>
+                  <HeaderButton
+                    size="sm"
+                    variant="thin"
+                    $align="center"
+                    onClick={() => handleSort('level')}
+                  >
+                    Level {sortArrow('level')}
+                  </HeaderButton>
+                </TableHeadCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {sortedUsers.map((user, index) => {
+                const bugCount =
+                  (Array.isArray(user.bugs) ? user.bugs.length : user.bugs) ?? 0
+                const bounty = user.bounty ?? 0
+                const efficiency =
+                  bugCount > 0 ? (bounty / bugCount).toFixed(1) : '—'
+                const level = levelFromBounty(bounty)
+
+                return (
+                  <BodyRow key={user.id}>
+                    <TableDataCell>{index + 1}</TableDataCell>
+                    <TableDataCell>
+                      <NameCell>
+                        {user.avatar && (
+                          <AvatarImage
+                            src={user.avatar}
+                            alt={`${user.name} avatar`}
+                          />
+                        )}
+                        <NameLink
+                          type="button"
+                          onClick={() =>
+                            openWindow('userProfile', {
+                              instanceId: `user-${user.id}`,
+                              context: { userId: user.id },
+                            })
+                          }
+                        >
+                          {user.name}
+                        </NameLink>
+                      </NameCell>
+                    </TableDataCell>
+                    <TableDataCell
+                      style={{
+                        textAlign: 'right',
+                        fontVariantNumeric: 'tabular-nums',
+                      }}
                     >
-                      {u.name}
-                    </button>
-                  </td>
-                  <td className="py-1 px-3 text-right tabular-nums">
-                    {bugCount}
-                  </td>
-                  <td className="py-1 px-3 text-right tabular-nums">
-                    {bounty.toLocaleString()}
-                  </td>
-                  <td className="py-1 px-3 text-right tabular-nums">
-                    {efficiency}
-                  </td>
-                  <td className="py-1 px-3 text-center">{level}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
+                      {bugCount}
+                    </TableDataCell>
+                    <TableDataCell
+                      style={{
+                        textAlign: 'right',
+                        fontVariantNumeric: 'tabular-nums',
+                      }}
+                    >
+                      {bounty.toLocaleString()}
+                    </TableDataCell>
+                    <TableDataCell
+                      style={{
+                        textAlign: 'right',
+                        fontVariantNumeric: 'tabular-nums',
+                      }}
+                    >
+                      {efficiency}
+                    </TableDataCell>
+                    <TableDataCell style={{ textAlign: 'center' }}>
+                      {level}
+                    </TableDataCell>
+                  </BodyRow>
+                )
+              })}
+              {!sortedUsers.length && (
+                <TableRow>
+                  <TableDataCell colSpan={6}>
+                    No hunters match the current search.
+                  </TableDataCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableScroll>
+      </LeaderboardFrame>
     </>
   )
 }

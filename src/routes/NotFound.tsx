@@ -1,10 +1,41 @@
-import Meta from '../components/Meta'
 import { memo } from 'react'
+import { styled } from 'styled-components'
+import { Button, Frame } from 'react95'
+import Meta from '../components/Meta'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import type { WindowComponentProps } from '../types/window'
 
+const NotFoundFrame = styled(Frame).attrs({
+  variant: 'window' as const,
+  shadow: true,
+})`
+  background: ${({ theme }) => theme.material};
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`
+
+const Title = styled.h1`
+  margin: 0;
+  font-size: 22px;
+`
+
+const Message = styled.p`
+  margin: 0;
+  font-size: 14px;
+`
+
 function NotFound({ windowId }: WindowComponentProps = {}) {
   const { openWindow, closeWindow } = useWindowManager()
+
+  const goHome = () => {
+    openWindow('bugs')
+    if (windowId) {
+      closeWindow(windowId)
+    }
+  }
 
   return (
     <>
@@ -12,29 +43,18 @@ function NotFound({ windowId }: WindowComponentProps = {}) {
         title="Page Not Found - Bug Bounty"
         description="This route is more elusive than a bug-free codebase."
       />
-      <div className="text-center space-y-4">
-        <h1 className="text-2xl font-bold">404 - Page Not Found</h1>
-        <p className="text-lg">
+      <NotFoundFrame>
+        <Title>404 - Page Not Found</Title>
+        <Message>
           Well, this is embarrassing. You found the page even we can&apos;t
           find.
-        </p>
-        <p>
+        </Message>
+        <Message>
           Either it never existed or a hungry bug devoured it in a midnight
           snack.
-        </p>
-        <button
-          type="button"
-          className="text-indigo-600 hover:underline bg-transparent !px-0 !py-0 border-none focus:outline-none focus-visible:underline cursor-pointer"
-          onClick={() => {
-            openWindow('bugs')
-            if (windowId) {
-              closeWindow(windowId)
-            }
-          }}
-        >
-          Back to the bug hunt
-        </button>
-      </div>
+        </Message>
+        <Button onClick={goHome}>Back to the bug hunt</Button>
+      </NotFoundFrame>
     </>
   )
 }

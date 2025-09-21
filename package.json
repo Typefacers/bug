@@ -14,23 +14,13 @@
     "test": "node --experimental-transform-types --loader ./png-loader.js --experimental-test-coverage --test-coverage-include=src/components/** --test-coverage-include=src/routes/** --test"
   },
   "dependencies": {
-    "@radix-ui/react-progress": "^1.1.7",
-    "@radix-ui/react-tabs": "^1.1.12",
-    "@tailwindcss/vite": "^4.1.11",
     "@types/styled-components": "^5.1.34",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
     "d3": "^7.9.0",
-    "framer-motion": "^12.19.2",
-    "lucide-react": "^0.523.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-rnd": "^10.5.2",
     "react95": "^4.0.0",
     "styled-components": "^6.1.19",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.11",
-    "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.1.0",
     "zustand": "^5.0.6"
   },

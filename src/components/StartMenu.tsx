@@ -1,4 +1,6 @@
 import { useEffect } from 'react'
+import { styled } from 'styled-components'
+import { Frame, MenuList, MenuListItem } from 'react95'
 import { START_MENU_APPS } from '../utils/window-apps'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 
@@ -8,6 +10,74 @@ type StartMenuProps = {
 }
 
 const MENU_WIDTH = 260
+
+const StartMenuPositioner = styled.div`
+  position: fixed;
+  z-index: 50;
+  width: ${MENU_WIDTH}px;
+`
+
+const StartMenuFrame = styled(Frame).attrs({
+  variant: 'window' as const,
+  shadow: true,
+})`
+  display: flex;
+  overflow: hidden;
+`
+
+const BrandColumn = styled.div`
+  width: 40px;
+  background: linear-gradient(180deg, #00007b 0%, #008080 60%, #4ea0c6 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+`
+
+const BrandText = styled.span`
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: 'ms_sans_serif', 'Microsoft Sans Serif', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.canvasTextInvert};
+  padding: 6px 0;
+`
+
+const MenuBody = styled.div`
+  flex: 1;
+  background: ${({ theme }) => theme.material};
+  border-left: 1px solid ${({ theme }) => theme.borderDark};
+`
+
+const StyledMenuList = styled(MenuList)`
+  margin: 0;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`
+
+const StyledMenuItem = styled(MenuListItem)`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  font-weight: 600;
+  cursor: pointer;
+`
+
+const ItemIcon = styled.span`
+  font-size: 18px;
+`
+
+const ItemLabel = styled.span`
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
 
 export default function StartMenu({ anchorRect, onClose }: StartMenuProps) {
   const { openWindow } = useWindowManager()
@@ -34,56 +104,32 @@ export default function StartMenu({ anchorRect, onClose }: StartMenuProps) {
   const bottom = Math.max(viewportHeight - anchorTop + 2, 8)
 
   return (
-    <div
-      className="pointer-events-auto fixed z-50 w-[260px] text-[13px]"
+    <StartMenuPositioner
       style={{ left, bottom }}
       role="menu"
       aria-label="Start menu"
     >
-      <div className="start-menu-shadow border-t border-l border-white border-b-[2px] border-r-[2px] border-[#404040] bg-[#C0C0C0] text-black">
-        <div className="flex">
-          <div className="start-menu__brand flex w-[36px] items-end justify-center bg-gradient-to-b from-[#00007B] via-[#008080] to-[#4EA0C6] text-white">
-            <span className="start-menu__brand-text">Windows 95</span>
-          </div>
-          <div className="flex-1 border-l border-[#808080] bg-[#C0C0C0] p-1">
-            <ul className="flex flex-col gap-1">
-              {START_MENU_APPS.map(item => (
-                <li key={item.id}>
-                  <StartMenuItem
-                    icon={item.icon}
-                    title={item.title}
-                    onSelect={() => {
-                      openWindow(item.id)
-                      onClose()
-                    }}
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-type StartMenuItemProps = {
-  icon: string
-  title: string
-  onSelect: () => void
-}
-
-function StartMenuItem({ icon, title, onSelect }: StartMenuItemProps) {
-  return (
-    <button
-      type="button"
-      onClick={onSelect}
-      className="flex h-8 w-full items-center gap-3 truncate border-t border-l border-white border-b border-r border-[#808080] bg-[#C0C0C0] px-3 text-left font-['MS_Sans_Serif','Tahoma',sans-serif] text-[13px] font-semibold text-black transition-colors hover:bg-[#000080] hover:text-white focus:outline-none focus-visible:bg-[#000080] focus-visible:text-white"
-    >
-      <span aria-hidden className="text-lg">
-        {icon}
-      </span>
-      <span className="truncate">{title}</span>
-    </button>
+      <StartMenuFrame>
+        <BrandColumn>
+          <BrandText>Windows 95</BrandText>
+        </BrandColumn>
+        <MenuBody>
+          <StyledMenuList fullWidth>
+            {START_MENU_APPS.map(item => (
+              <StyledMenuItem
+                key={item.id}
+                onClick={() => {
+                  openWindow(item.id)
+                  onClose()
+                }}
+              >
+                <ItemIcon aria-hidden>{item.icon}</ItemIcon>
+                <ItemLabel>{item.title}</ItemLabel>
+              </StyledMenuItem>
+            ))}
+          </StyledMenuList>
+        </MenuBody>
+      </StartMenuFrame>
+    </StartMenuPositioner>
   )
 }

@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { Rnd } from 'react-rnd'
+import { styled } from 'styled-components'
 import { Button, Window, WindowContent, WindowHeader } from 'react95'
 import {
   Win95CloseIcon,
@@ -15,6 +16,46 @@ type Props = {
   windowState: WindowState
   containerSize: WindowSize
 }
+
+const WindowShell = styled(Window)`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+`
+
+const TitleBar = styled(WindowHeader).attrs({ className: 'win95-title-bar' })`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+`
+
+const TitleText = styled.span`
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 8px;
+`
+
+const ControlGroup = styled.div`
+  display: flex;
+  gap: 4px;
+`
+
+const Content = styled(WindowContent)`
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+`
+
+const LoadingFallback = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 16px;
+`
 
 export default function DesktopWindow({ windowState, containerSize }: Props) {
   const {
@@ -61,16 +102,15 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
       enableResizing={!windowState.maximized}
       minWidth={360}
       minHeight={240}
-      className={`absolute ${windowState.minimized ? 'hidden' : ''}`}
-      style={{ zIndex: windowState.zIndex }}
+      style={{
+        display: windowState.minimized ? 'none' : undefined,
+        zIndex: windowState.zIndex,
+      }}
     >
-      <Window className="flex h-full w-full flex-col" shadow>
-        <WindowHeader
-          className="win95-title-bar flex items-center justify-between gap-2"
-          onDoubleClick={handleMaximize}
-        >
-          <span className="truncate pr-2">{windowState.title}</span>
-          <div className="flex gap-1">
+      <WindowShell shadow>
+        <TitleBar onDoubleClick={handleMaximize}>
+          <TitleText>{windowState.title}</TitleText>
+          <ControlGroup>
             <Button
               square
               size="sm"
@@ -99,24 +139,18 @@ export default function DesktopWindow({ windowState, containerSize }: Props) {
             >
               <Win95CloseIcon />
             </Button>
-          </div>
-        </WindowHeader>
-        <WindowContent className="!h-full flex-1 w-full overflow-hidden">
-          <Suspense
-            fallback={
-              <div className="flex h-full w-full items-center justify-center p-4">
-                Loading...
-              </div>
-            }
-          >
+          </ControlGroup>
+        </TitleBar>
+        <Content>
+          <Suspense fallback={<LoadingFallback>Loading...</LoadingFallback>}>
             <Component
               windowId={windowState.id}
               context={windowState.context}
               setTitle={title => setWindowTitle(windowState.id, title)}
             />
           </Suspense>
-        </WindowContent>
-      </Window>
+        </Content>
+      </WindowShell>
     </Rnd>
   )
 }

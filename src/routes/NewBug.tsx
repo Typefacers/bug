@@ -1,40 +1,89 @@
 import { useState, memo } from 'react'
-import { Button, Frame, TextInput } from 'react95'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '../components/ui/card'
-import { Label } from '../components/ui/label'
-import { Textarea } from '../components/ui/textarea'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../components/ui/select'
+import { styled } from 'styled-components'
+import { Button, Frame, Select, TextInput } from 'react95'
 import { useBugStore } from '../store'
 import { v4 as uuidv4 } from 'uuid'
-import { motion } from 'framer-motion'
-import { Bug } from '../types/bug'
+import type { Bug } from '../types/bug'
 import Meta from '../components/Meta'
 import Captcha from '../components/Captcha'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import type { WindowComponentProps } from '../types/window'
 
+type PriorityOption = 'high' | 'medium' | 'low'
+
+const FormContainer = styled.div`
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+`
+
+const FormFrame = styled(Frame).attrs({
+  variant: 'window' as const,
+  shadow: true,
+})`
+  background: ${({ theme }) => theme.material};
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`
+
+const Title = styled.h2`
+  margin: 0;
+  font-size: 24px;
+`
+
+const FieldGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`
+
+const FieldLabel = styled.label`
+  font-size: 13px;
+`
+
+const TextAreaField = styled.textarea`
+  width: 100%;
+  min-height: 120px;
+  padding: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  border: 1px solid ${({ theme }) => theme.borderDark};
+  background: ${({ theme }) => theme.canvas};
+  resize: vertical;
+`
+
+const ActionsRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+`
+
+const ErrorBanner = styled(Frame).attrs({ variant: 'well' as const })`
+  background: #f8d7da;
+  color: #721c24;
+  padding: 8px;
+  font-size: 13px;
+`
+
 function NewBug({ windowId }: WindowComponentProps = {}) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [bounty, setBounty] = useState(50)
-  const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium')
+  const [priority, setPriority] = useState<PriorityOption>('medium')
   const [error, setError] = useState('')
   const [captchaValid, setCaptchaValid] = useState(false)
 
   const addBug = useBugStore(s => s.addBug)
   const { openWindow, closeWindow } = useWindowManager()
+
+  const finish = () => {
+    openWindow('dashboard')
+    if (windowId) {
+      closeWindow(windowId)
+    }
+  }
 
   const createBug = () => {
     if (!title) {
@@ -64,117 +113,76 @@ function NewBug({ windowId }: WindowComponentProps = {}) {
     }
 
     addBug(newBug)
-    openWindow('dashboard')
-    if (windowId) {
-      closeWindow(windowId)
-    }
+    finish()
   }
 
-  /* 3-D border helpers with enhanced styles */
   return (
     <>
       <Meta
         title="File a New Bug"
         description="Report a new bug and earn bounties in Bug Basher."
       />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-2xl mx-auto"
-      >
-        <Card className="bg-[#E0E0E0] shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">File a New Bug</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {error && (
-              <Frame
-                variant="well"
-                className="bg-red-100 p-2 text-sm text-red-800"
-              >
-                {error}
-              </Frame>
-            )}
+      <FormContainer>
+        <FormFrame>
+          <Title>File a New Bug</Title>
+          {error && <ErrorBanner>{error}</ErrorBanner>}
 
-            <div className="space-y-1">
-              <Label htmlFor="title">Bug Title</Label>
+          <FieldGroup>
+            <FieldLabel htmlFor="title">Bug Title</FieldLabel>
+            <TextInput
+              id="title"
+              value={title}
+              onChange={event => setTitle(event.target.value)}
+              fullWidth
+            />
+          </FieldGroup>
+
+          <FieldGroup>
+            <FieldLabel htmlFor="description">Description</FieldLabel>
+            <TextAreaField
+              id="description"
+              value={description}
+              onChange={event => setDescription(event.target.value)}
+            />
+          </FieldGroup>
+
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            <FieldGroup style={{ flex: '1 1 160px' }}>
+              <FieldLabel htmlFor="bounty">Bounty Amount ($)</FieldLabel>
               <TextInput
-                id="title"
-                value={title}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setTitle(e.target.value)
-                }
-                fullWidth
+                id="bounty"
+                type="number"
+                min={10}
+                value={bounty}
+                onChange={event => setBounty(Number(event.target.value))}
               />
-            </div>
-
-            <div className="space-y-1">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                value={description}
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                  setDescription(e.target.value)
-                }
-                className="min-h-[100px]"
+            </FieldGroup>
+            <FieldGroup style={{ flex: '1 1 160px' }}>
+              <FieldLabel htmlFor="priority">Priority</FieldLabel>
+              <Select<PriorityOption>
+                aria-label="Priority"
+                value={priority}
+                options={[
+                  { value: 'high', label: 'High' },
+                  { value: 'medium', label: 'Medium' },
+                  { value: 'low', label: 'Low' },
+                ]}
+                onChange={option => setPriority(option.value)}
+                width="100%"
               />
-            </div>
+            </FieldGroup>
+          </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <Label htmlFor="bounty">Bounty Amount ($)</Label>
-                <TextInput
-                  id="bounty"
-                  type="number"
-                  min={10}
-                  value={bounty}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setBounty(Number(e.target.value))
-                  }
-                  fullWidth
-                />
-              </div>
+          <Captcha onChange={setCaptchaValid} />
 
-              <div className="space-y-1">
-                <Label htmlFor="priority">Priority</Label>
-                <Select
-                  value={priority}
-                  onValueChange={(value: 'high' | 'medium' | 'low') =>
-                    setPriority(value)
-                  }
-                >
-                  <SelectTrigger className="bg-[#C0C0C0]">
-                    <SelectValue placeholder="Select priority" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#C0C0C0] w-full">
-                    <SelectItem value="high">high</SelectItem>
-                    <SelectItem value="medium">medium</SelectItem>
-                    <SelectItem value="low">low</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <Captcha onChange={setCaptchaValid} />
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button
-              onClick={() => {
-                openWindow('dashboard')
-                if (windowId) {
-                  closeWindow(windowId)
-                }
-              }}
-            >
-              Cancel
-            </Button>
+          <ActionsRow>
+            <Button onClick={finish}>Cancel</Button>
             <Button primary disabled={!captchaValid} onClick={createBug}>
               Submit Bug
             </Button>
-          </CardFooter>
-        </Card>
-      </motion.div>
+          </ActionsRow>
+        </FormFrame>
+      </FormContainer>
     </>
   )
 }

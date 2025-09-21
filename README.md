@@ -13,14 +13,10 @@
 [![D3.js](https://img.shields.io/badge/D3.js-7.9.0-F7931E?style=flat-square&logo=d3.js&logoColor=white)](https://d3js.org)
 [![Zustand](https://img.shields.io/badge/Zustand-5.0.6-FF6B6B?style=flat-square&logo=react&logoColor=white)](https://github.com/pmndrs/zustand)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.1.11-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-12.19.2-0055FF?style=flat-square&logo=framer&logoColor=white)](https://www.framer.com/motion)
 
 [![ESLint](https://img.shields.io/badge/ESLint-9.29.0-4B32C3?style=flat-square&logo=eslint)](https://eslint.org)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![Prettier](https://img.shields.io/badge/Prettier-3.6.2-F7B93E?style=flat-square&logo=prettier&logoColor=black)](https://prettier.io)
-[![Lucide React](https://img.shields.io/badge/Lucide%20React-0.523.0-F56565?style=flat-square&logo=lucide&logoColor=white)](https://lucide.dev)
-[![Radix UI](https://img.shields.io/badge/Radix%20UI-Multiple%20Versions-161618?style=flat-square&logo=radix-ui&logoColor=white)](https://www.radix-ui.com)
 
 [![Bundle Size](https://img.shields.io/badge/Bundle%20Size-Astronomical-purple?style=flat-square&logo=webpack)](vite.config.ts)
 [![Dependencies](https://img.shields.io/badge/Dependencies-18%20Too%20Many-orange?style=flat-square&logo=npm)](package.json)
@@ -52,13 +48,12 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 📊 **Dashboard with Fancy Charts**: D3.js charts now sport gradients, grids, and zoom
 - 🏆 **Leaderboard System**: Compete with yourself since you're probably the only user
 - 🎨 **Windows 95 UI**: Powered by React95 components so every window, button, and menu looks like it came straight from 1995
+- 🧱 **Tailwind Detox**: The entire interface now leans on React95 and styled-components—no utility classes in sight
 - 🪟 **Pixel-Perfect Window Controls**: Title bars now rock the classic `_`, `□`, and `X` glyphs straight out of Windows 95
 - 🖱️ **Authentic Desktop Shell**: Draggable, resizable windows with minimize/maximize controls, a living taskbar, and a Start menu that launches every feature
 - 🗃️ **Zustand State Management**: Because Redux wasn't complicated enough, we needed something "simpler"
 - ⚡ **Blazing Fast Vite**: The only thing fast about this project
 - 🎭 **TypeScript**: Added types everywhere except where they're actually needed
-- 🎨 **Tailwind CSS**: 47KB of utility classes to style 3 buttons
-- 🎬 **Framer Motion**: Animated everything because static websites are for quitters
 - 🖥️ **Windows 95 Taskbar**: Pixel-perfect Start button, beveled task list, and system tray clock straight from 1995
 - 📂 **Start Menu**: Rebuilt with the teal sidebar, beveled casing, and Start button alignment from classic Windows 95 for quick navigation
 - 🗂️ **Desktop Shortcuts Everywhere**: Every page now shows up on the desktop for
@@ -89,10 +84,7 @@ This project showcases the fine art of using 30 dependencies to accomplish what 
 
 - **React 19**: For building a user interface that could've been static HTML
 - **TypeScript**: Because JavaScript wasn't confusing enough
-- **Tailwind CSS**: Why write 10 lines of CSS when you can write 100 class names?
-- **Radix UI**: Premium headless components for basic HTML elements
 - **D3.js**: Nuclear-powered charting library for displaying 5 data points
-- **Framer Motion**: Hollywood-grade animations for hover effects
 - **Zustand**: State management for 3 variables that could've been `useState`
 - **UUID**: Industrial-strength ID generation for a client-side game
 - **Lucide Icons**: 1000+ icons imported to use exactly 7
@@ -183,7 +175,6 @@ npm run format   # Rearrange deck chairs on the Titanic
 src/
 ├── assets/          # 12 bug PNGs that total 2MB
 ├── components/      # 15 components that could be 3
-│   └── ui/          # Radix UI wrappers because abstraction is life
 ├── lib/             # One utility function that could be inline
 ├── mock/            # Fake data more realistic than our deadlines
 ├── routes/          # 5 pages for a single-page concept

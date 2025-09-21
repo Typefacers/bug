@@ -1,5 +1,39 @@
 import React from 'react'
+import { styled } from 'styled-components'
 import type { AimCursorProps } from '../types/aim-cursor-props'
+
+const CursorWrapper = styled.div`
+  position: absolute;
+  z-index: 100;
+  pointer-events: none;
+`
+
+const CursorCircle = styled.div`
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid #cc0000;
+`
+
+const CursorLineVertical = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: #cc0000;
+  transform: translateX(-0.5px);
+`
+
+const CursorLineHorizontal = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: #cc0000;
+  transform: translateY(-0.5px);
+`
 
 /** A simple red cross-hair that never intercepts pointer events. */
 const AimCursor: React.FC<AimCursorProps> = ({ x, y }) => {
@@ -7,28 +41,13 @@ const AimCursor: React.FC<AimCursorProps> = ({ x, y }) => {
   const half = size / 2
 
   return (
-    <div
-      className="pointer-events-none absolute z-[100]"
-      style={{
-        left: x - half,
-        top: y - half,
-        width: size,
-        height: size,
-      }}
+    <CursorWrapper
+      style={{ left: x - half, top: y - half, width: size, height: size }}
     >
-      {/* outer ring */}
-      <div className="absolute inset-0 rounded-full border-2 border-red-600" />
-      {/* vertical line */}
-      <div
-        className="absolute top-0 bottom-0 left-1/2 w-px bg-red-600"
-        style={{ transform: 'translateX(-0.5px)' }}
-      />
-      {/* horizontal line */}
-      <div
-        className="absolute left-0 right-0 top-1/2 h-px bg-red-600"
-        style={{ transform: 'translateY(-0.5px)' }}
-      />
-    </div>
+      <CursorCircle />
+      <CursorLineVertical />
+      <CursorLineHorizontal />
+    </CursorWrapper>
   )
 }
 
