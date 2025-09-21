@@ -51,6 +51,7 @@ This is a "bug bounty hackathon" project that ironically has more bugs than it f
 - 🧱 **Tailwind Detox**: The entire interface now leans on React95 and styled-components—no utility classes in sight
 - 🪟 **Pixel-Perfect Window Controls**: Title bars now rock the classic `_`, `□`, and `X` glyphs straight out of Windows 95
 - 🖱️ **Authentic Desktop Shell**: Draggable, resizable windows with minimize/maximize controls, a living taskbar, and a Start menu that launches every feature
+- 🧊 **Smart Window Auto-Sizing**: Newly opened apps now expand to fit their content so you're not hunting for UI that slipped outside the frame
 - 🗃️ **Zustand State Management**: Because Redux wasn't complicated enough, we needed something "simpler"
 - ⚡ **Blazing Fast Vite**: The only thing fast about this project
 - 🎭 **TypeScript**: Added types everywhere except where they're actually needed
