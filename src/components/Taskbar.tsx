@@ -1,11 +1,4 @@
-import {
-  forwardRef,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { forwardRef, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { styled } from 'styled-components'
 import { AppBar, Toolbar, Button, Frame, Separator } from 'react95'
 import StartMenu from './StartMenu'
@@ -190,11 +183,6 @@ export default function Taskbar() {
     }
   }, [open])
 
-  const orderedWindows = useMemo(
-    () => [...windows].sort((a, b) => a.zIndex - b.zIndex),
-    [windows]
-  )
-
   return (
     <TaskbarAppBar position="relative">
       <TaskbarToolbar>
@@ -207,7 +195,7 @@ export default function Taskbar() {
         <Separator orientation="vertical" size={28} />
 
         <WindowButtonsFrame>
-          {orderedWindows.map(window => {
+          {windows.map(window => {
             const definition = apps[window.appId]
             const isActive = activeWindowId === window.id && !window.minimized
 
