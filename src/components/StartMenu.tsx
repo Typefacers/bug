@@ -62,10 +62,13 @@ const StyledMenuList = styled(MenuList)`
 const StyledMenuItem = styled(MenuListItem)`
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 8px;
   padding: 6px 10px;
   font-weight: 600;
   cursor: pointer;
+  text-align: left;
+  width: 100%;
 `
 
 const ItemIcon = styled.span`
@@ -77,6 +80,7 @@ const ItemLabel = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: left;
 `
 
 export default function StartMenu({ anchorRect, onClose }: StartMenuProps) {
