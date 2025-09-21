@@ -8,13 +8,13 @@
 [![Code Quality](https://img.shields.io/badge/Code%20Quality-Questionable-yellow?style=for-the-badge&logo=code-climate)](src/)
 [![License](https://img.shields.io/badge/License-None%20Specified-darkred?style=for-the-badge&logo=warning)](README.md)
 
-[![Vite](https://img.shields.io/badge/Vite-7.0.0-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
-[![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-7.1.6-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
+[![React](https://img.shields.io/badge/React-19.1.1-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
 [![D3.js](https://img.shields.io/badge/D3.js-7.9.0-F7931E?style=flat-square&logo=d3.js&logoColor=white)](https://d3js.org)
-[![Zustand](https://img.shields.io/badge/Zustand-5.0.6-FF6B6B?style=flat-square&logo=react&logoColor=white)](https://github.com/pmndrs/zustand)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Zustand](https://img.shields.io/badge/Zustand-5.0.8-FF6B6B?style=flat-square&logo=react&logoColor=white)](https://github.com/pmndrs/zustand)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.2-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
-[![ESLint](https://img.shields.io/badge/ESLint-9.29.0-4B32C3?style=flat-square&logo=eslint)](https://eslint.org)
+[![ESLint](https://img.shields.io/badge/ESLint-9.36.0-4B32C3?style=flat-square&logo=eslint)](https://eslint.org)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![Prettier](https://img.shields.io/badge/Prettier-3.6.2-F7B93E?style=flat-square&logo=prettier&logoColor=black)](https://prettier.io)
 
