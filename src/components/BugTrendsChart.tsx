@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useElementSize } from '../hooks/use-element-size'
 import * as d3 from 'd3'
+import { styled } from 'styled-components'
 import { Bug } from '../types/bug'
 import type { DataPoint } from '../types/bug-trends-chart'
 
@@ -11,6 +12,16 @@ import type { DataPoint } from '../types/bug-trends-chart'
  * • Resizes automatically with its container (ResizeObserver).
  * • Displays a friendly "No data" placeholder if nothing to plot.
  */
+const ChartWrapper = styled.div`
+  width: 100%;
+`
+
+const ChartSvg = styled.svg`
+  width: 100%;
+  height: 320px;
+  user-select: none;
+`
+
 const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement | null>(null)
@@ -411,9 +422,9 @@ const BugTrendsChart = ({ bugs }: { bugs: Bug[] }) => {
   }, [bugs, size.width])
 
   return (
-    <div ref={wrapperRef} className="w-full">
-      <svg ref={svgRef} className="w-full h-80 select-none" />
-    </div>
+    <ChartWrapper ref={wrapperRef}>
+      <ChartSvg ref={svgRef} />
+    </ChartWrapper>
   )
 }
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { styled } from 'styled-components'
 import { Button, Frame } from 'react95'
 
 const FORTUNES = [
@@ -10,6 +10,32 @@ const FORTUNES = [
   'Debugging: because real bugs have feelings too.',
   'Every bug you find hides two more.',
 ]
+
+const FortuneFrame = styled(Frame).attrs({
+  variant: 'window' as const,
+  shadow: true,
+})`
+  margin-top: 8px;
+  background: ${({ theme }) => theme.material};
+  padding: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`
+
+const FortuneText = styled(Frame).attrs({ variant: 'well' as const })`
+  display: inline-block;
+  background: ${({ theme }) => theme.canvas};
+  padding: 6px 12px;
+  font-size: 13px;
+`
+
+const ButtonRow = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+`
 
 export default function FortuneCookie() {
   const [fortune, setFortune] = useState('')
@@ -31,22 +57,12 @@ export default function FortuneCookie() {
   }, [])
 
   return (
-    <Frame shadow className="mt-2 rounded bg-[#C0C0C0] p-4 text-center">
-      <motion.div
-        key={fortune}
-        initial={{ opacity: 0, y: -4 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="mb-2 inline-block"
-      >
-        <Frame variant="well" className="bg-white px-2 py-1 text-sm">
-          🥠 {fortune}
-        </Frame>
-      </motion.div>
-      <div className="mt-2 flex justify-center gap-2">
+    <FortuneFrame>
+      <FortuneText>🥠 {fortune}</FortuneText>
+      <ButtonRow>
         <Button onClick={randomFortune}>New Fortune</Button>
         <Button onClick={speakFortune}>🔈 Read Aloud</Button>
-      </div>
-    </Frame>
+      </ButtonRow>
+    </FortuneFrame>
   )
 }

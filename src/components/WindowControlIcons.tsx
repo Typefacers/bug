@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import type { SVGProps } from 'react'
 
 const HIGHLIGHT = '#FFFFFF'
@@ -18,9 +17,12 @@ const svgBaseProps = {
 
 type IconProps = SVGProps<SVGSVGElement>
 
+const mergeClassName = (className?: string) =>
+  [ICON_CLASS, className].filter(Boolean).join(' ')
+
 export function Win95MinimizeIcon({ className, ...props }: IconProps) {
   return (
-    <svg {...svgBaseProps} className={clsx(ICON_CLASS, className)} {...props}>
+    <svg {...svgBaseProps} className={mergeClassName(className)} {...props}>
       <rect x="3" y="10" width="10" height="3" fill={FACE} />
       <rect x="3" y="10" width="10" height="1" fill={HIGHLIGHT} />
       <rect x="3" y="11" width="10" height="1" fill={OUTLINE} />
@@ -35,7 +37,7 @@ export function Win95MinimizeIcon({ className, ...props }: IconProps) {
 
 export function Win95MaximizeIcon({ className, ...props }: IconProps) {
   return (
-    <svg {...svgBaseProps} className={clsx(ICON_CLASS, className)} {...props}>
+    <svg {...svgBaseProps} className={mergeClassName(className)} {...props}>
       <rect x="3" y="3" width="10" height="1" fill={OUTLINE} />
       <rect x="3" y="3" width="1" height="8" fill={OUTLINE} />
       <rect x="12" y="3" width="1" height="8" fill={OUTLINE} />
@@ -56,7 +58,7 @@ export function Win95MaximizeIcon({ className, ...props }: IconProps) {
 
 export function Win95RestoreIcon({ className, ...props }: IconProps) {
   return (
-    <svg {...svgBaseProps} className={clsx(ICON_CLASS, className)} {...props}>
+    <svg {...svgBaseProps} className={mergeClassName(className)} {...props}>
       <rect x="4" y="4" width="8" height="1" fill={OUTLINE} />
       <rect x="4" y="4" width="1" height="6" fill={OUTLINE} />
       <rect x="11" y="4" width="1" height="6" fill={OUTLINE} />
@@ -90,7 +92,7 @@ export function Win95RestoreIcon({ className, ...props }: IconProps) {
 
 export function Win95CloseIcon({ className, ...props }: IconProps) {
   return (
-    <svg {...svgBaseProps} className={clsx(ICON_CLASS, className)} {...props}>
+    <svg {...svgBaseProps} className={mergeClassName(className)} {...props}>
       <path
         d="M5 5L11 11"
         stroke={OUTLINE}

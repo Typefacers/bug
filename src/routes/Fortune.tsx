@@ -1,7 +1,19 @@
+import { memo, type FC } from 'react'
+import { styled } from 'styled-components'
 import Meta from '../components/Meta'
 import FortuneCookie from '../components/FortuneCookie'
-import { memo, type FC } from 'react'
 import type { WindowComponentProps } from '../types/window'
+
+const FortuneContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`
+
+const Title = styled.h1`
+  margin: 0;
+  font-size: 24px;
+`
 
 const Fortune: FC<WindowComponentProps> = () => {
   return (
@@ -10,10 +22,10 @@ const Fortune: FC<WindowComponentProps> = () => {
         title="Fortune Cookie"
         description="Get a random bug-themed fortune."
       />
-      <div className="space-y-4">
-        <h1 className="text-2xl font-bold">Fortune Cookie</h1>
+      <FortuneContainer>
+        <Title>Fortune Cookie</Title>
         <FortuneCookie />
-      </div>
+      </FortuneContainer>
     </>
   )
 }

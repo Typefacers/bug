@@ -1,7 +1,17 @@
 import { useState, useEffect } from 'react'
-import { Label } from './ui/label'
+import { styled } from 'styled-components'
 import type { CaptchaProps } from '../types/captcha-props'
 import { TextInput } from 'react95'
+
+const CaptchaContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`
+
+const QuestionLabel = styled.label`
+  font-size: 13px;
+`
 
 export default function Captcha({ onChange }: CaptchaProps) {
   const [a, setA] = useState(0)
@@ -19,16 +29,16 @@ export default function Captcha({ onChange }: CaptchaProps) {
   }, [answer, a, b, onChange])
 
   return (
-    <div className="space-y-1">
-      <Label htmlFor="captcha">
+    <CaptchaContainer>
+      <QuestionLabel htmlFor="captcha">
         What is {a} + {b}?
-      </Label>
+      </QuestionLabel>
       <TextInput
         id="captcha"
         value={answer}
-        onChange={e => setAnswer(e.target.value)}
+        onChange={event => setAnswer(event.target.value)}
         fullWidth
       />
-    </div>
+    </CaptchaContainer>
   )
 }

@@ -1,8 +1,19 @@
 import { useEffect, useRef } from 'react'
 import * as d3 from 'd3'
+import { styled } from 'styled-components'
 import { Bug } from '../types/bug'
 import { forecastBugCounts } from '../lib/bug-forecast'
 import { useElementSize } from '../hooks/use-element-size'
+
+const ForecastWrapper = styled.div`
+  width: 100%;
+`
+
+const ForecastSvg = styled.svg`
+  width: 100%;
+  height: 160px;
+  user-select: none;
+`
 
 const BugForecast = ({ bugs }: { bugs: Bug[] }) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -69,9 +80,9 @@ const BugForecast = ({ bugs }: { bugs: Bug[] }) => {
   }, [bugs, size.width])
 
   return (
-    <div ref={wrapperRef} className="w-full">
-      <svg ref={svgRef} className="w-full h-40 select-none" />
-    </div>
+    <ForecastWrapper ref={wrapperRef}>
+      <ForecastSvg ref={svgRef} />
+    </ForecastWrapper>
   )
 }
 

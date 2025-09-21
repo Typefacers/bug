@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
+import { styled } from 'styled-components'
 import { useElementSize } from '../hooks/use-element-size'
 import type { BugAreaProps } from '../types/bug-area-props'
 import BugCrawler from './BugCrawler'
@@ -9,6 +10,15 @@ import { useBugStore } from '../store'
 
 const SPEED = 320 // px per second the aim moves when an input is held/tilted
 const DEAD_ZONE = 0.15 // ignore tiny stick deflections
+
+const AreaWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  cursor: none;
+`
 
 const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
   /* ---------- container size tracking ---------- */
@@ -313,11 +323,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
 
   /* ---------- render ---------- */
   return (
-    <div
-      ref={containerRef}
-      onClick={shoot}
-      className="absolute inset-0 overflow-hidden select-none cursor-none"
-    >
+    <AreaWrapper ref={containerRef} onClick={shoot}>
       {/* Aim cross-hair */}
       <AimCursor x={aim.x} y={aim.y} />
 
@@ -337,7 +343,7 @@ const BugArea: React.FC<BugAreaProps> = ({ bugs }) => {
           />
         )
       })}
-    </div>
+    </AreaWrapper>
   )
 }
 

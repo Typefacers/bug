@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { styled } from 'styled-components'
 import DesktopIcon from './DesktopIcon'
 import DesktopWindow from './DesktopWindow'
 import Taskbar from './Taskbar'
@@ -7,9 +8,38 @@ import { DESKTOP_SHORTCUTS } from '../utils/window-apps'
 import type { WindowSize } from '../types/window'
 
 const DEFAULT_SIZE: WindowSize = { width: 1024, height: 720 }
-const CONTAINER_PADDING = 32 // Tailwind p-4
-const ICON_GAP = 24 // Tailwind gap-6
+const ICON_GAP = 24
+const CONTAINER_PADDING = 32
 const DEFAULT_ICON_SIZE = { width: 96, height: 112 }
+
+const DesktopRoot = styled.div`
+  min-height: 100vh;
+  background: ${({ theme }) => theme.desktopBackground};
+  color: ${({ theme }) => theme.canvasText};
+  font-family: 'ms_sans_serif', 'Microsoft Sans Serif', sans-serif;
+  display: flex;
+  flex-direction: column;
+`
+
+const DesktopSurface = styled.div`
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  padding: ${CONTAINER_PADDING}px;
+  display: flex;
+`
+
+const IconColumns = styled.div`
+  display: flex;
+  gap: ${ICON_GAP}px;
+  align-items: flex-start;
+`
+
+const IconColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${ICON_GAP}px;
+`
 
 export default function Desktop() {
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -124,15 +154,11 @@ export default function Desktop() {
   ])
 
   return (
-    <div className="min-h-screen bg-[#008080] font-['MS_Sans_Serif','Tahoma',sans-serif] flex flex-col text-black">
-      <div
-        ref={containerRef}
-        className="relative flex-1 overflow-hidden p-4"
-        role="presentation"
-      >
-        <div className="flex h-full items-start gap-6">
+    <DesktopRoot>
+      <DesktopSurface ref={containerRef} role="presentation">
+        <IconColumns>
           {shortcutsByColumn.map((column, columnIndex) => (
-            <div key={`column-${columnIndex}`} className="flex flex-col gap-6">
+            <IconColumn key={`column-${columnIndex}`}>
               {column.map((app, itemIndex) => (
                 <DesktopIcon
                   key={app.id}
@@ -144,9 +170,9 @@ export default function Desktop() {
                   }
                 />
               ))}
-            </div>
+            </IconColumn>
           ))}
-        </div>
+        </IconColumns>
 
         {sortedWindows.map(window => (
           <DesktopWindow
@@ -155,8 +181,8 @@ export default function Desktop() {
             containerSize={containerSize}
           />
         ))}
-      </div>
+      </DesktopSurface>
       <Taskbar />
-    </div>
+    </DesktopRoot>
   )
 }

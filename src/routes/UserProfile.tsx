@@ -1,9 +1,51 @@
-import { useBugStore } from '../store'
-import { raised } from '../utils/win95'
-import Meta from '../components/Meta'
 import { memo, useEffect, useMemo } from 'react'
+import { styled } from 'styled-components'
+import { Button, Frame } from 'react95'
+import { useBugStore } from '../store'
+import Meta from '../components/Meta'
 import { useWindowManager } from '../contexts/WindowManagerContext'
 import type { WindowComponentProps } from '../types/window'
+
+const Container = styled.div`
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`
+
+const Panel = styled(Frame).attrs({ variant: 'window' as const, shadow: true })`
+  background: ${({ theme }) => theme.material};
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`
+
+const Title = styled.h2`
+  margin: 0;
+  font-size: 24px;
+`
+
+const StatRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid ${({ theme }) => theme.borderDark};
+  padding-bottom: 8px;
+`
+
+const BugCard = styled(Frame).attrs({ variant: 'window' as const })`
+  background: ${({ theme }) => theme.canvas};
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`
+
+const FooterActions = styled.div`
+  text-align: center;
+`
 
 type UserProfileContext = {
   userId?: number | string
@@ -38,6 +80,13 @@ function UserProfile({
     }
   }, [setTitle, user])
 
+  const goToLeaderboard = () => {
+    openWindow('leaderboard')
+    if (windowId) {
+      closeWindow(windowId)
+    }
+  }
+
   if (!user) {
     return (
       <>
@@ -45,20 +94,10 @@ function UserProfile({
           title="User Not Found - Bug Bounty"
           description="The requested user profile could not be located."
         />
-        <div className="text-center space-y-4">
-          <button
-            type="button"
-            className="text-indigo-600 hover:underline bg-transparent !px-0 !py-0 border-none focus:outline-none focus-visible:underline cursor-pointer"
-            onClick={() => {
-              openWindow('leaderboard')
-              if (windowId) {
-                closeWindow(windowId)
-              }
-            }}
-          >
-            Back to Leaderboard
-          </button>
-        </div>
+        <Panel>
+          <p>This profile could not be located.</p>
+          <Button onClick={goToLeaderboard}>Back to Leaderboard</Button>
+        </Panel>
       </>
     )
   }
@@ -69,78 +108,51 @@ function UserProfile({
         title={`Bug Bounty Profile - ${user.name}`}
         description={`Stats and achievements for ${user.name} in Bug Basher.`}
       />
-      <div className="mx-auto max-w-md space-y-6">
-        <div className={`bg-[#E0E0E0] ${raised}`}>
-          <div className="p-6 space-y-6">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold">{user.name}</h2>
-              <p className="mt-1 text-lg font-mono text-emerald-700">
-                {(user.score ?? 0).toLocaleString()} points
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex justify-between border-b pb-2">
-                <span>Total Bugs Squashed:</span>
-                <span className="font-medium">
-                  {user.bugsSquashed?.length ?? 0}
-                </span>
-              </div>
-
-              <div className="flex justify-between border-b pb-2">
-                <span>Total Bounty Collected:</span>
-                <span className="font-medium">
-                  {totalBounty.toLocaleString()}
-                </span>
-              </div>
-
-              <div className="flex justify-between border-b pb-2">
-                <span>Rank:</span>
-                <span className="font-medium">
-                  #{users.findIndex(u => u.id === id) + 1}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <Container>
+        <Panel>
+          <Title>{user.name}</Title>
+          <span style={{ fontFamily: 'monospace', color: '#006400' }}>
+            {(user.score ?? 0).toLocaleString()} points
+          </span>
+          <StatRow>
+            <span>Total Bugs Squashed:</span>
+            <strong>{user.bugsSquashed?.length ?? 0}</strong>
+          </StatRow>
+          <StatRow>
+            <span>Total Bounty Collected:</span>
+            <strong>{totalBounty.toLocaleString()}</strong>
+          </StatRow>
+          <StatRow>
+            <span>Rank:</span>
+            <strong>#{users.findIndex(u => u.id === id) + 1}</strong>
+          </StatRow>
+        </Panel>
 
         {squashedBugs.length > 0 && (
-          <div className={`bg-[#E0E0E0] ${raised}`}>
-            <div className="p-6 space-y-2">
-              <h3 className="mb-3 text-xl font-semibold">Bugs Squashed</h3>
-              {squashedBugs.map(bug => (
-                <div
-                  key={bug.id}
-                  className="rounded-lg border bg-white p-3 shadow-sm"
+          <Panel>
+            <h3 style={{ margin: 0, fontSize: 18 }}>Bugs Squashed</h3>
+            {squashedBugs.map(bug => (
+              <BugCard key={bug.id}>
+                <strong>{bug.title}</strong>
+                <span style={{ fontSize: 13 }}>{bug.description}</span>
+                <span
+                  style={{
+                    textAlign: 'right',
+                    fontFamily: 'monospace',
+                    color: '#006400',
+                  }}
                 >
-                  <div className="font-medium">{bug.title}</div>
-                  <div className="mt-1 text-sm text-gray-600">
-                    {bug.description}
-                  </div>
-                  <div className="mt-2 text-right font-mono text-emerald-700">
-                    +{bug.bounty.toLocaleString()}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                  +{bug.bounty.toLocaleString()}
+                </span>
+              </BugCard>
+            ))}
+          </Panel>
         )}
 
-        <div className="text-center">
-          <button
-            type="button"
-            className="text-indigo-600 hover:underline bg-transparent !px-0 !py-0 border-none focus:outline-none focus-visible:underline cursor-pointer"
-            onClick={() => {
-              openWindow('leaderboard')
-              if (windowId) {
-                closeWindow(windowId)
-              }
-            }}
-          >
-            Back to Leaderboard
-          </button>
-        </div>
-      </div>
+        <FooterActions>
+          <Button onClick={goToLeaderboard}>Back to Leaderboard</Button>
+        </FooterActions>
+      </Container>
     </>
   )
 }

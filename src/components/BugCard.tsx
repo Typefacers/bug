@@ -1,9 +1,138 @@
-import { motion } from 'framer-motion'
+import { styled } from 'styled-components'
+import { Frame } from 'react95'
+import type {
+  KeyboardEvent as ReactKeyboardEvent,
+  MouseEvent as ReactMouseEvent,
+} from 'react'
 import type { BugCardProps } from '../types/bug-card-props'
+import type { Bug } from '../types/bug'
 import { useBugStore, priorityModel } from '../store'
-import clsx from 'clsx'
 import { getBugImage } from '../utils/utils'
 import { predictPriorityProbability } from '../lib/bug-priority-ml.ts'
+
+type CardShellProps = {
+  $preview: boolean
+  $modal: boolean
+  $inactive: boolean
+}
+
+type PriorityProps = { $priority?: Bug['priority'] }
+
+type ImageProps = { $modal: boolean }
+
+const cardWidth = ({ $preview, $modal }: CardShellProps) =>
+  $preview ? '200px' : $modal ? 'min(90vw, 420px)' : '320px'
+
+const cardCursor = ({ $inactive }: CardShellProps) =>
+  $inactive ? 'not-allowed' : 'pointer'
+
+const cardOpacity = ({ $inactive }: CardShellProps) => ($inactive ? 0.6 : 1)
+
+const cardFilter = ({ $inactive }: CardShellProps) =>
+  $inactive ? 'grayscale(0.4)' : 'none'
+
+const cardHoverTransform = ({ $inactive }: CardShellProps) =>
+  $inactive ? 'none' : 'translateY(-4px)'
+
+const imageHeight = ({ $modal }: ImageProps) => ($modal ? '200px' : '180px')
+
+const priorityBorder = ({ $priority }: PriorityProps) =>
+  $priority === 'high'
+    ? '#b22222'
+    : $priority === 'medium'
+      ? '#b8860b'
+      : '#1f4f8f'
+
+const priorityBackground = ({ $priority }: PriorityProps) =>
+  $priority === 'high'
+    ? '#f5d6d6'
+    : $priority === 'medium'
+      ? '#f4e5c0'
+      : '#d5e1f7'
+
+const CardShell = styled(Frame)<CardShellProps>`
+  position: relative;
+  width: ${cardWidth};
+  background: ${({ theme }) => theme.material};
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: ${cardCursor};
+  opacity: ${cardOpacity};
+  filter: ${cardFilter};
+
+  &:hover {
+    transform: ${cardHoverTransform};
+  }
+`
+
+const BugImage = styled.img<ImageProps>`
+  width: 100%;
+  height: ${imageHeight};
+  object-fit: cover;
+`
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 16px 16px;
+`
+
+const HeaderRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+`
+
+const Title = styled.h3`
+  flex: 1;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+`
+
+const Badge = styled.span`
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  font-size: 11px;
+  border: 1px solid ${({ theme }) => theme.borderDark};
+  background: ${({ theme }) => theme.canvas};
+  font-family: 'ms_sans_serif', 'Microsoft Sans Serif', sans-serif;
+`
+
+const PriorityBadge = styled(Badge)<PriorityProps>`
+  border-color: ${priorityBorder};
+  background: ${priorityBackground};
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+`
+
+const Description = styled.p`
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+`
+
+const SquashedOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: rgba(178, 34, 34, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+`
 
 export const BugCard: React.FC<BugCardProps> = ({
   bug,
@@ -17,91 +146,56 @@ export const BugCard: React.FC<BugCardProps> = ({
       ? predictPriorityProbability(bug.bounty, priorityModel)
       : null
 
+  const handleSquash = () => {
+    if (!bug.active) return
+    squashBug(bug.id)
+  }
+
+  const handleClick = (event: ReactMouseEvent<HTMLDivElement>) => {
+    event.stopPropagation()
+    handleSquash()
+  }
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      handleSquash()
+    }
+  }
+
   return (
-    <motion.div
-      whileHover={{
-        y: -8,
-        boxShadow:
-          '0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.05)',
-      }}
-      whileTap={{ scale: 0.95, rotate: -3 }}
-      className={clsx(
-        'relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg transition',
-        !bug.active && 'opacity-40 grayscale',
-        preview ? 'w-[200px]' : modal ? 'w-[90vw] max-w-sm sm:max-w-md' : 'w-80'
-      )}
-      onClick={e => {
-        e.stopPropagation()
-        if (bug.active) {
-          squashBug(bug.id)
-        }
-      }}
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
+    <CardShell
+      as="div"
+      role="button"
+      tabIndex={0}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      $preview={preview}
+      $modal={modal}
+      $inactive={!bug.active}
+      shadow
+      variant="window"
     >
-      {/* Overlay for squashed bugs */}
-      {!bug.active && (
-        <motion.div
-          className="absolute inset-0 bg-red-500/20 flex items-center justify-center z-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, ease: 'easeInOut' }}
-        >
-          <motion.span
-            className="text-4xl font-extrabold text-white px-4 py-1 tracking-wider uppercase font-serif drop-shadow-[0_0_8px_rgba(255,0,0,0.7)]"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, delay: 0.3, ease: 'easeInOut' }}
-          >
-            SQUASHED
-          </motion.span>
-        </motion.div>
-      )}
+      {!bug.active && <SquashedOverlay>SQUASHED</SquashedOverlay>}
 
-      <div className="flex flex-col">
-        {!preview && (
-          <img
-            src={bugImage}
-            alt={bug.title}
-            className={clsx(
-              'w-full object-cover mb-2',
-              modal ? 'h-40' : 'h-full aspect-square'
-            )}
-          />
-        )}
+      {!preview && <BugImage src={bugImage} alt={bug.title} $modal={modal} />}
 
-        <div className="flex items-center mx-4 mt-2">
-          <h3 className="flex-1 text-xl font-semibold leading-tight">
-            {bug.title}
-          </h3>
-          <span className="ml-2 inline-block rounded-full bg-emerald-600 px-2 py-1 text-xs font-mono text-white">
-            +{bug.bounty}
-          </span>
-          <span className="ml-2 inline-block rounded-full bg-blue-600 px-2 py-1 text-xs font-mono text-white">
-            {bug.pto}h PTO
-          </span>
+      <Content>
+        <HeaderRow>
+          <Title>{bug.title}</Title>
+          <Badge>+{bug.bounty}</Badge>
+          <Badge>{bug.pto}h PTO</Badge>
           {bug.priority && (
-            <span
-              className={clsx(
-                'ml-2 inline-block rounded-full px-2 py-1 text-xs font-mono text-white',
-                bug.priority === 'high' && 'bg-red-600',
-                bug.priority === 'medium' && 'bg-yellow-500',
-                bug.priority === 'low' && 'bg-gray-500'
-              )}
-            >
+            <PriorityBadge $priority={bug.priority}>
               {bug.priority}
-            </span>
+            </PriorityBadge>
           )}
           {highProb !== null && (
-            <span className="ml-2 text-xs text-gray-500 font-mono">
-              {Math.round(highProb * 100)}%
-            </span>
+            <Badge>{Math.round(highProb * 100)}% high risk</Badge>
           )}
-        </div>
-
-        <p className="mb-4 mx-4 text-sm text-gray-600">{bug.description}</p>
-      </div>
-    </motion.div>
+        </HeaderRow>
+        <Description>{bug.description}</Description>
+      </Content>
+    </CardShell>
   )
 }

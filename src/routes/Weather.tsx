@@ -1,22 +1,64 @@
+import { memo, useMemo, type FC } from 'react'
+import { styled } from 'styled-components'
+import { Frame } from 'react95'
 import Meta from '../components/Meta'
 import { forecast } from '../mock/weather'
-import { raised as raisedBase } from '../utils/win95'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
-import { SunIcon, CloudIcon, CloudRainIcon, SnowflakeIcon } from 'lucide-react'
 import type { ForecastDay } from '../types/weather'
-import { memo, useMemo, type FC } from 'react'
 import type { WindowComponentProps } from '../types/window'
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`
+
+const Title = styled.h1`
+  margin: 0;
+  font-size: 24px;
+`
+
+const CardsGrid = styled.div`
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+`
+
+const WeatherCard = styled(Frame).attrs({
+  variant: 'window' as const,
+  shadow: true,
+})`
+  background: ${({ theme }) => theme.material};
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`
+
+const CardHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+`
+
+const CardBody = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+`
 
 const iconFor = (condition: ForecastDay['condition']) => {
   switch (condition) {
     case 'sunny':
-      return <SunIcon className="h-5 w-5 text-amber-500" />
+      return '☀️'
     case 'cloudy':
-      return <CloudIcon className="h-5 w-5 text-gray-500" />
+      return '☁️'
     case 'rainy':
-      return <CloudRainIcon className="h-5 w-5 text-blue-500" />
+      return '🌧️'
     case 'snow':
-      return <SnowflakeIcon className="h-5 w-5 text-indigo-400" />
+      return '❄️'
+    default:
+      return '🌤️'
   }
 }
 
@@ -28,7 +70,7 @@ const formatDate = (date: string) =>
   }).format(new Date(date))
 
 const Weather: FC<WindowComponentProps> = () => {
-  const raised = useMemo(() => `${raisedBase} shadow-sm`, [])
+  const cards = useMemo(() => forecast, [])
 
   return (
     <>
@@ -36,25 +78,23 @@ const Weather: FC<WindowComponentProps> = () => {
         title="Weather Forecast"
         description="Check the upcoming weather for your next bug hunt."
       />
-      <div className="space-y-4">
-        <h1 className="text-2xl font-bold">Weather Forecast</h1>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {forecast.map(day => (
-            <Card key={day.date} className={`bg-[#E0E0E0] ${raised}`}>
+      <Container>
+        <Title>Weather Forecast</Title>
+        <CardsGrid>
+          {cards.map(day => (
+            <WeatherCard key={day.date}>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  {iconFor(day.condition)}
-                  {formatDate(day.date)}
-                </CardTitle>
+                <span aria-hidden>{iconFor(day.condition)}</span>
+                {formatDate(day.date)}
               </CardHeader>
-              <CardContent className="flex justify-between text-sm">
+              <CardBody>
                 <span>High: {day.high}°C</span>
                 <span>Low: {day.low}°C</span>
-              </CardContent>
-            </Card>
+              </CardBody>
+            </WeatherCard>
           ))}
-        </div>
-      </div>
+        </CardsGrid>
+      </Container>
     </>
   )
 }
