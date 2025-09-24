@@ -6,10 +6,10 @@ const FACE = '#C0C0C0'
 const OUTLINE = '#000000'
 const ACCENT_DARK = '#000080'
 const ACCENT_LIGHT = '#1084d9'
-const ICON_CLASS = 'block h-4 w-4'
-
 const svgBaseProps = {
   viewBox: '0 0 16 16',
+  width: 16,
+  height: 16,
   'aria-hidden': true,
   focusable: 'false',
   shapeRendering: 'crispEdges' as const,
@@ -17,12 +17,9 @@ const svgBaseProps = {
 
 type IconProps = SVGProps<SVGSVGElement>
 
-const mergeClassName = (className?: string) =>
-  [ICON_CLASS, className].filter(Boolean).join(' ')
-
 export function Win95MinimizeIcon({ className, ...props }: IconProps) {
   return (
-    <svg {...svgBaseProps} className={mergeClassName(className)} {...props}>
+    <svg {...svgBaseProps} className={className} {...props}>
       <rect x="3" y="10" width="10" height="3" fill={FACE} />
       <rect x="3" y="10" width="10" height="1" fill={HIGHLIGHT} />
       <rect x="3" y="11" width="10" height="1" fill={OUTLINE} />
@@ -37,7 +34,7 @@ export function Win95MinimizeIcon({ className, ...props }: IconProps) {
 
 export function Win95MaximizeIcon({ className, ...props }: IconProps) {
   return (
-    <svg {...svgBaseProps} className={mergeClassName(className)} {...props}>
+    <svg {...svgBaseProps} className={className} {...props}>
       <rect x="3" y="3" width="10" height="1" fill={OUTLINE} />
       <rect x="3" y="3" width="1" height="8" fill={OUTLINE} />
       <rect x="12" y="3" width="1" height="8" fill={OUTLINE} />
@@ -58,7 +55,7 @@ export function Win95MaximizeIcon({ className, ...props }: IconProps) {
 
 export function Win95RestoreIcon({ className, ...props }: IconProps) {
   return (
-    <svg {...svgBaseProps} className={mergeClassName(className)} {...props}>
+    <svg {...svgBaseProps} className={className} {...props}>
       <rect x="4" y="4" width="8" height="1" fill={OUTLINE} />
       <rect x="4" y="4" width="1" height="6" fill={OUTLINE} />
       <rect x="11" y="4" width="1" height="6" fill={OUTLINE} />
@@ -92,43 +89,67 @@ export function Win95RestoreIcon({ className, ...props }: IconProps) {
 
 export function Win95CloseIcon({ className, ...props }: IconProps) {
   return (
-    <svg {...svgBaseProps} className={mergeClassName(className)} {...props}>
-      <path
-        d="M5 5L11 11"
-        stroke={OUTLINE}
-        strokeWidth="1"
-        strokeLinecap="square"
-      />
-      <path
-        d="M5 11L11 5"
-        stroke={OUTLINE}
-        strokeWidth="1"
-        strokeLinecap="square"
-      />
-      <path
-        d="M6 5L11 10"
-        stroke={HIGHLIGHT}
-        strokeWidth="1"
-        strokeLinecap="square"
-      />
-      <path
-        d="M5 6L10 11"
-        stroke={HIGHLIGHT}
-        strokeWidth="1"
-        strokeLinecap="square"
-      />
-      <path
-        d="M6 11L11 6"
-        stroke={SHADOW}
-        strokeWidth="1"
-        strokeLinecap="square"
-      />
-      <path
-        d="M5 10L10 5"
-        stroke={SHADOW}
-        strokeWidth="1"
-        strokeLinecap="square"
-      />
+    <svg {...svgBaseProps} className={className} {...props}>
+      {[5, 6, 7, 8, 9, 10, 11].map((offset, index) => (
+        <rect
+          key={`outline-main-${index}`}
+          x={offset}
+          y={offset}
+          width="1"
+          height="1"
+          fill={OUTLINE}
+        />
+      ))}
+      {[5, 6, 7, 8, 9, 10, 11].map((offset, index) => (
+        <rect
+          key={`outline-cross-${index}`}
+          x={offset}
+          y={16 - offset}
+          width="1"
+          height="1"
+          fill={OUTLINE}
+        />
+      ))}
+      {[6, 7, 8, 9, 10, 11].map((offset, index) => (
+        <rect
+          key={`highlight-main-${index}`}
+          x={offset}
+          y={offset - 1}
+          width="1"
+          height="1"
+          fill={HIGHLIGHT}
+        />
+      ))}
+      {[5, 6, 7, 8, 9, 10].map((offset, index) => (
+        <rect
+          key={`highlight-cross-${index}`}
+          x={offset}
+          y={offset + 1}
+          width="1"
+          height="1"
+          fill={HIGHLIGHT}
+        />
+      ))}
+      {[6, 7, 8, 9, 10, 11].map((offset, index) => (
+        <rect
+          key={`shadow-main-${index}`}
+          x={offset}
+          y={offset + 1}
+          width="1"
+          height="1"
+          fill={SHADOW}
+        />
+      ))}
+      {[5, 6, 7, 8, 9, 10].map((offset, index) => (
+        <rect
+          key={`shadow-cross-${index}`}
+          x={offset}
+          y={offset - 1}
+          width="1"
+          height="1"
+          fill={SHADOW}
+        />
+      ))}
     </svg>
   )
 }
