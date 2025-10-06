@@ -297,17 +297,66 @@ export function WindowManagerProvider({ children }: PropsWithChildren) {
               width: Math.max(MIN_WIDTH, bounds.width),
               height: Math.max(MIN_HEIGHT, bounds.height),
             }
-            if (
+
+            let nextPrevious = window.previous
+            let previousChanged = false
+
+            if (window.previous) {
+              const limitedPrevWidth = Math.min(
+                window.previous.size.width,
+                bounds.width
+              )
+              const limitedPrevHeight = Math.min(
+                window.previous.size.height,
+                bounds.height
+              )
+
+              const nextPreviousSize = {
+                width: Math.max(MIN_WIDTH, limitedPrevWidth),
+                height: Math.max(MIN_HEIGHT, limitedPrevHeight),
+              }
+
+              const maxPrevX = Math.max(
+                0,
+                bounds.width - nextPreviousSize.width
+              )
+              const maxPrevY = Math.max(
+                0,
+                bounds.height - nextPreviousSize.height
+              )
+
+              const nextPreviousPosition = {
+                x: Math.min(Math.max(0, window.previous.position.x), maxPrevX),
+                y: Math.min(Math.max(0, window.previous.position.y), maxPrevY),
+              }
+
+              previousChanged =
+                nextPreviousSize.width !== window.previous.size.width ||
+                nextPreviousSize.height !== window.previous.size.height ||
+                nextPreviousPosition.x !== window.previous.position.x ||
+                nextPreviousPosition.y !== window.previous.position.y
+
+              if (previousChanged) {
+                nextPrevious = {
+                  position: nextPreviousPosition,
+                  size: nextPreviousSize,
+                }
+              }
+            }
+
+            const frameChanged =
               window.position.x !== 0 ||
               window.position.y !== 0 ||
               window.size.width !== maximizeSize.width ||
               window.size.height !== maximizeSize.height
-            ) {
+
+            if (frameChanged || previousChanged) {
               changed = true
               return {
                 ...window,
                 position: { x: 0, y: 0 },
                 size: maximizeSize,
+                previous: nextPrevious,
               }
             }
             return window
