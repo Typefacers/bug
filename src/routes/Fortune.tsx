@@ -8,11 +8,16 @@ const FortuneContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  width: 100%;
+  padding: 16px;
+  align-items: center;
+  box-sizing: border-box;
 `
 
 const Title = styled.h1`
   margin: 0;
   font-size: 24px;
+  text-align: center;
 `
 
 const Fortune: FC<WindowComponentProps> = () => {

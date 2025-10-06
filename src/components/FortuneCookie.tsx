@@ -22,6 +22,9 @@ const FortuneFrame = styled(Frame).attrs({
   display: flex;
   flex-direction: column;
   gap: 12px;
+  width: 100%;
+  max-width: 360px;
+  box-sizing: border-box;
 `
 
 const FortuneText = styled(Frame).attrs({ variant: 'well' as const })`
