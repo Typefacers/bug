@@ -45,7 +45,7 @@ export default function Desktop() {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [containerSize, setContainerSize] = useState<WindowSize>(DEFAULT_SIZE)
   const [iconSize, setIconSize] = useState(DEFAULT_ICON_SIZE)
-  const { windows, openWindow } = useWindowManager()
+  const { windows, openWindow, setDesktopBounds } = useWindowManager()
   const initializedRef = useRef(false)
   const firstIconRef = useRef<HTMLButtonElement | null>(null)
 
@@ -62,7 +62,9 @@ export default function Desktop() {
 
     const updateSize = () => {
       const rect = element.getBoundingClientRect()
-      setContainerSize({ width: rect.width, height: rect.height })
+      const bounds = { width: rect.width, height: rect.height }
+      setContainerSize(bounds)
+      setDesktopBounds(bounds)
     }
 
     updateSize()
@@ -76,7 +78,7 @@ export default function Desktop() {
     const handleResize = () => updateSize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  }, [setDesktopBounds])
 
   useEffect(() => {
     const element = firstIconRef.current

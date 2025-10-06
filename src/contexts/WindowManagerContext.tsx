@@ -35,6 +35,7 @@ type WindowManagerValue = {
   setWindowPosition: (id: string, position: WindowPoint) => void
   setWindowSize: (id: string, size: WindowSize, position?: WindowPoint) => void
   setWindowTitle: (id: string, title: string) => void
+  setDesktopBounds: (bounds: WindowSize) => void
   apps: typeof WINDOW_APPS
 }
 
@@ -43,6 +44,10 @@ const randomId = () => Math.random().toString(36).slice(2, 7)
 export function WindowManagerProvider({ children }: PropsWithChildren) {
   const [windows, setWindows] = useState<WindowState[]>([])
   const [activeWindowId, setActiveWindowIdState] = useState<string | null>(null)
+  const [desktopBounds, setDesktopBoundsState] = useState<WindowSize>({
+    width: Number.POSITIVE_INFINITY,
+    height: Number.POSITIVE_INFINITY,
+  })
   const activeIdRef = useRef<string | null>(null)
   const zIndexRef = useRef(100)
 
@@ -105,15 +110,17 @@ export function WindowManagerProvider({ children }: PropsWithChildren) {
           y: 80 + prev.length * 24,
         }
 
+        const requestedWidth =
+          options?.size?.width ?? definition.defaultSize.width
+        const requestedHeight =
+          options?.size?.height ?? definition.defaultSize.height
+
+        const boundedWidth = Math.min(requestedWidth, desktopBounds.width)
+        const boundedHeight = Math.min(requestedHeight, desktopBounds.height)
+
         const size = {
-          width: Math.max(
-            MIN_WIDTH,
-            options?.size?.width ?? definition.defaultSize.width
-          ),
-          height: Math.max(
-            MIN_HEIGHT,
-            options?.size?.height ?? definition.defaultSize.height
-          ),
+          width: Math.max(MIN_WIDTH, boundedWidth),
+          height: Math.max(MIN_HEIGHT, boundedHeight),
         }
 
         const id = `${appId}-${Date.now()}-${randomId()}`
@@ -139,7 +146,12 @@ export function WindowManagerProvider({ children }: PropsWithChildren) {
       setActiveWindowId(createdId)
       return createdId
     },
-    [getNextZIndex, setActiveWindowId]
+    [
+      desktopBounds.height,
+      desktopBounds.width,
+      getNextZIndex,
+      setActiveWindowId,
+    ]
   )
 
   const toggleMinimize = useCallback(
@@ -236,19 +248,114 @@ export function WindowManagerProvider({ children }: PropsWithChildren) {
             return window
           }
 
+          const limitedWidth = Math.min(size.width, desktopBounds.width)
+          const limitedHeight = Math.min(size.height, desktopBounds.height)
+
+          const nextSize = {
+            width: Math.max(MIN_WIDTH, limitedWidth),
+            height: Math.max(MIN_HEIGHT, limitedHeight),
+          }
+
+          const nextPosition = position ?? window.position
+          const maxX = Math.max(0, desktopBounds.width - nextSize.width)
+          const maxY = Math.max(0, desktopBounds.height - nextSize.height)
+
+          const clampedPosition = {
+            x: Math.min(Math.max(0, nextPosition.x), maxX),
+            y: Math.min(Math.max(0, nextPosition.y), maxY),
+          }
+
           return {
             ...window,
-            size: {
-              width: Math.max(MIN_WIDTH, size.width),
-              height: Math.max(MIN_HEIGHT, size.height),
-            },
-            position: position ?? window.position,
+            size: nextSize,
+            position: clampedPosition,
           }
         })
       )
     },
-    []
+    [desktopBounds.height, desktopBounds.width]
   )
+
+  const setDesktopBounds = useCallback((bounds: WindowSize) => {
+    setDesktopBoundsState(prevBounds => {
+      const hasWidthChange = bounds.width !== prevBounds.width
+      const hasHeightChange = bounds.height !== prevBounds.height
+
+      if (!hasWidthChange && !hasHeightChange) {
+        return prevBounds
+      }
+
+      const widthShrunk = bounds.width < prevBounds.width
+      const heightShrunk = bounds.height < prevBounds.height
+
+      setWindows(prevWindows => {
+        let changed = false
+
+        const updated = prevWindows.map(window => {
+          if (window.maximized) {
+            const maximizeSize = {
+              width: Math.max(MIN_WIDTH, bounds.width),
+              height: Math.max(MIN_HEIGHT, bounds.height),
+            }
+            if (
+              window.position.x !== 0 ||
+              window.position.y !== 0 ||
+              window.size.width !== maximizeSize.width ||
+              window.size.height !== maximizeSize.height
+            ) {
+              changed = true
+              return {
+                ...window,
+                position: { x: 0, y: 0 },
+                size: maximizeSize,
+              }
+            }
+            return window
+          }
+
+          if (!widthShrunk && !heightShrunk) {
+            return window
+          }
+
+          const limitedWidth = Math.min(window.size.width, bounds.width)
+          const limitedHeight = Math.min(window.size.height, bounds.height)
+
+          const nextSize = {
+            width: Math.max(MIN_WIDTH, limitedWidth),
+            height: Math.max(MIN_HEIGHT, limitedHeight),
+          }
+
+          const maxX = Math.max(0, bounds.width - nextSize.width)
+          const maxY = Math.max(0, bounds.height - nextSize.height)
+
+          const nextPosition = {
+            x: Math.min(Math.max(0, window.position.x), maxX),
+            y: Math.min(Math.max(0, window.position.y), maxY),
+          }
+
+          if (
+            nextSize.width !== window.size.width ||
+            nextSize.height !== window.size.height ||
+            nextPosition.x !== window.position.x ||
+            nextPosition.y !== window.position.y
+          ) {
+            changed = true
+            return {
+              ...window,
+              size: nextSize,
+              position: nextPosition,
+            }
+          }
+
+          return window
+        })
+
+        return changed ? updated : prevWindows
+      })
+
+      return bounds
+    })
+  }, [])
 
   const closeWindow = useCallback(
     (id: string) => {
@@ -288,6 +395,7 @@ export function WindowManagerProvider({ children }: PropsWithChildren) {
       setWindowPosition,
       setWindowSize,
       setWindowTitle,
+      setDesktopBounds,
       apps: WINDOW_APPS,
     }),
     [
@@ -301,6 +409,7 @@ export function WindowManagerProvider({ children }: PropsWithChildren) {
       setWindowPosition,
       setWindowSize,
       setWindowTitle,
+      setDesktopBounds,
     ]
   )
 
